@@ -1,0 +1,7 @@
+{
+  "name": "viva-alagoas",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
