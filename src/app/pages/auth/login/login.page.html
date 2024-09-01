@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input formControlName="email" type="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input formControlName="password" type="password"></ion-input>
+    </ion-item>
+    <ion-button expand="full" type="submit">Login</ion-button>
+  </form>
+
+  <ion-list *ngIf="loginForm.invalid && (loginForm.dirty || loginForm.touched)">
+    <ion-item *ngIf="loginForm.get('email')?.errors?.['required']">
+      <p>Email is required.</p>
+    </ion-item>
+    <ion-item *ngIf="loginForm.get('email')?.errors?.['email']">
+      <p>Enter a valid email.</p>
+    </ion-item>
+    <ion-item *ngIf="loginForm.get('password')?.errors?.['required']">
+      <p>Password is required.</p>
+    </ion-item>
+    <ion-item *ngIf="loginForm.get('password')?.errors?.['minlength']">
+      <p>Password must be at least 6 characters long.</p>
+    </ion-item>
+  </ion-list>
+</ion-content>
