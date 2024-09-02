@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Register</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Name</ion-label>
+          <ion-input formControlName="name" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input formControlName="email" type="email"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input formControlName="password" type="password"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Confirm Password</ion-label>
+          <ion-input formControlName="confirmPassword" type="password"></ion-input>
+        </ion-item>
+
+        <ion-button expand="full" type="submit">Register</ion-button>
+
+        <ion-note color="danger" *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+          Name is required.
+        </ion-note>
+        <ion-note color="danger" *ngIf="registerForm.get('email')?.errors?.['required'] && registerForm.get('email')?.touched">
+          Email is required.
+        </ion-note>
+        <ion-note color="danger" *ngIf="registerForm.get('email')?.errors?.['email'] && registerForm.get('email')?.touched">
+          Enter a valid email.
+        </ion-note>
+        <ion-note color="danger" *ngIf="registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.touched">
+          Password is required.
+        </ion-note>
+        <ion-note color="danger" *ngIf="registerForm.get('password')?.errors?.['minlength'] && registerForm.get('password')?.touched">
+          Password must be at least 6 characters long.
+        </ion-note>
+        <ion-note color="danger" *ngIf="registerForm.get('confirmPassword')?.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched">
+          Passwords do not match.
+        </ion-note>
+        <ion-note color="danger" *ngIf="registerForm.get('birthAt')?.errors?.['required'] && registerForm.get('birthAt')?.touched">
+          Date of Birth is required.
+        </ion-note>
+      </ion-card-content>
+    </ion-card>
+  </form>
+
+</ion-content>
