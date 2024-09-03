@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LoginPageRoutingModule } from './login-routing.module';
+import { ResetPasswordPageRoutingModule } from './reset-password-routing.module';
 
-import { LoginPage } from './login.page';
+import { ResetPasswordPage } from './reset-password.page';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
@@ -15,11 +15,11 @@ import { AuthService } from 'src/app/services/auth.service';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
     IonicModule,
-    LoginPageRoutingModule
+    ResetPasswordPageRoutingModule,
+    ReactiveFormsModule,
   ],
-  declarations: [LoginPage],
+  declarations: [ResetPasswordPage],
   providers: [AuthService]
 })
-export class LoginPageModule {}
+export class ResetPasswordPageModule {}
