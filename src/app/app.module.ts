@@ -6,7 +6,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import {TokenModule } from 'src/app/services/token/token.module';
 @NgModule({

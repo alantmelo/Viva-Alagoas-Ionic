@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Home
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,43 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">Home</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h2>Where would you spend your holiday?</h2>
+      </ion-col>
+    </ion-row>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+    <!-- Top Destinations Section -->
+    <ion-row>
+      <ion-col>
+        <h3>Top Destinations</h3>
+        <swiper-container [slidesPerView]="1.5" spaceBetween="10">
+          <swiper-slide *ngFor="let destination of destinations">
+            <ion-card>
+              <img [src]="destination.image" />
+              <ion-card-header>
+                <ion-card-title>{{ destination.name }}</ion-card-title>
+                <ion-card-subtitle>{{ destination.city }}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <p>{{ destination.activities }} activities</p>
+              </ion-card-content>
+            </ion-card>
+          </swiper-slide>
+        </swiper-container>
+      </ion-col>
+    </ion-row>
+
+    <!-- Exclusive Hotels Section -->
+    <ion-row>
+      <ion-col>
+        <h3>Exclusive Hotels</h3>
+        <!-- Conteúdo para Exclusive Hotels -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
