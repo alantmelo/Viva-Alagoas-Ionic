@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,8 @@ export class RegisterPage implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private navCtrl: NavController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private readonly tokenService: TokenService,
   ) {}
 
   ngOnInit() {
@@ -57,9 +59,11 @@ export class RegisterPage implements OnInit {
       const { name, email, password, birthAt } = this.registerForm.value;
       const userData = { name, email, password, birthAt: null, role: 'TOURIST' };
 
-      this.authService.register(userData).subscribe({
+      await this.authService.register(userData).subscribe({
         next: (res) => {
-          this.navCtrl.navigateForward('/');
+          console.log(res.token.accessToken);
+          this.tokenService.saveToken(res.token.accessToken);
+          this.navCtrl.navigateForward('/tabs/tab1');
         },
         error: async (err) => {
           console.error(err);

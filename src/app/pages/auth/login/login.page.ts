@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
-import { TokenService } from 'src/app/services/token/token.service'; // Correct path
+import { TokenService } from 'src/app/services/token/token.service';
 
 
 @Component({
