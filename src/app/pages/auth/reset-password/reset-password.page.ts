@@ -16,7 +16,7 @@ export class ResetPasswordPage implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private navCtrl: NavController,
-    private alertController: AlertController // Adicione AlertController ao construtor
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
