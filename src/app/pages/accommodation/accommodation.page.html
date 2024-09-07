@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ accommodation?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="accommodation">
+  <!-- <swiper-container pagination="true" space-between="10">
+    <swiper-slide *ngFor="let photo of accommodation.photos">
+      <img [src]="photo.url" alt="Accommodation Photo"/>
+    </swiper-slide>
+  </swiper-container> -->
+
+  
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ accommodation.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ accommodation.description }}</p>
+      <p *ngIf="accommodation.youtube">
+        <iframe [src]="accommodation.youtube" width="100%" height="200" frameborder="0"></iframe>
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" fill="clear">
+          <ion-icon name="globe"></ion-icon>
+          Website
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" fill="clear">
+          <ion-icon name="mail"></ion-icon>
+          Email
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" fill="clear">
+          <ion-icon name="navigate"></ion-icon>
+          Directions
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" fill="clear">
+          <ion-icon name="call"></ion-icon>
+          Call
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list>
+    <ion-item>
+      <ion-icon slot="start" name="time"></ion-icon>
+      <ion-label>{{ accommodation.openingHours }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="location"></ion-icon>
+      <ion-label>
+        {{ accommodation.street }}, {{ accommodation.number }}, 
+        {{ accommodation.neighborhood }}, {{ accommodation.city?.name }}, 
+        {{ accommodation.zipeCode }}
+      </ion-label>
+    </ion-item>
+    <ion-item *ngIf="accommodation.phone">
+      <ion-icon slot="start" name="call"></ion-icon>
+      <ion-label>{{ accommodation.phone }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div style="padding: 10px;">
+    <iframe [src]="accommodation.geolocation"
+      width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+</ion-content>

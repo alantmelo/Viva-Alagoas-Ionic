@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Sunset Monalisa - Los Cabos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <swiper-container pagination="true" space-between="10">
+    <swiper-slide>
+      <img src="assets/img1.jpg" alt="Image 1"/>
+    </swiper-slide>
+    <swiper-slide>
+      <img src="assets/img2.jpg" alt="Image 2"/>
+    </swiper-slide>
+    <swiper-slide>
+      <img src="assets/img3.jpg" alt="Image 3"/>
+    </swiper-slide>
+  </swiper-container>
+
+  <ion-segment>
+    <ion-segment-button value="overview">
+      Overview
+    </ion-segment-button>
+    <ion-segment-button value="review">
+      Review
+    </ion-segment-button>
+    <ion-segment-button value="nearby">
+      Nearby
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Hotel Information</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Welcome to Sunset Monalisa Novel Mediterranean Cuisine in Los Cabos! Our unique location at the tip of the bay of Cabo San Lucas offers breathtaking views of the ocean and the arch.</p>
+      <a href="#">See full description</a>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" fill="clear">
+          <ion-icon name="globe"></ion-icon>
+          Website
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" fill="clear">
+          <ion-icon name="mail"></ion-icon>
+          Email
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" fill="clear">
+          <ion-icon name="navigate"></ion-icon>
+          Directions
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" fill="clear">
+          <ion-icon name="call"></ion-icon>
+          Call
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list>
+    <ion-item>
+      <ion-icon slot="start" name="time"></ion-icon>
+      <ion-label>Open 05:00PM - Closes 10:30PM</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="location"></ion-icon>
+      <ion-label>Carretera Transpeninsular Km 6.5, Cabo San Lucas 23455, Mexico</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div style="padding: 10px;">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3111.842374605924!2d-109.90493738465415!3d23.08814178492521!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86af4cd4908b7f2d%3A0x7d5d5a5d2de2b5dd!2sSunset%20Monalisa!5e0!3m2!1sen!2sus!4v1667836017012!5m2!1sen!2sus"
+      width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+</ion-content>
