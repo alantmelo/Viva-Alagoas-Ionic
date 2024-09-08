@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ tour?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="tour">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ tour.name }}</ion-card-title>
+      <ion-card-subtitle>{{ tour.city?.name }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ tour.description }}</p>
+      <p><strong>Duration:</strong> {{ tour.duration }} hours</p>
+      <p><strong>Price:</strong> ${{ tour.price }}</p>
+      <p><strong>Status:</strong> {{ tour.status ? 'Active' : 'Inactive' }}</p>
+      <p><strong>Start Date:</strong> {{ tour.startDate | date }}</p>
+      <p><strong>End Date:</strong> {{ tour.endDate | date }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="tour.photos?.length">
+    <ion-list-header>
+      <ion-label>Photos</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let photo of tour.photos">
+      <ion-thumbnail slot="start">
+        <img [src]="'http://localhost:3000/storage/photos/' + photo.url" alt="Tour Photo" />
+      </ion-thumbnail>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="tour.translations?.length">
+    <ion-list-header>
+      <ion-label>Translations</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let translation of tour.translations">
+      <ion-label>
+        <h2>{{ translation.language }}</h2>
+        <p>{{ translation.name }}</p>
+        <p>{{ translation.description }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
