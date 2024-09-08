@@ -1,17 +1,40 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class="header">
+    <ion-buttons>
+      <ion-button routerLink="/home/listing">
+        <ion-icon slot="icon-only" color='light' name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons>
+      <ion-button>
+        <ion-icon slot="icon-only" color='light' name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- FOOD DETAIL CARD -->
+  <div class="card">
+    <div class="image">
+      <!-- <ion-img src="https://avatars.githubusercontent.com/u/7445511?s=400&u=4e6a5be04ef39cb213587a76df65792e6f875d05&v=4"></ion-img> -->
+    </div>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+    <div class="card-content">
+      <div class="card-title">
+        <h1 class="ion-no-margin">Nome</h1>
+        <p class="ion-no-margin"><sup>$</sup> 12</p>
+      </div>
+    </div>
+
+    <!-- <div class="rates">
+      <app-badge icon="d-time-forward" text="30m"></app-badge>
+      <app-badge icon="star-outline" text="4.5"></app-badge>
+    </div> -->
+
+    <div class="about">
+      <h1>About</h1>
+      <p>descricao</p>
+    </div>
+
+    <!-- <app-button >Add to Cart</app-button> -->
+  </div>
 </ion-content>
