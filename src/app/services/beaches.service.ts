@@ -1,17 +1,18 @@
+// src/app/services/beach.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Tour } from 'src/app/models/tour';
-
+import { Beach } from '../models/beach';
 import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
-export class ToursService {
-  private apiUrl = `${environment.apiUrl}mobile/v1/tours`; 
+export class BeachService {
+  private apiUrl = `${environment.apiUrl}mobile/v1/beaches`; 
   constructor(private http: HttpClient) {}
 
-  getTourById(id: number): Observable<Tour> {
-    return this.http.get<Tour>(`${this.apiUrl}/${id}`);
+  getBeachById(id: number): Observable<Beach> {
+    return this.http.get<Beach>(`${this.apiUrl}/${id}`);
   }
 }
