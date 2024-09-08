@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ store?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="store">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ store.name }}</ion-card-title>
+      <ion-card-subtitle>{{ store.city?.name }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ store.description }}</p>
+      <p><strong>Geolocation:</strong> {{ store.geolocation }}</p>
+      <p><strong>Directions:</strong> {{ store.directions }}</p>
+      <p><strong>Status:</strong> {{ store.status ? 'Active' : 'Inactive' }}</p>
+      <p><strong>Street:</strong> {{ store.street }}</p>
+      <p><strong>Neighborhood:</strong> {{ store.neighborhood }}</p>
+      <p><strong>Number:</strong> {{ store.number }}</p>
+      <p><strong>Additional Address:</strong> {{ store.additionalAddress }}</p>
+      <p><strong>Zip Code:</strong> {{ store.zipeCode }}</p>
+      <p><strong>Created At:</strong> {{ store.created_at | date }}</p>
+      <p><strong>Updated At:</strong> {{ store.updated_at | date }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="store.photos?.length">
+    <ion-list-header>
+      <ion-label>Photos</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let photo of store.photos">
+      <ion-thumbnail slot="start">
+        <img [src]="'http://localhost:3000/storage/photos/' + photo.url" alt="Store Photo" />
+      </ion-thumbnail>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="store.translations?.length">
+    <ion-list-header>
+      <ion-label>Translations</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let translation of store.translations">
+      <ion-label>
+        <h2>{{ translation.language }}</h2>
+        <p>{{ translation.name }}</p>
+        <p>{{ translation.description }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

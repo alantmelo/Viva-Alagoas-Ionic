@@ -33,6 +33,10 @@ const routes: Routes = [
   {
     path: 'beach',
     loadChildren: () => import('./pages/beach/beach.module').then( m => m.BeachPageModule)
+  },
+  {
+    path: 'store',
+    loadChildren: () => import('./pages/store/store.module').then( m => m.StorePageModule)
   }
 ];
 @NgModule({
