@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ service?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="service">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ service.name }}</ion-card-title>
+      <ion-card-subtitle>{{ service.city?.name }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ service.description }}</p>
+      <p><strong>Geolocation:</strong> {{ service.geolocation }}</p>
+      <p><strong>Directions:</strong> {{ service.directions }}</p>
+      <p><strong>Status:</strong> {{ service.status ? 'Active' : 'Inactive' }}</p>
+      <p><strong>Street:</strong> {{ service.street }}</p>
+      <p><strong>Neighborhood:</strong> {{ service.neighborhood }}</p>
+      <p><strong>Number:</strong> {{ service.number }}</p>
+      <p><strong>Additional Address:</strong> {{ service.additionalAddress }}</p>
+      <p><strong>Zip Code:</strong> {{ service.zipeCode }}</p>
+      <p><strong>Phone:</strong> {{ service.phone }}</p>
+      <p><strong>Instagram:</strong> {{ service.instagram }}</p>
+      <p><strong>Opening Hours:</strong> {{ service.openingHours }}</p>
+      <p><strong>Website:</strong> <a href="{{ service.website }}" target="_blank">{{ service.website }}</a></p>
+      <p><strong>Created At:</strong> {{ service.created_at | date }}</p>
+      <p><strong>Updated At:</strong> {{ service.updated_at | date }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="service.photos?.length">
+    <ion-list-header>
+      <ion-label>Photos</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let photo of service.photos">
+      <ion-thumbnail slot="start">
+        <img [src]="'http://localhost:3000/storage/photos/' + photo.url" alt="Service Photo" />
+      </ion-thumbnail>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="service.translations?.length">
+    <ion-list-header>
+      <ion-label>Translations</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let translation of service.translations">
+      <ion-label>
+        <h2>{{ translation.language }}</h2>
+        <p>{{ translation.name }}</p>
+        <p>{{ translation.description }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
