@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ restaurant?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="restaurant">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ restaurant.name }}</ion-card-title>
+      <ion-card-subtitle>{{ restaurant.city?.name }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ restaurant.description }}</p>
+      <p><strong>Phone:</strong> {{ restaurant.phone }}</p>
+      <p><strong>Status:</strong> {{ restaurant.status ? 'Active' : 'Inactive' }}</p>
+      <p><strong>Address:</strong> {{ restaurant.street }}, {{ restaurant.number }}, {{ restaurant.neighborhood }}</p>
+      <p><strong>Zip Code:</strong> {{ restaurant.zipeCode }}</p>
+      <p><strong>Opening Hours:</strong> {{ restaurant.openingHours }}</p>
+      <p><strong>Instagram:</strong> <a href="https://instagram.com/{{ restaurant.instagram }}" target="_blank">{{ restaurant.instagram }}</a></p>
+      <p><strong>Website:</strong> <a href="{{ restaurant.website }}" target="_blank">{{ restaurant.website }}</a></p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="restaurant.photos?.length">
+    <ion-list-header>
+      <ion-label>Photos</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let photo of restaurant.photos">
+      <ion-thumbnail slot="start">
+        <img [src]="'http://localhost:3000/storage/photos/' + photo.url" alt="Restaurant Photo" />
+      </ion-thumbnail>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="restaurant.translations?.length">
+    <ion-list-header>
+      <ion-label>Translations</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let translation of restaurant.translations">
+      <ion-label>
+        <h2>{{ translation.language }}</h2>
+        <p>{{ translation.name }}</p>
+        <p>{{ translation.description }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
