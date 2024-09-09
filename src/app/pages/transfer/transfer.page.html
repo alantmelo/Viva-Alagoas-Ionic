@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ transfer?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="transfer">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ transfer.name }}</ion-card-title>
+      <ion-card-subtitle>{{ transfer.type }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Capacity:</strong> {{ transfer.capacity }}</p>
+      <p><strong>Description:</strong> {{ transfer.description }}</p>
+      <p><strong>License Plate:</strong> {{ transfer.licensePlate }}</p>
+      <p><strong>Driver Name:</strong> {{ transfer.driverName }}</p>
+      <p><strong>Phone:</strong> {{ transfer.phone }}</p>
+      <p><strong>Created At:</strong> {{ transfer.created_at | date }}</p>
+      <p><strong>Updated At:</strong> {{ transfer.updated_at | date }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="transfer.translations?.length">
+    <ion-list-header>
+      <ion-label>Translations</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let translation of transfer.translations">
+      <ion-label>
+        <h2>{{ translation.language }}</h2>
+        <p>{{ translation.name }}</p>
+        <p>{{ translation.description }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

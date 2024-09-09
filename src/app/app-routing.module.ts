@@ -49,6 +49,10 @@ const routes: Routes = [
   {
     path: 'event',
     loadChildren: () => import('./pages/event/event.module').then( m => m.EventPageModule)
+  },
+  {
+    path: 'transfer',
+    loadChildren: () => import('./pages/transfer/transfer.module').then( m => m.TransferPageModule)
   }
 ];
 @NgModule({
