@@ -57,6 +57,10 @@ const routes: Routes = [
   {
     path: 'tour-guide',
     loadChildren: () => import('./pages/tour-guide/tour-guide.module').then( m => m.TourGuidePageModule)
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./pages/user/user.module').then( m => m.UserPageModule)
   }
 ];
 @NgModule({

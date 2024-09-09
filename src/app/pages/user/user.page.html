@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit User</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="user">
+    <ion-item>
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input [(ngModel)]="user.name" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Email</ion-label>
+      <ion-input [(ngModel)]="user.email" type="email" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Birth Date</ion-label>
+      <ion-datetime [(ngModel)]="user.birthAt"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Role</ion-label>
+      <ion-input [(ngModel)]="user.role" required></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="full" (click)="updateUser()">Save Changes</ion-button>
+</ion-content>
