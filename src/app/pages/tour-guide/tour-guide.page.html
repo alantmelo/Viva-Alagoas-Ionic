@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ tourGuide?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="tourGuide">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ tourGuide.name }}</ion-card-title>
+      <ion-card-subtitle>{{ tourGuide.email }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Phone Number:</strong> {{ tourGuide.phoneNumber }}</p>
+      <p><strong>Bio:</strong> {{ tourGuide.bio }}</p>
+      <p><strong>Description:</strong> {{ tourGuide.description }}</p>
+      <p><strong>Created At:</strong> {{ tourGuide.createdAt | date }}</p>
+      <p><strong>Updated At:</strong> {{ tourGuide.updatedAt | date }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="tourGuide.translations?.length">
+    <ion-list-header>
+      <ion-label>Translations</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let translation of tourGuide.translations">
+      <ion-label>
+        <h2>{{ translation.language }}</h2>
+        <p>{{ translation.name }}</p>
+        <p>{{ translation.description }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

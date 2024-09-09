@@ -53,6 +53,10 @@ const routes: Routes = [
   {
     path: 'transfer',
     loadChildren: () => import('./pages/transfer/transfer.module').then( m => m.TransferPageModule)
+  },
+  {
+    path: 'tour-guide',
+    loadChildren: () => import('./pages/tour-guide/tour-guide.module').then( m => m.TourGuidePageModule)
   }
 ];
 @NgModule({
