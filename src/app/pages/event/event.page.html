@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ event?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="event">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ event.name }}</ion-card-title>
+      <ion-card-subtitle>{{ event.city?.name }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ event.description }}</p>
+      <p><strong>Geolocation:</strong> {{ event.geolocation }}</p>
+      <p><strong>Directions:</strong> {{ event.directions }}</p>
+      <p><strong>Status:</strong> {{ event.status ? 'Active' : 'Inactive' }}</p>
+      <p><strong>Street:</strong> {{ event.street }}</p>
+      <p><strong>Neighborhood:</strong> {{ event.neighborhood }}</p>
+      <p><strong>Number:</strong> {{ event.number }}</p>
+      <p><strong>Additional Address:</strong> {{ event.additionalAddress }}</p>
+      <p><strong>Zip Code:</strong> {{ event.zipeCode }}</p>
+      <p><strong>Price:</strong> ${{ event.price }}</p>
+      <p><strong>Start Date:</strong> {{ event.startDate | date }}</p>
+      <p><strong>End Date:</strong> {{ event.endDate | date }}</p>
+      <p><strong>Created At:</strong> {{ event.created_at | date }}</p>
+      <p><strong>Updated At:</strong> {{ event.updated_at | date }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="event.translations?.length">
+    <ion-list-header>
+      <ion-label>Translations</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let translation of event.translations">
+      <ion-label>
+        <h2>{{ translation.language }}</h2>
+        <p>{{ translation.name }}</p>
+        <p>{{ translation.description }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

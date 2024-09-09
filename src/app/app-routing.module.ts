@@ -45,6 +45,10 @@ const routes: Routes = [
   {
     path: 'restaurant',
     loadChildren: () => import('./pages/restaurant/restaurant.module').then( m => m.RestaurantPageModule)
+  },
+  {
+    path: 'event',
+    loadChildren: () => import('./pages/event/event.module').then( m => m.EventPageModule)
   }
 ];
 @NgModule({
