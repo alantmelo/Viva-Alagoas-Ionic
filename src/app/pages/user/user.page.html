@@ -5,24 +5,33 @@
 </ion-header>
 
 <ion-content>
-  <ion-list *ngIf="user">
+  <form [formGroup]="userForm" (ngSubmit)="updateUser()">
     <ion-item>
-      <ion-label position="stacked">Name</ion-label>
-      <ion-input [(ngModel)]="user.name" required></ion-input>
+      <ion-label position="floating">Name</ion-label>
+      <ion-input formControlName="name"></ion-input>
     </ion-item>
+    <ion-note color="danger" *ngIf="f['name'].touched && f['name'].invalid">
+      Name is required and must have at least 3 characters.
+    </ion-note>
+  
     <ion-item>
-      <ion-label position="stacked">Email</ion-label>
-      <ion-input [(ngModel)]="user.email" type="email" required></ion-input>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input formControlName="email"></ion-input>
     </ion-item>
+    <ion-note color="danger" *ngIf="f['email'].touched && f['email'].invalid">
+      Email is required and must be valid.
+    </ion-note>
+  
     <ion-item>
-      <ion-label position="stacked">Birth Date</ion-label>
-      <ion-datetime [(ngModel)]="user.birthAt"></ion-datetime>
+      <ion-label position="floating">Birth Date</ion-label>
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-datetime id="datetime" formControlName="birthAt"></ion-datetime>
     </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Role</ion-label>
-      <ion-input [(ngModel)]="user.role" required></ion-input>
-    </ion-item>
-  </ion-list>
-
-  <ion-button expand="full" (click)="updateUser()">Save Changes</ion-button>
+  
+  
+    <ion-button expand="full" type="submit" [disabled]="userForm.invalid">
+      Update
+    </ion-button>
+  </form>
+  
 </ion-content>

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service'; 
 import { User } from 'src/app/models/user'; 
 import { AlertController } from '@ionic/angular';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user',
@@ -11,25 +11,35 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./user.page.scss'],
 })
 export class UserPage implements OnInit {
-  user!: User;
+  userForm!: FormGroup;
   userId!: number;
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
-    this.userId = 2;
-    // this.userId = +this.route.snapshot.paramMap.get('id');
+    this.userId = 3;
+    // this.userId = +this.route.snapshot.paramMap.get('id')!;
+    this.initializeForm();
     this.loadUser();
+  }
+
+  initializeForm() {
+    this.userForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      birthAt: ['']
+    });
   }
 
   loadUser() {
     this.userService.getUser(this.userId).subscribe(
       (userData) => {
-        this.user = userData;
+        this.userForm.patchValue(userData);
       },
       async (error) => {
         await this.presentAlert('Error', 'Failed to load user data.');
@@ -38,41 +48,19 @@ export class UserPage implements OnInit {
   }
 
   async updateUser() {
-    if (!this.isValidForm()) {
+    if (this.userForm.invalid) {
       await this.presentAlert('Validation Error', 'Please fill in all required fields correctly.');
       return;
     }
 
-    const updatedUserData = {
-      name: this.user.name,
-      email: this.user.email,
-      birthAt: this.user.birthAt,
-      role: this.user.role
-    };
-
-    this.userService.updateUser(this.userId, updatedUserData).subscribe(
+    this.userService.updateUser(this.userId, this.userForm.value).subscribe(
       async (updatedUser) => {
-        this.user = updatedUser;
         await this.presentAlert('Success', 'User data updated successfully.');
       },
       async (error) => {
         await this.presentAlert('Error', 'Failed to update user data.');
       }
     );
-  }
-
-  isValidForm(): boolean {
-    return (
-      this.user.name.trim() !== '' &&
-      this.user.email.trim() !== '' &&
-      this.validateEmail(this.user.email) &&
-      this.user.role.trim() !== ''
-    );
-  }
-
-  validateEmail(email: string): boolean {
-    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return re.test(String(email).toLowerCase());
   }
 
   async presentAlert(header: string, message: string) {
@@ -82,5 +70,10 @@ export class UserPage implements OnInit {
       buttons: ['OK']
     });
     await alert.present();
+  }
+
+  // Helper method to easily access form controls in the template
+  get f() {
+    return this.userForm.controls;
   }
 }
