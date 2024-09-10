@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { EventPageRoutingModule } from './event-routing.module';
 
 import { EventPage } from './event.page';
+import { LanguageSelectorButtonComponent } from 'src/app/components/language-selector-button/language-selector-button.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { EventPage } from './event.page';
     IonicModule,
     EventPageRoutingModule
   ],
-  declarations: [EventPage]
+  declarations: [EventPage, LanguageSelectorButtonComponent]
 })
 export class EventPageModule {}
