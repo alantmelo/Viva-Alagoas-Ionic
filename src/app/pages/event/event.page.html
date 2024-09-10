@@ -14,7 +14,7 @@
       <ion-card-subtitle>{{ event.city?.name }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      {{ getDescriptionForLanguage() }}
+      <p>{{ description }}</p>
       <p><strong>Geolocation:</strong> {{ event.geolocation }}</p>
       <p><strong>Directions:</strong> {{ event.directions }}</p>
       <p><strong>Status:</strong> {{ event.status ? 'Active' : 'Inactive' }}</p>

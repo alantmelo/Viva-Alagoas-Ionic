@@ -14,7 +14,7 @@ export class EventPage implements OnInit, OnDestroy {
   private refreshSubscription: Subscription | undefined;
 
   event: Event | null = null;
-  selectedLanguage: string = 'pt-br'; // Inicialize com um valor padrão
+  description: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -23,8 +23,6 @@ export class EventPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.selectedLanguage = this.languageService.getCurrentLanguage();
-    
     this.refreshSubscription = this.languageService.refreshPage$.subscribe(() => {
       this.reloadPage();
     });
@@ -38,54 +36,27 @@ export class EventPage implements OnInit, OnDestroy {
     }
   }
 
-  async reloadPage() {
-    // console.log('Recarregando a página devido à alteração da língua');
-
-    this.selectedLanguage = this.languageService.getCurrentLanguage();
+  reloadPage() {
+    console.log('Recarregando a página devido à alteração da língua');
     this.updatePageContent();
   }
 
   updatePageContent() {
-    if (!this.event) {
-      console.log('Nenhum evento carregado.');
-      return;
+    if (this.event) {
+      this.description = this.languageService.getDescriptionForLanguage(this.event);
+      console.log('Descrição para a língua selecionada:', this.description);
     }
-
-    // Define a descrição baseada na língua selecionada
-    const description = this.getDescriptionForLanguage();
-    console.log('Descrição para a língua selecionada:', description);
-    // Atualize o conteúdo da página conforme necessário, por exemplo:
-    // this.pageDescription = description;
-  }
-
-  getDescriptionForLanguage(): string {
-    if (!this.event) {
-      return '';
-    }
-
-    if (this.selectedLanguage === 'pt-br') {
-      // console.log('entrou pt br');
-      return this.event.description || '';
-    }
-
-    if (this.event.translations) {
-      const translation = this.event.translations.find(t => t.lang === this.selectedLanguage);
-      // console.log('translation: '+translation);
-      return translation ? translation.description : '';
-    }
-
-    return '';
   }
 
   async getEventData() {
     try {
       console.log('Chamando a API');
-      const eventId = +this.route.snapshot.paramMap.get('id')! || 1; // Obtém o ID da rota ou usa um valor padrão
+      const eventId = +this.route.snapshot.paramMap.get('id')! || 1;
       this.eventsService.findOne(eventId).subscribe({
         next: (eventData) => {
           console.log('Dados do evento recebidos:', eventData);
           this.event = eventData;
-          this.updatePageContent(); // Atualiza o conteúdo da página após receber os dados
+          this.updatePageContent(); 
         },
         error: (error) => {
           console.error('Erro ao carregar dados do evento', error);
@@ -98,5 +69,4 @@ export class EventPage implements OnInit, OnDestroy {
       console.error('Erro inesperado ao carregar dados do evento', error);
     }
   }
-  
 }

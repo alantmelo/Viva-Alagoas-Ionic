@@ -1,30 +1,39 @@
-// language.service.ts
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LanguageService {
-  private languageSource = new BehaviorSubject<string>(this.getStoredLanguage());
-  private refreshPageSource = new Subject<void>();
-
-  language$ = this.languageSource.asObservable();
-  refreshPage$ = this.refreshPageSource.asObservable();
-
-  constructor() {}
-
-  private getStoredLanguage(): string {
-    return localStorage.getItem('selectedLanguage') || 'pt-br'; // Valor padrão
-  }
+  private currentLanguage = new BehaviorSubject<string>('pt-br'); // Valor padrão
+  refreshPage$ = new BehaviorSubject<void>(undefined!); // Para notificar mudanças
 
   getCurrentLanguage(): string {
-    return this.languageSource.getValue(); // Retorna a língua atual
+    return this.currentLanguage.getValue();
   }
 
-  setLanguage(language: string) {
-    localStorage.setItem('selectedLanguage', language);
-    this.languageSource.next(language);
-    this.refreshPageSource.next(); // Emite um evento para atualizar a página
+  setCurrentLanguage(language: string): void {
+    this.currentLanguage.next(language);
+    this.refreshPage$.next(); // Notifica os inscritos sobre a mudança
   }
+
+  getDescriptionForLanguage(event: any): string {
+    if (!event) {
+      return '';
+    }
+
+    const selectedLanguage = this.getCurrentLanguage();
+
+    if (selectedLanguage === 'pt-br') {
+      return event.description || '';
+    }
+
+    if (event.translations) {
+      const translation = event.translations.find((t: { lang: string; }) => t.lang === selectedLanguage);
+      return translation ? translation.description : '';
+    }
+
+    return '';
+  }
+  
 }

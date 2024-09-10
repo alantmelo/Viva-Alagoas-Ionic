@@ -29,7 +29,7 @@ export class LanguageSelectorButtonComponent implements OnInit {
 
   onLanguageSelect(event: any) {
     const selectedLanguage = event.detail.value;
-    this.languageService.setLanguage(selectedLanguage); // Atualiza o serviço com a nova língua e emite evento
+    this.languageService.setCurrentLanguage(selectedLanguage); // Atualiza o serviço com a nova língua e emite evento
   }
   openSelect() {
     this.selectRef.open(); // Abre o ion-select programaticamente
