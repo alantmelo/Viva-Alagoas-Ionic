@@ -4,7 +4,6 @@
     <ion-buttons slot="end">
       <app-language-selector-button></app-language-selector-button>
     </ion-buttons>
-    <!-- <app-language-selector-button></app-language-selector-button> -->
   </ion-toolbar>
 </ion-header>
 
@@ -15,7 +14,7 @@
       <ion-card-subtitle>{{ event.city?.name }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      <p>{{ event.description }}</p>
+      {{ getDescriptionForLanguage() }}
       <p><strong>Geolocation:</strong> {{ event.geolocation }}</p>
       <p><strong>Directions:</strong> {{ event.directions }}</p>
       <p><strong>Status:</strong> {{ event.status ? 'Active' : 'Inactive' }}</p>
@@ -31,17 +30,4 @@
       <p><strong>Updated At:</strong> {{ event.updated_at | date }}</p>
     </ion-card-content>
   </ion-card>
-
-  <ion-list *ngIf="event.translations?.length">
-    <ion-list-header>
-      <ion-label>Translations</ion-label>
-    </ion-list-header>
-    <ion-item *ngFor="let translation of event.translations">
-      <ion-label>
-        <h2>{{ translation.language }}</h2>
-        <p>{{ translation.name }}</p>
-        <p>{{ translation.description }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
 </ion-content>

@@ -36,7 +36,7 @@ export interface Event {
   
   export interface Translation {
     id: number;
-    language: string;
+    lang: string;
     name: string;
     description: string;
   }
