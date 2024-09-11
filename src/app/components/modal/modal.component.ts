@@ -10,7 +10,7 @@ import { ToursService } from 'src/app/services/tours.service';
 import { ModalController } from '@ionic/angular';
 import { BehaviorSubject, Observable, of, Subject, switchMap, firstValueFrom } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-
+import { NavController } from '@ionic/angular'; 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
@@ -36,7 +36,8 @@ export class ModalComponent implements OnInit {
     private storesService: StoresService,
     private tourGuidesService: TourGuidesService,
     private transfersService: TransferService,
-    private toursService: ToursService
+    private toursService: ToursService,
+    private navCtrl: NavController
   ) {}
 
   ngOnInit() {
@@ -77,7 +78,7 @@ export class ModalComponent implements OnInit {
     let result: any;
     switch (type) {
       case 'beach':
-        // result = await firstValueFrom(this.beachService.getBeaches(term, page, pageSize));
+        result = await firstValueFrom(this.beachService.getBeaches(term, page, pageSize));
         break;
       case 'event':
         // result = await firstValueFrom(this.eventService.getEvents(term, page, pageSize));
@@ -113,5 +114,27 @@ export class ModalComponent implements OnInit {
     this.page = 0;
     this.items = [];
     this.searchTerm$.next(this.searchTerm);
+  }
+
+  goToPage(id: number) {
+    let targetPage: string;
+    this.modalCtrl.dismiss(null, 'cancel');
+    switch (this.type) {
+      case 'accommodation':
+        targetPage = `/accommodation/${id}`;
+        break;
+      case 'restaurant':
+        targetPage = `/restaurant/${id}`;
+        break;
+      case 'store':
+        targetPage = `/store/${id}`;
+        break;
+      case 'tour':
+        targetPage = `/tour/${id}`;
+        break;
+      default:
+        targetPage = '/';
+    }
+    this.navCtrl.navigateForward(targetPage);
   }
 }

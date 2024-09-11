@@ -23,39 +23,39 @@ const routes: Routes = [
     loadChildren: () => import('./pages/accommodations/accommodations.module').then( m => m.AccommodationsPageModule)
   },
   {
-    path: 'accommodation',
+    path: 'accommodation/:id',
     loadChildren: () => import('./pages/accommodation/accommodation.module').then( m => m.AccommodationPageModule)
   },
   {
-    path: 'tour',
+    path: 'tour/:id',
     loadChildren: () => import('./pages/tour/tour.module').then( m => m.TourPageModule)
   },
   {
-    path: 'beach',
+    path: 'beach/:id',
     loadChildren: () => import('./pages/beach/beach.module').then( m => m.BeachPageModule)
   },
   {
-    path: 'store',
+    path: 'store/:id',
     loadChildren: () => import('./pages/store/store.module').then( m => m.StorePageModule)
   },
   {
-    path: 'service',
+    path: 'service/:id',
     loadChildren: () => import('./pages/service/service.module').then( m => m.ServicePageModule)
   },
   {
-    path: 'restaurant',
+    path: 'restaurant/:id',
     loadChildren: () => import('./pages/restaurant/restaurant.module').then( m => m.RestaurantPageModule)
   },
   {
-    path: 'event',
+    path: 'event/:id',
     loadChildren: () => import('./pages/event/event.module').then( m => m.EventPageModule)
   },
   {
-    path: 'transfer',
+    path: 'transfer/:id',
     loadChildren: () => import('./pages/transfer/transfer.module').then( m => m.TransferPageModule)
   },
   {
-    path: 'tour-guide',
+    path: 'tour-guide/:id',
     loadChildren: () => import('./pages/tour-guide/tour-guide.module').then( m => m.TourGuidePageModule)
   },
   {
