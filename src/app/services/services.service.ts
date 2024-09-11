@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Service } from '../models/service';
 import { environment } from 'src/environments/environment';
@@ -13,5 +13,13 @@ export class ServicesService {
 
   getServiceById(id: number): Observable<Service> {
     return this.http.get<Service>(`${this.apiUrl}/${id}`);
+  }
+  getServices(searchTerm: string = '', page: number = 0, pageSize: number = 10) {
+    let params = new HttpParams()
+      .set('search', searchTerm)
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString());
+
+    return this.http.get<{ items: any[], total: number }>(this.apiUrl, { params });
   }
 }

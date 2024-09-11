@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Restaurant } from '../models/restaurant';
 import { environment } from 'src/environments/environment';
@@ -12,5 +12,13 @@ export class RestaurantsService {
 
   getRestaurant(id: number): Observable<Restaurant> {
     return this.http.get<Restaurant>(`${this.apiUrl}/${id}`);
+  }
+  getRestaurants(searchTerm: string = '', page: number = 0, pageSize: number = 10) {
+    let params = new HttpParams()
+      .set('search', searchTerm)
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString());
+
+    return this.http.get<{ items: any[], total: number }>(this.apiUrl, { params });
   }
 }
