@@ -81,7 +81,7 @@ export class ModalComponent implements OnInit {
         result = await firstValueFrom(this.beachService.getBeaches(term, page, pageSize));
         break;
       case 'event':
-        // result = await firstValueFrom(this.eventService.getEvents(term, page, pageSize));
+        result = await firstValueFrom(this.eventService.getEvents(term, page, pageSize));
         break;
       case 'accommodation':
         result = await firstValueFrom(this.accommodationsService.getAccommodations(term, page, pageSize));
@@ -131,6 +131,9 @@ export class ModalComponent implements OnInit {
         break;
       case 'tour':
         targetPage = `/tour/${id}`;
+        break;
+      case 'beach':
+        targetPage = `/beach/${id}`;
         break;
       default:
         targetPage = '/';

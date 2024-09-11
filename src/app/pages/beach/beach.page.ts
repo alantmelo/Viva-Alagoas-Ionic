@@ -16,8 +16,7 @@ export class BeachPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    const beachId = 1;
-    // const beachId = +this.route.snapshot.paramMap.get('id');
+    const beachId = +this.route.snapshot.paramMap.get('id')!;
     this.beachService.getBeachById(beachId).subscribe((beachData) => {
       console.log(beachData);
       this.beach = beachData;

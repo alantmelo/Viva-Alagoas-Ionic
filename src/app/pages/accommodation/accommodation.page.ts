@@ -16,8 +16,7 @@ export class AccommodationPage implements OnInit {
   ) {}
 
   async ngOnInit() {
-    const id = Number(1);
-    // const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = Number(this.route.snapshot.paramMap.get('id'));
     await this.accommodationService.getAccommodation(id).subscribe(data => {
       this.accommodation = data;
       console.log(data)
