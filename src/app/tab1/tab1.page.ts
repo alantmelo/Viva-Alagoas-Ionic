@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -29,6 +30,9 @@ export class Tab1Page {
     },
     // Add more destinations as needed
   ];
-  constructor() {}
-
+  constructor(private router: Router) {}
+  navigateToEventPage() {
+    // Navega para a página EventPage
+    this.router.navigate(['/event']);
+  }
 }

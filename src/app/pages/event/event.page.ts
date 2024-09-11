@@ -15,6 +15,7 @@ export class EventPage implements OnInit, OnDestroy {
 
   event: Event | null = null;
   description: string = '';
+  name: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -44,7 +45,9 @@ export class EventPage implements OnInit, OnDestroy {
   updatePageContent() {
     if (this.event) {
       this.description = this.languageService.getDescriptionForLanguage(this.event);
+      this.name = this.languageService.getNameForLanguage(this.event);
       console.log('Descrição para a língua selecionada:', this.description);
+      console.log('name para a língua selecionada:', this.name);
     }
   }
 
