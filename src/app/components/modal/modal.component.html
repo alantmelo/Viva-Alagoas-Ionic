@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Data Modal</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Cancel</ion-button>
+      <ion-button (click)="confirm()">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar
+    (ionInput)="onSearchChange($event)"
+    debounce="0"
+    placeholder="Search..."
+  ></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let item of items">
+      <ion-label>{{ item.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll
+    threshold="100px"
+    (ionInfinite)="loadData($event)"
+    [disabled]="loading || items.length >= totalItems"
+  >
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

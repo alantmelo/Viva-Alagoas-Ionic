@@ -11,18 +11,55 @@
     <ion-toolbar>
       <ion-title size="large">Home</ion-title>
     </ion-toolbar>
-    <app-language-selector-button></app-language-selector-button>
 
   </ion-header>
+
+
+  <div class="ion-padding">
+    <ion-card class="ion-text-center ion-align-self-center">
+      <ion-card-header>
+        <ion-card-title>Card Title</ion-card-title>
+        <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+      </ion-card-header>
+  
+      <ion-card-content>
+        <div class="button-row">
+          <ion-button shape="round" (click)="openModal('beach')">
+            <ion-icon slot="icon-only" name="heart"></ion-icon>
+          </ion-button>
+          <ion-button shape="round" (click)="openModal('event')">
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+          <ion-button shape="round" (click)="openModal('accommodation')">
+            <ion-icon slot="icon-only" name="thumbs-up"></ion-icon>
+          </ion-button>
+        </div>
+        
+        <div class="button-row">
+          <ion-button shape="round" (click)="openModal('restaurant')">
+            <ion-icon slot="icon-only" name="chatbubble"></ion-icon>
+          </ion-button>
+          <ion-button shape="round" (click)="openModal('store')">
+            <ion-icon slot="icon-only" name="share"></ion-icon>
+          </ion-button>
+          <ion-button shape="round" (click)="openModal('tourguide')">
+            <ion-icon slot="icon-only" name="settings"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
   <ion-grid>
     <ion-row>
       <ion-col>
-        <h2>Where would you spend your holiday?</h2>
+        <ion-button class="custom-button" expand="block" fill="clear">
+          <ion-icon slot="icon-only" name="call-outline"></ion-icon>
+          <ion-label>Call</ion-label>
+        </ion-button>
         <ion-button (click)="navigateToEventPage()">Go to Event Page</ion-button>
       </ion-col>
     </ion-row>
 
-    <!-- Top Destinations Section -->
     <ion-row>
       <ion-col>
         <h3>Top Destinations</h3>

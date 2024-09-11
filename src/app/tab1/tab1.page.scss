@@ -8,3 +8,9 @@ h3 {
 font-size: 20px;
 font-weight: bold;
 }
+
+ion-card {
+    width: 100%; 
+    max-width: 600px; 
+    margin: auto; /* Centraliza o card */
+  }

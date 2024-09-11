@@ -5,18 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
 import { Tab1PageRoutingModule } from './tab1-routing.module';
-
+import { ModalComponent } from '../components/modal/modal.component';
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab1PageRoutingModule
+    Tab1PageRoutingModule,
   ],
-  declarations: [Tab1Page],
+  declarations: [Tab1Page, ModalComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab1PageModule {}
