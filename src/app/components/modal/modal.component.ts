@@ -103,7 +103,7 @@ export class ModalComponent implements OnInit {
         result = await firstValueFrom(this.servicesService.getServices(term, page, pageSize));
         break;
       case 'transfer':
-        // result = await firstValueFrom(this.transfersService.getTransfers(term, page, pageSize));
+        result = await firstValueFrom(this.transfersService.getTransfers(term, page, pageSize));
         break;
       case 'tour':
         // result = await firstValueFrom(this.toursService.getTours(term, page, pageSize));
@@ -146,6 +146,9 @@ export class ModalComponent implements OnInit {
         break;
       case 'service':
         targetPage = `/service/${id}`;
+        break;
+      case 'transfer':
+        targetPage = `/transfer/${id}`;
         break;
       default:
         targetPage = '/';

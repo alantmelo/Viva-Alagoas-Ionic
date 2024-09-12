@@ -17,8 +17,7 @@ export class TransferPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    const transferId =1;
-    // const transferId = +this.route.snapshot.paramMap.get('id')!;
+    const transferId = +this.route.snapshot.paramMap.get('id')!;
     this.transferService.getTransferById(transferId).subscribe((transferData) => {
       console.log(transferData);
       this.transfer = transferData;
