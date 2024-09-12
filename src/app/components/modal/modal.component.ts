@@ -41,6 +41,7 @@ export class ModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(''+ this.type);
     this.searchTerm$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -76,6 +77,7 @@ export class ModalComponent implements OnInit {
 
   private async getData(type: string, term: string, page: number = 0, pageSize: number = 10): Promise<any> {
     let result: any;
+    console.log(result);
     switch (type) {
       case 'beach':
         result = await firstValueFrom(this.beachService.getBeaches(term, page, pageSize));
@@ -85,10 +87,10 @@ export class ModalComponent implements OnInit {
         break;
       case 'accommodation':
         result = await firstValueFrom(this.accommodationsService.getAccommodations(term, page, pageSize));
-        console.log(result);
+        // console.log(result);
         break;
       case 'restaurant':
-        // result = await firstValueFrom(this.restaurantsService.getRestaurants(term, page, pageSize));
+        result = await firstValueFrom(this.restaurantsService.getRestaurants(term, page, pageSize));
         break;
       case 'store':
         // result = await firstValueFrom(this.storesService.getStores(term, page, pageSize));

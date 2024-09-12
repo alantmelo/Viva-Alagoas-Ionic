@@ -27,7 +27,7 @@ export class EventPage implements OnInit, OnDestroy {
     this.refreshSubscription = this.languageService.refreshPage$.subscribe(() => {
       this.reloadPage();
     });
-
+    this.languageService.getCurrentLanguage();
     this.getEventData();
   }
 
