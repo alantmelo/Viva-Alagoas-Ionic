@@ -14,8 +14,9 @@ export class EventsService {
   findOne(id: number): Observable<Event> {
     return this.http.get<Event>(`${this.apiUrl}/${id}`);
   }
-  getEvents(searchTerm: string = '', page: number = 0, pageSize: number = 10) {
+  getEvents(searchTerm: string = '', page: number = 0, pageSize: number = 10, cityId: string = '1') {
     let params = new HttpParams()
+      .set('cityId', cityId)
       .set('search', searchTerm)
       .set('page', page.toString())
       .set('pageSize', pageSize.toString());

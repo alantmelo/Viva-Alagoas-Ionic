@@ -79,34 +79,37 @@ export class ModalComponent implements OnInit {
 
   private async getData(type: string, term: string, page: number = 0, pageSize: number = 10): Promise<any> {
     let result: any;
+    let cityId : string = localStorage.getItem('cityId')!;
+    cityId = '1';
+    // const cityId = localStorage.getItem('cityId');
     switch (type) {
       case 'beach':
-        result = await firstValueFrom(this.beachService.getBeaches(term, page, pageSize));
+        result = await firstValueFrom(this.beachService.getBeaches(term, page, pageSize, cityId!));
         break;
       case 'event':
-        result = await firstValueFrom(this.eventService.getEvents(term, page, pageSize));
+        result = await firstValueFrom(this.eventService.getEvents(term, page, pageSize, cityId!));
         break;
       case 'accommodation':
-        result = await firstValueFrom(this.accommodationsService.getAccommodations(term, page, pageSize));
+        result = await firstValueFrom(this.accommodationsService.getAccommodations(term, page, pageSize, cityId!));
         // console.log(result);
         break;
       case 'restaurant':
-        result = await firstValueFrom(this.restaurantsService.getRestaurants(term, page, pageSize));
+        result = await firstValueFrom(this.restaurantsService.getRestaurants(term, page, pageSize, cityId!));
         break;
       case 'store':
-        result = await firstValueFrom(this.storesService.getStores(term, page, pageSize));
+        result = await firstValueFrom(this.storesService.getStores(term, page, pageSize, cityId!));
         break;
       case 'tourguide':
-        // result = await firstValueFrom(this.tourGuidesService.getTourGuides(term, page, pageSize));
+        result = await firstValueFrom(this.tourGuidesService.getTourGuides(term, page, pageSize, cityId!));
         break;
       case 'service':
-        result = await firstValueFrom(this.servicesService.getServices(term, page, pageSize));
+        result = await firstValueFrom(this.servicesService.getServices(term, page, pageSize, cityId!));
         break;
       case 'transfer':
-        result = await firstValueFrom(this.transfersService.getTransfers(term, page, pageSize));
+        result = await firstValueFrom(this.transfersService.getTransfers(term, page, pageSize, cityId!));
         break;
       case 'tour':
-        // result = await firstValueFrom(this.toursService.getTours(term, page, pageSize));
+        result = await firstValueFrom(this.toursService.getTours(term, page, pageSize, cityId!));
         break;
       default:
         result = { items: [], total: 0 };
@@ -137,6 +140,9 @@ export class ModalComponent implements OnInit {
         break;
       case 'tour':
         targetPage = `/tour/${id}`;
+        break;
+      case 'tourguide':
+        targetPage = `/tour-guide/${id}`;
         break;
       case 'beach':
         targetPage = `/beach/${id}`;

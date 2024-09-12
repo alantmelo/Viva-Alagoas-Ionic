@@ -15,8 +15,9 @@ export class TransferService {
   getTransferById(id: number): Observable<Transfer> {
     return this.http.get<Transfer>(`${this.apiUrl}/${id}`);
   }
-  getTransfers(searchTerm: string = '', page: number = 0, pageSize: number = 10) {
+  getTransfers(searchTerm: string = '', page: number = 0, pageSize: number = 10, cityId: string = '1') {
     let params = new HttpParams()
+      .set('cityId', cityId)
       .set('search', searchTerm)
       .set('page', page.toString())
       .set('pageSize', pageSize.toString());

@@ -14,8 +14,9 @@ export class ToursService {
   getTourById(id: number): Observable<Tour> {
     return this.http.get<Tour>(`${this.apiUrl}/${id}`);
   }
-  getTours(searchTerm: string = '', page: number = 0, pageSize: number = 10) {
+  getTours(searchTerm: string = '', page: number = 0, pageSize: number = 10, cityId: string = '1') {
     let params = new HttpParams()
+      .set('cityId', cityId)
       .set('search', searchTerm)
       .set('page', page.toString())
       .set('pageSize', pageSize.toString());

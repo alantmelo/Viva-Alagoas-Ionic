@@ -14,8 +14,9 @@ export class StoresService {
   getStoreById(id: number): Observable<Store> {
     return this.http.get<Store>(`${this.apiUrl}/${id}`);
   }
-  getStores(searchTerm: string = '', page: number = 0, pageSize: number = 10) {
+  getStores(searchTerm: string = '', page: number = 0, pageSize: number = 10, cityId: string = '1') {
     let params = new HttpParams()
+      .set('cityId', cityId)
       .set('search', searchTerm)
       .set('page', page.toString())
       .set('pageSize', pageSize.toString());
