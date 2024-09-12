@@ -8,6 +8,7 @@ import { TourGuidesService } from 'src/app/services/tour-guides.service';
 import { TransferService } from 'src/app/services/transfers.service'; 
 import { ToursService } from 'src/app/services/tours.service';
 import { ModalController } from '@ionic/angular';
+import { ServicesService } from 'src/app/services/services.service';
 import { BehaviorSubject, Observable, of, Subject, switchMap, firstValueFrom } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { NavController } from '@ionic/angular'; 
@@ -37,6 +38,7 @@ export class ModalComponent implements OnInit {
     private tourGuidesService: TourGuidesService,
     private transfersService: TransferService,
     private toursService: ToursService,
+    private servicesService: ServicesService,
     private navCtrl: NavController
   ) {}
 
@@ -77,7 +79,6 @@ export class ModalComponent implements OnInit {
 
   private async getData(type: string, term: string, page: number = 0, pageSize: number = 10): Promise<any> {
     let result: any;
-    console.log(result);
     switch (type) {
       case 'beach':
         result = await firstValueFrom(this.beachService.getBeaches(term, page, pageSize));
@@ -93,10 +94,13 @@ export class ModalComponent implements OnInit {
         result = await firstValueFrom(this.restaurantsService.getRestaurants(term, page, pageSize));
         break;
       case 'store':
-        // result = await firstValueFrom(this.storesService.getStores(term, page, pageSize));
+        result = await firstValueFrom(this.storesService.getStores(term, page, pageSize));
         break;
       case 'tourguide':
         // result = await firstValueFrom(this.tourGuidesService.getTourGuides(term, page, pageSize));
+        break;
+      case 'service':
+        result = await firstValueFrom(this.servicesService.getServices(term, page, pageSize));
         break;
       case 'transfer':
         // result = await firstValueFrom(this.transfersService.getTransfers(term, page, pageSize));
@@ -139,6 +143,9 @@ export class ModalComponent implements OnInit {
         break;
       case 'event':
         targetPage = `/event/${id}`;
+        break;
+      case 'service':
+        targetPage = `/service/${id}`;
         break;
       default:
         targetPage = '/';

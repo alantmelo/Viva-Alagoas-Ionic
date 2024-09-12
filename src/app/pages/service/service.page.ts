@@ -16,9 +16,7 @@ export class ServicePage implements OnInit {
     private serviceService: ServicesService
   ) {}
 
-  ngOnInit() {
-    const serviceId = 1; // Substitua pelo valor adequado ou obtenha da rota
-    // const serviceId = +this.route.snapshot.paramMap.get('id');
+  ngOnInit() {const serviceId = +this.route.snapshot.paramMap.get('id')!;
     this.serviceService.getServiceById(serviceId).subscribe((serviceData) => {
       console.log(serviceData);
       this.service = serviceData;
