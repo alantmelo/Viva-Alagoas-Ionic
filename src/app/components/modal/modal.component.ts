@@ -135,6 +135,9 @@ export class ModalComponent implements OnInit {
       case 'beach':
         targetPage = `/beach/${id}`;
         break;
+      case 'event':
+        targetPage = `/event/${id}`;
+        break;
       default:
         targetPage = '/';
     }
