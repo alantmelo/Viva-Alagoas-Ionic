@@ -1,2 +1,21 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+/* Core Variables */
+:root {
+    /* Primary color */
+    --ion-color-primary: #002C69; // Azul escuro
+    --ion-color-primary-rgb: 0, 44, 105;
+    --ion-color-primary-contrast: #fff; // Cor de contraste para texto e ícones
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+    --ion-color-primary-shade: #001c4f; // Tom mais escuro para hover ou estados ativos
+    --ion-color-primary-tint: #00408f; // Tom mais claro para hover ou estados inativos
+  
+    /* Secondary color */
+    --ion-color-secondary: #FF0000; // Vermelho
+    --ion-color-secondary-rgb: 255, 0, 0;
+    --ion-color-secondary-contrast: #fff; // Cor de contraste para texto e ícones
+    --ion-color-secondary-contrast-rgb: 255, 255, 255;
+    --ion-color-secondary-shade: #cc0000; // Tom mais escuro para hover ou estados ativos
+    --ion-color-secondary-tint: #ff3333; // Tom mais claro para hover ou estados inativos
+  
+    // Outras cores e variáveis podem ser definidas aqui
+  }
+  

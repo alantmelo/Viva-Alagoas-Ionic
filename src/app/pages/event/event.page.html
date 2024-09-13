@@ -4,11 +4,56 @@
     <ion-buttons slot="end">
       <app-language-selector-button></app-language-selector-button>
     </ion-buttons>
+    
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="event">
-  <ion-card>
+  <img [src]="'http://localhost:3000/storage/photos/' + event.photo" />
+  <div class="card">
+    <div class="image">
+      <div class="button-row">
+        <ion-button size="default" shape="round" >
+          <ion-icon slot="icon-only" name="logo-whatsapp"></ion-icon>
+        </ion-button>
+        <ion-button size="default" shape="round" >
+          <ion-icon slot="icon-only" name="logo-instagram"></ion-icon>
+        </ion-button>
+        <ion-button size="default" shape="round" >
+          <ion-icon slot="icon-only" name="call-outline"></ion-icon>
+        </ion-button>
+        <ion-button size="default" shape="round" >
+          <ion-icon slot="icon-only" name="map-outline"></ion-icon>
+        </ion-button>
+        <ion-button size="default" shape="round" >
+          <ion-icon slot="icon-only" name="share-social-outline"></ion-icon>
+        </ion-button>
+        <!-- <ion-button size="default" shape="round" >
+          <ion-icon slot="icon-only" name="logo-youtube"></ion-icon>
+        </ion-button> -->
+      </div>
+      
+    </div>
+    <div class="card-content">
+      <div class="card-title">
+        <h1 class="ion-no-margin">{{ name }}</h1>
+        <p class="ion-no-margin"><sup>R$</sup> {{ event.price }}</p>
+      </div>
+    </div>
+
+    <div class="about">
+      <p>{{ description }}</p>
+      <p><ion-icon name="location-outline"></ion-icon> {{ event.street }}</p>
+      <p><ion-icon name="pin-outline"></ion-icon> {{ event.neighborhood }}</p>
+      <p><ion-icon name="home-outline"></ion-icon> {{ event.number }}</p>
+      <p><ion-icon name="map-outline"></ion-icon> {{ event.additionalAddress }}</p>
+      <p><ion-icon name="code-outline"></ion-icon> {{ event.zipeCode }}</p>
+      <p><ion-icon name="calendar-outline"></ion-icon> {{ event.startDate }}</p>
+    </div>
+    
+    
+  </div>
+  <!-- <ion-card class="card">
     <ion-card-header>
       <ion-card-title>{{ name }}</ion-card-title>
       <ion-card-subtitle>{{ event.city?.name }}</ion-card-subtitle>
@@ -29,5 +74,11 @@
       <p><strong>Created At:</strong> {{ event.created_at | date }}</p>
       <p><strong>Updated At:</strong> {{ event.updated_at | date }}</p>
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
 </ion-content>
+<ion-footer  >
+  <ion-button shape="round" expand="block">
+    {{buttonName}}
+    <ion-icon slot="end" name="cart"></ion-icon>
+  </ion-button>
+</ion-footer>

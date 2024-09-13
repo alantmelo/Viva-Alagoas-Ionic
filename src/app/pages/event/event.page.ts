@@ -29,6 +29,7 @@ export class EventPage implements OnInit, OnDestroy {
     });
     this.languageService.getCurrentLanguage();
     this.getEventData();
+    this.test();
   }
 
   ngOnDestroy() {
@@ -48,7 +49,9 @@ export class EventPage implements OnInit, OnDestroy {
       this.name = this.languageService.getNameForLanguage(this.event);
       console.log('Descrição para a língua selecionada:', this.description);
       console.log('name para a língua selecionada:', this.name);
+      this.test();
     }
+    
   }
 
   async getEventData() {
@@ -70,6 +73,26 @@ export class EventPage implements OnInit, OnDestroy {
       });
     } catch (error) {
       console.error('Erro inesperado ao carregar dados do evento', error);
+    }
+  }
+  buttonName!:string;
+  test() {
+    const lang = localStorage.getItem('selectedLanguage');
+    console.log('ang '+lang )
+    switch (lang) {
+      case 'en':
+        this.buttonName = 'Buy';
+        break;
+      case 'es':
+        this.buttonName = 'Comprar';
+        break;
+      case 'fr':
+        this.buttonName = 'Acheter';
+        break;
+      
+      default:
+        this.buttonName = 'Comprar';
+      break;
     }
   }
 }

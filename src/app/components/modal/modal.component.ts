@@ -27,7 +27,7 @@ export class ModalComponent implements OnInit {
   pageSize: number = 10;
   totalItems: number = 0;
   searchTerm: string = '';
-
+  name!: string;
   constructor(
     private modalCtrl: ModalController,
     private beachService: BeachService,
@@ -43,6 +43,7 @@ export class ModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.name = this.type.toUpperCase();
     console.log(''+ this.type);
     this.searchTerm$.pipe(
       debounceTime(300),
@@ -83,32 +84,32 @@ export class ModalComponent implements OnInit {
     cityId = '1';
     // const cityId = localStorage.getItem('cityId');
     switch (type) {
-      case 'beach':
+      case 'beaches':
         result = await firstValueFrom(this.beachService.getBeaches(term, page, pageSize, cityId!));
         break;
-      case 'event':
+      case 'events':
         result = await firstValueFrom(this.eventService.getEvents(term, page, pageSize, cityId!));
         break;
-      case 'accommodation':
+      case 'accommodations':
         result = await firstValueFrom(this.accommodationsService.getAccommodations(term, page, pageSize, cityId!));
         // console.log(result);
         break;
-      case 'restaurant':
+      case 'restaurants':
         result = await firstValueFrom(this.restaurantsService.getRestaurants(term, page, pageSize, cityId!));
         break;
-      case 'store':
+      case 'stores':
         result = await firstValueFrom(this.storesService.getStores(term, page, pageSize, cityId!));
         break;
-      case 'tourguide':
+      case 'tourguides':
         result = await firstValueFrom(this.tourGuidesService.getTourGuides(term, page, pageSize, cityId!));
         break;
-      case 'service':
+      case 'services':
         result = await firstValueFrom(this.servicesService.getServices(term, page, pageSize, cityId!));
         break;
-      case 'transfer':
+      case 'transfers':
         result = await firstValueFrom(this.transfersService.getTransfers(term, page, pageSize, cityId!));
         break;
-      case 'tour':
+      case 'tours':
         result = await firstValueFrom(this.toursService.getTours(term, page, pageSize, cityId!));
         break;
       default:
@@ -129,36 +130,42 @@ export class ModalComponent implements OnInit {
     let targetPage: string;
     this.modalCtrl.dismiss(null, 'cancel');
     switch (this.type) {
-      case 'accommodation':
+      case 'accommodations':
         targetPage = `/accommodation/${id}`;
         break;
-      case 'restaurant':
+      case 'restaurants':
         targetPage = `/restaurant/${id}`;
         break;
-      case 'store':
+      case 'stores':
         targetPage = `/store/${id}`;
         break;
-      case 'tour':
+      case 'tours':
         targetPage = `/tour/${id}`;
         break;
-      case 'tourguide':
+      case 'tourguides':
         targetPage = `/tour-guide/${id}`;
         break;
-      case 'beach':
+      case 'beaches':
         targetPage = `/beach/${id}`;
         break;
-      case 'event':
+      case 'events':
         targetPage = `/event/${id}`;
         break;
-      case 'service':
+      case 'services':
         targetPage = `/service/${id}`;
         break;
-      case 'transfer':
+      case 'transfers':
         targetPage = `/transfer/${id}`;
         break;
       default:
         targetPage = '/';
     }
     this.navCtrl.navigateForward(targetPage);
+  }
+  getImageUrl(photo: string): string {
+    const baseUrl = 'http://localhost:3000/storage/photos/';
+    const defaultUrl = 'https://ionicframework.com/docs/img/demos/card-media.png';
+
+    return photo ? `${baseUrl}${photo}` : defaultUrl;
   }
 }

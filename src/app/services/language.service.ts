@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class LanguageService {
-  private readonly LANGUAGE_KEY = 'selectedLanguage'; // Chave para armazenar no localStorage
+  private readonly LANGUAGE_KEY = 'selectedLanguage';
   private currentLanguageSubject: BehaviorSubject<string>;
   public currentLanguage$: Observable<string>;
 
@@ -13,7 +13,6 @@ export class LanguageService {
   public refreshPage$: Observable<void> = this.refreshPageSubject.asObservable();
 
   constructor() {
-    // Inicializa currentLanguageSubject com a linguagem salva ou padrão
     const savedLanguage = localStorage.getItem(this.LANGUAGE_KEY) || 'pt-br';
     this.currentLanguageSubject = new BehaviorSubject<string>(savedLanguage);
     this.currentLanguage$ = this.currentLanguageSubject.asObservable();
@@ -21,8 +20,8 @@ export class LanguageService {
 
   setSelectedLanguage(language: string) {
     this.currentLanguageSubject.next(language);
-    localStorage.setItem(this.LANGUAGE_KEY, language); // Salva a linguagem no localStorage
-    this.refreshPageSubject.next(); // Emite um sinal para que os observadores possam reagir à mudança
+    localStorage.setItem(this.LANGUAGE_KEY, language);
+    this.refreshPageSubject.next();
   }
   getCurrentLanguage(): string {
     return this.currentLanguageSubject.getValue();
