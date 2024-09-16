@@ -1,0 +1,18 @@
+<div class="card" (click)="clicked.emit()">
+  
+  <ion-img [src]="item.restaurante!= null ? item.restaurante.fotoUrl : 'https://cdn2.iconfinder.com/data/icons/basic-2-2/128/a-25-256.png'"></ion-img>
+
+  <div class="card-content">
+    <h3 class="title">{{item.nome}}</h3>
+    <h2 class="subtitle"><sup>R$</sup>{{item.totalReal}}</h2>
+
+    <ion-buttons slot="start">
+      <ion-button >
+        <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+</div>

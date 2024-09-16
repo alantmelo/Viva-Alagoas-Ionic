@@ -17,7 +17,7 @@ export class Tab1Page {
       slidesPerView: 1.5, // You can adjust this to control the number of visible cards
       spaceBetween: 10,
   };
-
+  cities: { id: number; label: string; image: string; active: boolean; }[] | undefined;
   destinations = [{
           name: 'Ponta Verde',
           city: 'Maceió',
@@ -35,7 +35,7 @@ export class Tab1Page {
   constructor(
       private router: Router, private modalController: ModalController,
 ) {
-
+  this.getCategories();
   }
   navigateToEventPage() {
       // Navega para a página EventPage
@@ -60,6 +60,64 @@ export class Tab1Page {
       if (role === 'confirm') {
           // this.message = `Hello, ${data}!`;
       }
+  }
+  getCategories() {
+    this.cities = [
+      {
+        id: 1,
+        label: 'Beaches',
+        image: 'assets/images/icons/all.png',
+        active: false,
+      },
+      {
+        id: 2,
+        label: 'Events',
+        image: 'assets/images/icons/burger.png',
+        active: false,
+      },
+      {
+        id: 3,
+        label: 'Hotels',
+        image: 'assets/images/icons/dish.png',
+        active: false,
+      },
+      {
+        id: 4,
+        label: 'Transfers',
+        image: 'assets/images/icons/sushi.png',
+        active: false,
+      },
+      {
+        id: 5,
+        label: 'Stores',
+        image: 'assets/images/icons/sushi.png',
+        active: false,
+      },
+      {
+        id: 6,
+        label: 'Tour',
+        image: 'assets/images/icons/sushi.png',
+        active: false,
+      },
+      {
+        id: 7,
+        label: 'Restaurant',
+        image: 'assets/images/icons/sushi.png',
+        active: false,
+      },
+      {
+        id: 8,
+        label: 'Services',
+        image: 'assets/images/icons/sushi.png',
+        active: false,
+      },
+      {
+        id: 8,
+        label: 'Guides',
+        image: 'assets/images/icons/sushi.png',
+        active: false,
+      },
+    ];
   }
 
 }

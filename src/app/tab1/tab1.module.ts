@@ -7,6 +7,9 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { ModalComponent } from '../components/modal/modal.component';
+import { CategoryItemModule } from 'src/app/components/category-item/category-item.module';
+import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
+
 @NgModule({
   imports: [
     IonicModule,
@@ -14,6 +17,8 @@ import { ModalComponent } from '../components/modal/modal.component';
     FormsModule,
     ExploreContainerComponentModule,
     Tab1PageRoutingModule,
+    CategoryItemModule,
+    SearchbarModule,
   ],
   declarations: [Tab1Page, ModalComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
