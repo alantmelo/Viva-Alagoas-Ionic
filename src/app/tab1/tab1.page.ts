@@ -42,25 +42,25 @@ export class Tab1Page {
       this.router.navigate(['/event']);
   }
   isModalOpen = false;
-  async openModal(type: string) {
-    const modal = await this.modalController.create({
-          component: ModalComponent,
-          breakpoints: [0, 0.7, 0.9],
-          initialBreakpoint: 0.9,
-          componentProps: {
-            type: type,
-          },
-      });
-      modal.present();
-      const {
-          data,
-          role
-      } = await modal.onWillDismiss();
+  // async openModal(type: string) {
+  //   const modal = await this.modalController.create({
+  //         component: ModalComponent,
+  //         breakpoints: [0, 0.7, 0.9],
+  //         initialBreakpoint: 0.9,
+  //         componentProps: {
+  //           type: type,
+  //         },
+  //     });
+  //     modal.present();
+  //     const {
+  //         data,
+  //         role
+  //     } = await modal.onWillDismiss();
 
-      if (role === 'confirm') {
-          // this.message = `Hello, ${data}!`;
-      }
-  }
+  //     if (role === 'confirm') {
+  //         // this.message = `Hello, ${data}!`;
+  //     }
+  // }
   getCategories() {
     this.cities = [
       {
@@ -72,13 +72,13 @@ export class Tab1Page {
       {
         id: 2,
         label: 'Events',
-        image: 'assets/images/icons/burger.png',
+        image: 'assets/images/icons/all.png',
         active: false,
       },
       {
         id: 3,
         label: 'Hotels',
-        image: 'assets/images/icons/dish.png',
+        image: 'assets/images/icons/all.png',
         active: false,
       },
       {
@@ -95,7 +95,7 @@ export class Tab1Page {
       },
       {
         id: 6,
-        label: 'Tour',
+        label: 'Tours',
         image: 'assets/images/icons/sushi.png',
         active: false,
       },

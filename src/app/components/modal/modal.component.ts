@@ -43,6 +43,7 @@ export class ModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log('entrou')
     this.name = this.type.toUpperCase();
     console.log(''+ this.type);
     this.searchTerm$.pipe(
@@ -84,32 +85,32 @@ export class ModalComponent implements OnInit {
     cityId = '1';
     // const cityId = localStorage.getItem('cityId');
     switch (type) {
-      case 'beaches':
+      case 'Beaches':
         result = await firstValueFrom(this.beachService.getBeaches(term, page, pageSize, cityId!));
         break;
-      case 'events':
+      case 'Events':
         result = await firstValueFrom(this.eventService.getEvents(term, page, pageSize, cityId!));
         break;
-      case 'accommodations':
+      case 'Hotels':
         result = await firstValueFrom(this.accommodationsService.getAccommodations(term, page, pageSize, cityId!));
         // console.log(result);
         break;
-      case 'restaurants':
+      case 'Restaurant':
         result = await firstValueFrom(this.restaurantsService.getRestaurants(term, page, pageSize, cityId!));
         break;
-      case 'stores':
+      case 'Stores':
         result = await firstValueFrom(this.storesService.getStores(term, page, pageSize, cityId!));
         break;
-      case 'tourguides':
+      case 'Guides':
         result = await firstValueFrom(this.tourGuidesService.getTourGuides(term, page, pageSize, cityId!));
         break;
-      case 'services':
+      case 'Services':
         result = await firstValueFrom(this.servicesService.getServices(term, page, pageSize, cityId!));
         break;
-      case 'transfers':
+      case 'Transfers':
         result = await firstValueFrom(this.transfersService.getTransfers(term, page, pageSize, cityId!));
         break;
-      case 'tours':
+      case 'Tours':
         result = await firstValueFrom(this.toursService.getTours(term, page, pageSize, cityId!));
         break;
       default:
@@ -130,31 +131,31 @@ export class ModalComponent implements OnInit {
     let targetPage: string;
     this.modalCtrl.dismiss(null, 'cancel');
     switch (this.type) {
-      case 'accommodations':
+      case 'Hotels':
         targetPage = `/accommodation/${id}`;
         break;
-      case 'restaurants':
+      case 'Restaurant':
         targetPage = `/restaurant/${id}`;
         break;
-      case 'stores':
+      case 'Stores':
         targetPage = `/store/${id}`;
         break;
-      case 'tours':
+      case 'Tours':
         targetPage = `/tour/${id}`;
         break;
-      case 'tourguides':
+      case 'Guides':
         targetPage = `/tour-guide/${id}`;
         break;
-      case 'beaches':
+      case 'Beaches':
         targetPage = `/beach/${id}`;
         break;
-      case 'events':
+      case 'Events':
         targetPage = `/event/${id}`;
         break;
-      case 'services':
+      case 'Services':
         targetPage = `/service/${id}`;
         break;
-      case 'transfers':
+      case 'Transfers':
         targetPage = `/transfer/${id}`;
         break;
       default:

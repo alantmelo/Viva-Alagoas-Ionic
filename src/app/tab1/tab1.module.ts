@@ -6,7 +6,7 @@ import { Tab1Page } from './tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Tab1PageRoutingModule } from './tab1-routing.module';
-import { ModalComponent } from '../components/modal/modal.component';
+// import { ModalComponent } from '../components/modal/modal.component';
 import { CategoryItemModule } from 'src/app/components/category-item/category-item.module';
 import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
 
@@ -20,7 +20,7 @@ import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
     CategoryItemModule,
     SearchbarModule,
   ],
-  declarations: [Tab1Page, ModalComponent],
+  declarations: [Tab1Page],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab1PageModule {}
