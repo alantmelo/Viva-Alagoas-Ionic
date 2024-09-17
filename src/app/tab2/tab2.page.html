@@ -1,40 +1,29 @@
 <ion-content>
-  <div class="header">
-    <ion-buttons>
-      <ion-button routerLink="/home/listing">
-        <ion-icon slot="icon-only" color='light' name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-buttons>
-      <ion-button>
-        <ion-icon slot="icon-only" color='light' name="add"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </div>
+  <!-- <h3 class="title" *ngIf="(tripItems$|async).length">Adicionar a Conta</h3> -->
+  <!-- <h3 class="title" *ngIf="(tripItems$|async).length">{{(tripItems$|async).length}} towards at trip</h3> -->
 
-  <!-- FOOD DETAIL CARD -->
-  <div class="card">
-    <div class="image">
-      <!-- <ion-img src="https://avatars.githubusercontent.com/u/7445511?s=400&u=4e6a5be04ef39cb213587a76df65792e6f875d05&v=4"></ion-img> -->
-    </div>
-
-    <div class="card-content">
-      <div class="card-title">
-        <h1 class="ion-no-margin">Nome</h1>
-        <p class="ion-no-margin"><sup>$</sup> 12</p>
-      </div>
-    </div>
-
-    <!-- <div class="rates">
-      <app-badge icon="d-time-forward" text="30m"></app-badge>
-      <app-badge icon="star-outline" text="4.5"></app-badge>
-    </div> -->
-
-    <div class="about">
-      <h1>About</h1>
-      <p>descricao</p>
-    </div>
-
-    <!-- <app-button >Add to Cart</app-button> -->
-  </div>
+  <!-- CART ITEMS -->
+  <!-- <ion-list lines="none">
+    <ion-item-sliding *ngFor="let item of tripItems$|async">
+      <ion-item>
+        <app-trip-item [item]="item" (increase)="onIncrease(item)" (decrease)="onDecrease(item)"></app-trip-item>
+      </ion-item>
+      <ion-item-options side='end'>
+        <ion-item-option (click)="removeFromCart(item)">
+          <ion-icon name='trash-outline' size='large' color='danger'></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list> -->
+  <ion-card>
+  <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+  <ion-card-header>
+    <ion-card-subtitle>Maceió</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    Viagem para carnaval em maceio no mes de fevereiro
+  </ion-card-content>
+  <ion-button fill="clear">Delete</ion-button>
+  <ion-button fill="clear">Add Item</ion-button>
+</ion-card>
 </ion-content>

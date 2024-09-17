@@ -1,81 +1,71 @@
-ion-content {
-  --background: #6b45bc;
-  position: relative;
+// ion-content {
+//   --padding-top: 1.6rem;
+//   --padding-end: 1.6rem;
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 0.5rem;
+//   .title {
+//     font-weight: 700;
+//     color: #1f1f1f;
+//     margin-bottom: 2rem;
+//     padding-left: 1.6rem;
+//   }
 
-    ion-button {
-      height: 60px;
-      width: 60px;
+//   app-trip-item {
+//     display: block;
+//     width: 100%;
+//     padding-left: 1.6rem;
+//   }
 
-      ion-icon {
-        font-size: 2rem;
-      }
-    }
-  }
+//   ion-item-sliding {
+//     margin-bottom: 2rem;
+//     overflow: hidden;
 
-  .card {
-    height: 75%;
-    width: 100%;
-    background: #fff;
-    position: absolute;
-    bottom: 0;
-    border-radius: 3rem 3rem 0 0;
-    padding: 2rem;
+//     ion-item {
+//       --padding-start: 0;
+//       --inner-padding-end: 0;
+//       border-radius: 25px;
+//     }
 
-    .image {
-      position: absolute;
-      top: -6.5rem;
-      width: 50%;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+//     ion-item-options {
+//       border: 2px solid #f3f3f3;
+//       border-radius: 25px;
+//       overflow: hidden;
+//       background: #fff;
 
-    .card-title {
-      margin-top: 35%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.2rem;
+//       ion-item-option {
+//         background: #fff;
+//       }
+//     }
+//   }
 
-      h1 {
-        font-weight: 700;
-        font-size: 2.1rem;
-      }
+//   .empty-trip {
+//     height: 90%;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+//     color: #c7c7c7;
 
-      p {
-        font-size: 2.2rem;
-        font-weight: 700;
-        color: #ffb800;
+//     ion-icon {
+//       font-size: 8rem;
+//     }
 
-        sup {
-          font-size: 1.2rem;
-          margin-right: -0.5rem;
-        }
-      }
-    }
+//     p {
+//       font-size: 1.8rem;
+//     }
+//   }
 
-    .rates {
-      display: flex;
-      align-items: center;
-      margin-bottom: 3rem;
-    }
+//   app-button {
+//     display: block;
+//     padding-left: 1.6rem;
 
-    .about {
-      margin-bottom: 2.5rem;
+//     span {
+//       margin-left: 10px;
+//       font-size: 1.5rem;
 
-      h1 {
-        font-weight: 600;
-      }
-
-      p {
-        font-size: 1.1rem;
-        line-height: 1.6;
-        color: #b9b9b9;
-      }
-    }
-  }
-}
+//       sup {
+//         font-weight: 400;
+//         font-size: 0.9rem;
+//       }
+//     }
+//   }
+// }
