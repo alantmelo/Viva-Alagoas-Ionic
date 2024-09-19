@@ -12,10 +12,31 @@ export class TripService {
   private items$ = new BehaviorSubject<TripItem[]>([
     {
       id: 1,
-      name: 'Sea Food',
-      price: 12,
-      image: 'assets/images/foods/seafood-dishes.png',
+      name: 'Sol Victoria Marina Hotel',
+      price: 1500,
+      image: 'https://cdn4.iconfinder.com/data/icons/macaron-1/48/eog-512.png',
       quantity: 1,
+    },
+    {
+      id: 1,
+      name: 'Passages',
+      price: 3000,
+      image: 'https://cdn4.iconfinder.com/data/icons/macaron-1/48/eog-512.png',
+      quantity: 1,
+    },
+    {
+      id: 1,
+      name: 'Transfer',
+      price: 300,
+      image: 'https://cdn4.iconfinder.com/data/icons/macaron-1/48/eog-512.png',
+      quantity: 1,
+    },
+    {
+      id: 1,
+      name: 'Concert Ticket',
+      price: 600,
+      image: 'https://cdn4.iconfinder.com/data/icons/macaron-1/48/eog-512.png',
+      quantity: 3,
     },
   ]);
 

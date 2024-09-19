@@ -9,49 +9,7 @@
   <div class="categories">
     <app-category-item *ngFor="let item of cities" [item]="item"></app-category-item>
   </div>
-  <!-- <div class="ion-padding">
-    <ion-card class="ion-text-center ion-align-self-center">
-      <ion-card-header>
-        <ion-card-title>Card Title</ion-card-title>
-        <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-      </ion-card-header>
   
-      <ion-card-content>
-        <div class="button-row">
-          <ion-button shape="round" (click)="openModal('beaches')">
-            <ion-icon slot="icon-only" name="boat"></ion-icon>
-          </ion-button>
-          <ion-button shape="round" (click)="openModal('events')">
-            <ion-icon slot="icon-only" name="calendar"></ion-icon>
-          </ion-button>
-          <ion-button shape="round" (click)="openModal('accommodations')">
-            <ion-icon slot="icon-only" name="home"></ion-icon>
-          </ion-button>
-          <ion-button shape="round" (click)="openModal('transfers')">
-            <ion-icon slot="icon-only" name="car"></ion-icon>
-          </ion-button>
-          <ion-button shape="round" (click)="openModal('tours')">
-            <ion-icon slot="icon-only" name="bus"></ion-icon>
-          </ion-button>
-        </div>
-        
-        <div class="button-row">
-          <ion-button shape="round" (click)="openModal('restaurants')">
-            <ion-icon slot="icon-only" name="restaurant"></ion-icon>
-          </ion-button>
-          <ion-button shape="round" (click)="openModal('stores')">
-            <ion-icon slot="icon-only" name="storefront"></ion-icon>
-          </ion-button>
-          <ion-button shape="round" (click)="openModal('tourguides')">
-            <ion-icon slot="icon-only" name="footsteps"></ion-icon>
-          </ion-button>
-          <ion-button shape="round" (click)="openModal('services')">
-            <ion-icon slot="icon-only" name="home"></ion-icon>
-          </ion-button>
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </div> -->
   <ion-grid>
 
     <ion-row>
@@ -59,7 +17,7 @@
         <h3>Top Destinations</h3>
         <swiper-container [slidesPerView]="1.5" spaceBetween="10">
           <swiper-slide *ngFor="let destination of destinations">
-            <ion-card>
+            <ion-card style="max-width: 400px; width: 400px;">
               <img [src]="destination.image" />
               <ion-card-header>
                 <ion-card-title>{{ destination.name }}</ion-card-title>

@@ -166,7 +166,9 @@ export class ModalComponent implements OnInit {
   getImageUrl(photo: string): string {
     const baseUrl = 'http://localhost:3000/storage/photos/';
     const defaultUrl = 'https://ionicframework.com/docs/img/demos/card-media.png';
-
+    if(this.type == 'Beaches' ){
+      return  'http://localhost:3000/storage/photos/praia.jpg';
+    }
     return photo ? `${baseUrl}${photo}` : defaultUrl;
   }
 }

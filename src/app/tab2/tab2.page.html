@@ -1,4 +1,7 @@
 <ion-content>
+  <div class="ion-padding">
+    <h2>MY TRIPS</h2>
+  </div>
   <!-- <h3 class="title" *ngIf="(tripItems$|async).length">Adicionar a Conta</h3> -->
   <!-- <h3 class="title" *ngIf="(tripItems$|async).length">{{(tripItems$|async).length}} towards at trip</h3> -->
 
@@ -16,14 +19,30 @@
     </ion-item-sliding>
   </ion-list> -->
   <ion-card>
-  <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+  <img  src="https://media.staticontent.com/media/pictures/88836def-639e-414a-83e8-3fcaa3d74fa8" />
   <ion-card-header>
-    <ion-card-subtitle>Maceió</ion-card-subtitle>
+    <ion-card-subtitle>Maceió + São Miguel dos Milagres + Gunga</ion-card-subtitle>
   </ion-card-header>
   <ion-card-content>
-    Viagem para carnaval em maceio no mes de fevereiro
+    Days: 3 - Total: R$ 950,34 - Tourist(s): 2 <ion-icon name="people-outline"></ion-icon>
   </ion-card-content>
   <ion-button fill="clear">Delete</ion-button>
   <ion-button fill="clear">Add Item</ion-button>
 </ion-card>
+  <ion-card>
+  <img  src="https://www.queroabada.com.br/upload/blocos-carnaval-salvador_2023824104845779843.webp" />
+  <ion-card-header >
+    <ion-card-subtitle>Carnaval Salvador 2025</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    Days: 7 - Total: R$ 9000,00 - Tourist(s): 3 <ion-icon name="people-outline"></ion-icon>
+  </ion-card-content>
+  <ion-button fill="clear">Delete</ion-button>
+  <ion-button (click)="navigateToEventPage()" fill="clear">Add Item</ion-button>
+</ion-card>
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button>
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 </ion-content>
