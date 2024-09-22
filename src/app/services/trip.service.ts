@@ -14,8 +14,8 @@ export class TripService {
 
   private apiUrl = `${environment.apiUrl}mobile/v1/calculator`; 
   constructor(private http: HttpClient) {}
-  getTourById(id: number): Observable<Trip> {
-    return this.http.get<Trip>(`${this.apiUrl}/${id}`);
+  getTripById(id: number): Observable<Trip> {
+    return this.http.get<Trip>(`${this.apiUrl}/trips/${id}`);
   }
   getTrips(search: string = '', page: number = 0, pageSize: number = 10, cityId?: number): Observable<TripResponse> {
     let params = new HttpParams()

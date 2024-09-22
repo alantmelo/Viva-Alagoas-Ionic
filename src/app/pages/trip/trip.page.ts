@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
-import { Observable } from 'rxjs';
-import { TripItem } from 'src/app/models/trip-item'; 
-import { TripService } from 'src/app/services/trip.service'; 
+import { ActivatedRoute } from '@angular/router';
+import { TripService } from 'src/app/services/trip.service';
+import { Trip } from 'src/app/models/trip';
 
 @Component({
   selector: 'app-trip',
@@ -10,46 +9,21 @@ import { TripService } from 'src/app/services/trip.service';
   styleUrls: ['./trip.page.scss'],
 })
 export class TripPage implements OnInit {
-
-
-  tripItems$!: Observable<TripItem[]>;
-  totalAmount$!: Observable<number>;
+  trip: Trip | undefined;
 
   constructor(
-    private tripService: TripService,
-    private alertCtrl: AlertController
+    private route: ActivatedRoute,
+    private tripsService: TripService
   ) {}
 
   ngOnInit() {
-    this.tripItems$ = this.tripService.getCart();
-    this.totalAmount$ = this.tripService.getTotalAmount();
+    const tripId = +this.route.snapshot.paramMap.get('id')!;
+    this.loadTrip(tripId);
   }
 
-  onIncrease(item: TripItem) {
-    this.tripService.changeQty(1, item.id);
-  }
-
-  onDecrease(item: TripItem) {
-    if (item.quantity === 1) this.removeFromCart(item);
-    else this.tripService.changeQty(-1, item.id);
-  }
-
-  async removeFromCart(item: TripItem) {
-    const alert = await this.alertCtrl.create({
-      header: 'Remove',
-      message: 'Are you sure you want to remove?',
-      buttons: [
-        {
-          text: 'Yes',
-          handler: () => this.tripService.removeItem(item.id),
-        },
-        {
-          text: 'No',
-        },
-      ],
+  loadTrip(id: number) {
+    this.tripsService.getTripById(id).subscribe((trip) => {
+      this.trip = trip;
     });
-
-    alert.present();
   }
-
 }

@@ -1,22 +1,40 @@
-<ion-content>
-  <div class="ion-padding">
-    <h2>Carnaval Salvador 2025</h2>
-  </div>
-<ion-list lines="none">
-    <ion-item-sliding *ngFor="let item of tripItems$|async">
-      <ion-item>
-        <app-trip-item [item]="item" (increase)="onIncrease(item)" (decrease)="onDecrease(item)"></app-trip-item>
-      </ion-item>
-      <ion-item-options side='end'>
-        <ion-item-option (click)="removeFromCart(item)">
-          <ion-icon name='trash-outline' size='large' color='danger'></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalhes da Viagem</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="trip">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ trip.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Código:</strong> {{ trip.tripCode }}</p>
+      <p><strong>Status:</strong> {{ trip.status ? 'Ativa' : 'Inativa' }}</p>
+      <p><strong>Descrição:</strong> {{ trip.description }}</p>
+      <!-- <p><strong>Cidade:</strong> {{ trip.city?.name }}</p> -->
+      <p><strong>Criada em:</strong> {{ trip.createdAt | date }}</p>
+      <p><strong>Atualizada em:</strong> {{ trip.updatedAt | date }}</p>
+    </ion-card-content>
+  </ion-card>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button>
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="cube-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="person-add-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
 </ion-content>
