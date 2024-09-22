@@ -63,7 +63,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/user/user.module').then( m => m.UserPageModule)
   },
   {
-    path: 'trip',
+    path: 'trip/:id',
     loadChildren: () => import('./pages/trip/trip.module').then( m => m.TripPageModule)
   },
   {

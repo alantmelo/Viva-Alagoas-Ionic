@@ -18,9 +18,9 @@ export class Tab2Page  implements OnInit{
       private tripsService: TripService
   ) {
   }
-  navigateToEventPage() {
+  navigateToPage(id: Number) {
       // Navega para a página EventPage
-      this.router.navigate(['/trip']);
+      this.router.navigate(['/trip/'+ id]);
   }
   ngOnInit() {
     this.loadTrips();
