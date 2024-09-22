@@ -1,13 +1,34 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TripItem } from '../models/trip-item';
+import { Trip,TripResponse } from '../models/trip';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripService {
+
+  private apiUrl = `${environment.apiUrl}mobile/v1/calculator`; 
+  constructor(private http: HttpClient) {}
+  getTourById(id: number): Observable<Trip> {
+    return this.http.get<Trip>(`${this.apiUrl}/${id}`);
+  }
+  getTrips(search: string = '', page: number = 0, pageSize: number = 10, cityId?: number): Observable<TripResponse> {
+    let params = new HttpParams()
+      .set('search', search)
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString());
+
+    if (cityId) {
+      params = params.set('cityId', cityId.toString());
+    }
+
+    return this.http.get<TripResponse>(`${this.apiUrl}/trips`, { params });
+  }
 
   private items$ = new BehaviorSubject<TripItem[]>([
     {

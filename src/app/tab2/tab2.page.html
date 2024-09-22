@@ -1,23 +1,7 @@
-<ion-content>
+<!-- <ion-content>
   <div class="ion-padding">
     <h2>MY TRIPS</h2>
   </div>
-  <!-- <h3 class="title" *ngIf="(tripItems$|async).length">Adicionar a Conta</h3> -->
-  <!-- <h3 class="title" *ngIf="(tripItems$|async).length">{{(tripItems$|async).length}} towards at trip</h3> -->
-
-  <!-- CART ITEMS -->
-  <!-- <ion-list lines="none">
-    <ion-item-sliding *ngFor="let item of tripItems$|async">
-      <ion-item>
-        <app-trip-item [item]="item" (increase)="onIncrease(item)" (decrease)="onDecrease(item)"></app-trip-item>
-      </ion-item>
-      <ion-item-options side='end'>
-        <ion-item-option (click)="removeFromCart(item)">
-          <ion-icon name='trash-outline' size='large' color='danger'></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list> -->
   <ion-card>
   <img  src="https://media.staticontent.com/media/pictures/88836def-639e-414a-83e8-3fcaa3d74fa8" />
   <ion-card-header>
@@ -45,4 +29,28 @@
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>
+</ion-content> -->
+
+
+
+
+<ion-content>
+  <div class="ion-padding">
+    <h2>MY TRIPS</h2>
+  </div>
+  <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="onSearchChange($event)" debounce="500"></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let trip of trips">
+      <ion-label>
+        <h2>{{ trip.name }}</h2>
+        <p>{{ trip.description }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more trips...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

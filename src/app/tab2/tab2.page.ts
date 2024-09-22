@@ -1,18 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TripService } from '../services/trip.service'; 
+import { Trip, TripResponse } from '../models/trip';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page  {
-  constructor(
-    private router: Router
-) {
-}
-navigateToEventPage() {
-    // Navega para a página EventPage
-    this.router.navigate(['/trip']);
-}
+export class Tab2Page  implements OnInit{
+  trips: Trip[] = [];
+  searchQuery: string = '';
+  page: number = 0;
+  pageSize: number = 10;
+  totalTrips: number = 0;
+    constructor(
+      private router: Router,
+      private tripsService: TripService
+  ) {
+  }
+  navigateToEventPage() {
+      // Navega para a página EventPage
+      this.router.navigate(['/trip']);
+  }
+  ngOnInit() {
+    this.loadTrips();
+  }
+
+  loadTrips(event?: any) {
+    this.tripsService.getTrips(this.searchQuery, this.page, this.pageSize).subscribe((response: TripResponse) => {
+      console.log(response)
+      if (event) {
+        event.target.complete(); // Completa o evento de scroll infinito
+      }
+
+      this.trips = [...this.trips, ...response.items]; // Adiciona novas viagens à lista existente
+      this.totalTrips = response.total; // Atualiza o total de viagens
+    });
+  }
+
+  onSearchChange(event: any) {
+    this.page = 0; // Reseta a página para a primeira
+    this.trips = []; // Limpa a lista de viagens
+    this.loadTrips(); // Carrega as viagens de acordo com a nova busca
+  }
+
+  loadMore(event: any) {
+    this.page++; // Incrementa a página
+    this.loadTrips(event); // Carrega mais viagens
+
+    if (this.trips.length >= this.totalTrips) {
+      event.target.disabled = true; // Desabilita o scroll infinito quando todas as viagens são carregadas
+    }
+  }
+
 
 }
