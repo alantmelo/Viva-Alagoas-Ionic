@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TripItem } from '../models/trip-item';
 import { Trip,TripResponse } from '../models/trip';
+import { User } from '../models/user';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
@@ -91,5 +92,11 @@ export class TripService {
         return total;
       })
     );
+  }
+  getTripUsers(tripId: number): Observable<{ id: number, user: { name: string } }[]> {
+    return this.http.get<{ id: number, user: { name: string } }[]>(`${this.apiUrl}/trips/${tripId}/users`)
+      .pipe(
+        map(users => users || []) // Garante que retornará um array, mesmo que vazio
+      );
   }
 }

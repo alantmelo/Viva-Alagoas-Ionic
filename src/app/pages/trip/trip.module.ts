@@ -8,7 +8,7 @@ import { TripPageRoutingModule } from './trip-routing.module';
 
 import { TripPage } from './trip.page';
 import { TripItemModule } from 'src/app/components/trip-item/trip-item.module'; 
-
+import { AddItemTripModalComponent } from 'src/app/components/add-item-trip-modal/add-item-trip-modal.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,6 +17,6 @@ import { TripItemModule } from 'src/app/components/trip-item/trip-item.module';
     TripPageRoutingModule,
     TripItemModule
   ],
-  declarations: [TripPage]
+  declarations: [TripPage, AddItemTripModalComponent]
 })
 export class TripPageModule {}

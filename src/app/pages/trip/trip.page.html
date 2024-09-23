@@ -21,12 +21,14 @@
       <p><strong>Atualizada em:</strong> {{ trip.updatedAt | date }}</p>
     </ion-card-content>
   </ion-card>
+  <ion-button expand="block" (click)="openAddItemModal()">Add User to Trip</ion-button>
+
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button>
+      <ion-fab-button >
         <ion-icon name="create-outline"></ion-icon>
       </ion-fab-button>
       <ion-fab-button>

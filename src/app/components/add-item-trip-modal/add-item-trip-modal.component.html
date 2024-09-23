@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Select Users</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let user of users">
+      <!-- Acessando o name dentro de user -->
+      <ion-label>{{ user.user.name }}</ion-label>
+      <ion-checkbox slot="end" [(ngModel)]="user.isSelected"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="confirm()">Confirm</ion-button>
+  </ion-toolbar>
+</ion-footer>
