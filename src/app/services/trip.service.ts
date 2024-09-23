@@ -99,4 +99,8 @@ export class TripService {
         map(users => users || []) // Garante que retornará um array, mesmo que vazio
       );
   }
+
+  addUserToTrip(tripId: number, email: string) {
+    return this.http.post(`http://localhost:3000/mobile/v1/calculator/trips/${tripId}/users`, { email });
+  }
 }
