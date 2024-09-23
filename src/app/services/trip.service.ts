@@ -100,7 +100,11 @@ export class TripService {
       );
   }
 
+  getTripData(tripId: number): Observable<{ tripUsers: any[], activeItemTypes: any[] }> {
+    return this.http.get<{ tripUsers: any[], activeItemTypes: any[] }>(`${this.apiUrl}/trips/${tripId}/itemData`);
+  }
+
   addUserToTrip(tripId: number, email: string) {
-    return this.http.post(`http://localhost:3000/mobile/v1/calculator/trips/${tripId}/users`, { email });
+    return this.http.post(`${this.apiUrl}/trips/${tripId}/users`, { email });
   }
 }

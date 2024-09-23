@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Select Users</ion-title>
+    <ion-title>Select Users and Item Type</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="close()">Close</ion-button>
     </ion-buttons>
@@ -9,12 +9,20 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let user of users">
-      <!-- Acessando o name dentro de user -->
+    <ion-item *ngFor="let user of tripUsers">
       <ion-label>{{ user.user.name }}</ion-label>
       <ion-checkbox slot="end" [(ngModel)]="user.isSelected"></ion-checkbox>
     </ion-item>
   </ion-list>
+
+  <ion-item>
+    <ion-label>Select Item Type</ion-label>
+    <ion-select [(ngModel)]="selectedItemType">
+      <ion-select-option *ngFor="let itemType of activeItemTypes" [value]="itemType.id">
+        {{ itemType.name }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
 </ion-content>
 
 <ion-footer>

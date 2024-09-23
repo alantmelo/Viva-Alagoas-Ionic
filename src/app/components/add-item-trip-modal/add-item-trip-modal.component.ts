@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TripService } from 'src/app/services/trip.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-item-trip-modal',
@@ -9,27 +10,43 @@ import { TripService } from 'src/app/services/trip.service';
 })
 export class AddItemTripModalComponent implements OnInit {
   @Input() tripId!: number;
-  users: any[] = [];
+  tripUsers: any[] = [];
+  activeItemTypes: any[] = [];
+  selectedItemType: number | null = null;
+  searchTerm: string = '';
+
+  // Form properties
+  addItemForm!: FormGroup;
 
   constructor(
     private modalController: ModalController,
-    private tripService: TripService
-  ) {}
-
-  ngOnInit() {
-    this.loadUsers();
+    private tripService: TripService,
+    private fb: FormBuilder
+  ) {
+    // Initialize the form group here
+    this.addItemForm = this.fb.group({
+      itemName: ['', Validators.required],
+      quantity: [1, [Validators.required, Validators.min(1)]],
+      userQuantity: [1, [Validators.required, Validators.min(1)]],
+      price: [0, [Validators.required, Validators.min(0)]],
+      selectedItemType: [null]
+    });
   }
 
-  loadUsers() {
-    this.tripService.getTripUsers(this.tripId).subscribe({
-      next: (users: UserItem[]) => {
-        console.log('Users received from API:', users);
-        this.users = users.map(user => ({
+  ngOnInit() {
+    this.loadTripData();
+  }
+
+  loadTripData() {
+    this.tripService.getTripData(this.tripId).subscribe({
+      next: (data) => {
+        this.tripUsers = data.tripUsers.map(user => ({
           ...user,
-          isSelected: false // Inicialize o campo isSelected como false
+          isSelected: false
         }));
+        this.activeItemTypes = data.activeItemTypes;
       },
-      error: (err) => console.error('Error loading users', err)
+      error: (err) => console.error('Error loading trip data', err)
     });
   }
 
@@ -38,14 +55,23 @@ export class AddItemTripModalComponent implements OnInit {
   }
 
   confirm() {
-    const selectedUsers = this.users.filter(user => user.isSelected).map(user => user.id);
-    this.modalController.dismiss(selectedUsers); // Enviando os IDs dos usuários selecionados ao fechar o modal
+    const selectedUsers = this.tripUsers.filter(user => user.isSelected).map(user => user.id);
+    
+    const itemData = {
+      name: this.addItemForm.value.itemName,
+      quantity: this.addItemForm.value.quantity,
+      userQuantity: this.addItemForm.value.userQuantity,
+      price: this.addItemForm.value.price,
+      selectedItemType: this.addItemForm.value.selectedItemType,
+      selectedUsers: selectedUsers
+    };
+    
+    this.modalController.dismiss(itemData);
   }
-}
-export interface UserItem {
-  id: number;
-  user: {
-    name: string;
-  };
-  isSelected?: boolean; // Adicionar o campo para seleção, se necessário
+
+  get filteredItemTypes() {
+    return this.activeItemTypes.filter(itemType =>
+      itemType.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
 }
