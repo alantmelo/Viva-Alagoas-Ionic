@@ -8,25 +8,40 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let user of tripUsers">
-      <ion-label>{{ user.user.name }}</ion-label>
-      <ion-checkbox slot="end" [(ngModel)]="user.isSelected"></ion-checkbox>
+  <form [formGroup]="addItemForm" (ngSubmit)="confirm()">
+    <ion-list>
+      <ion-item *ngFor="let user of tripUsers">
+        <ion-label>{{ user.user.name }}</ion-label>
+        <ion-checkbox 
+          slot="end" 
+          [checked]="user.isSelected" 
+          (ionChange)="toggleUserSelection(user)">
+        </ion-checkbox>
+      </ion-item>
+    </ion-list>
+
+    <ion-item>
+      <ion-label>Select Item Type</ion-label>
+      <ion-select formControlName="selectedItemType">
+        <ion-select-option *ngFor="let itemType of activeItemTypes" [value]="itemType.id">
+          {{ itemType.name }}
+        </ion-select-option>
+      </ion-select>
     </ion-item>
-  </ion-list>
 
-  <ion-item>
-    <ion-label>Select Item Type</ion-label>
-    <ion-select [(ngModel)]="selectedItemType">
-      <ion-select-option *ngFor="let itemType of activeItemTypes" [value]="itemType.id">
-        {{ itemType.name }}
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
+    <ion-item>
+      <ion-label>Item Name</ion-label>
+      <ion-input formControlName="itemName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Quantity</ion-label>
+      <ion-input type="number" formControlName="quantity"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Price</ion-label>
+      <ion-input type="number" formControlName="price"></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" type="submit">Confirm</ion-button>
+  </form>
 </ion-content>
-
-<ion-footer>
-  <ion-toolbar>
-    <ion-button expand="block" (click)="confirm()">Confirm</ion-button>
-  </ion-toolbar>
-</ion-footer>

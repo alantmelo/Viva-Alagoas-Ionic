@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { TripPageRoutingModule } from './trip-routing.module';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { TripPage } from './trip.page';
 import { TripItemModule } from 'src/app/components/trip-item/trip-item.module'; 
 import { AddItemTripModalComponent } from 'src/app/components/add-item-trip-modal/add-item-trip-modal.component';
@@ -15,7 +15,8 @@ import { AddItemTripModalComponent } from 'src/app/components/add-item-trip-moda
     FormsModule,
     IonicModule,
     TripPageRoutingModule,
-    TripItemModule
+    TripItemModule, 
+    ReactiveFormsModule
   ],
   declarations: [TripPage, AddItemTripModalComponent]
 })

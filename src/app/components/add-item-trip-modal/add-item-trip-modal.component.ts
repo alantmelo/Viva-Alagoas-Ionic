@@ -13,7 +13,6 @@ export class AddItemTripModalComponent implements OnInit {
   tripUsers: any[] = [];
   activeItemTypes: any[] = [];
   selectedItemType: number | null = null;
-  searchTerm: string = '';
 
   // Form properties
   addItemForm!: FormGroup;
@@ -42,7 +41,7 @@ export class AddItemTripModalComponent implements OnInit {
       next: (data) => {
         this.tripUsers = data.tripUsers.map(user => ({
           ...user,
-          isSelected: false
+          // isSelected: false
         }));
         this.activeItemTypes = data.activeItemTypes;
       },
@@ -55,8 +54,10 @@ export class AddItemTripModalComponent implements OnInit {
   }
 
   confirm() {
+    console.log(this.tripUsers)
     const selectedUsers = this.tripUsers.filter(user => user.isSelected).map(user => user.id);
-    
+    // const selectedUsers = this.users.filter(user => user.isSelected).map(user => user.id);
+    // this.modalController.dismiss(selectedUsers); 
     const itemData = {
       name: this.addItemForm.value.itemName,
       quantity: this.addItemForm.value.quantity,
@@ -68,10 +69,8 @@ export class AddItemTripModalComponent implements OnInit {
     
     this.modalController.dismiss(itemData);
   }
-
-  get filteredItemTypes() {
-    return this.activeItemTypes.filter(itemType =>
-      itemType.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+  toggleUserSelection(user: any) {
+    user.isSelected = !user.isSelected; // Toggle the selection state
+    console.log(this.tripUsers); // Log tripUsers to see the updated selection state
   }
 }
