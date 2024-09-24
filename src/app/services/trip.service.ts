@@ -114,7 +114,7 @@ export class TripService {
 
   // Método para atualizar um item existente
   updateItem(id: number, updateItemDto: Item): Observable<any> {
-    return this.http.patch<any>(`${this.apiUrl}/item/${id}`, updateItemDto);
+    return this.http.patch<any>(`${this.apiUrl}/trips/item/${id}`, updateItemDto);
   }
 
   getItemById(itemId: number): Observable<any> {
