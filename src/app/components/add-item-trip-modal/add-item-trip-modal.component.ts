@@ -43,6 +43,7 @@ export class AddItemTripModalComponent implements OnInit {
           ...user,
           // isSelected: false
         }));
+        console.log(data);
         this.activeItemTypes = data.activeItemTypes;
       },
       error: (err) => console.error('Error loading trip data', err)
@@ -54,20 +55,29 @@ export class AddItemTripModalComponent implements OnInit {
   }
 
   confirm() {
-    console.log(this.tripUsers)
-    const selectedUsers = this.tripUsers.filter(user => user.isSelected).map(user => user.id);
-    // const selectedUsers = this.users.filter(user => user.isSelected).map(user => user.id);
-    // this.modalController.dismiss(selectedUsers); 
+    const selectedUsers = this.tripUsers.filter(user => user.isSelected).map(user => user.user.id);
+    // console.log(selectedUsers);
+    // Dados do item coletados do formulário e dos usuários selecionados
     const itemData = {
       name: this.addItemForm.value.itemName,
       quantity: this.addItemForm.value.quantity,
       userQuantity: this.addItemForm.value.userQuantity,
       price: this.addItemForm.value.price,
-      selectedItemType: this.addItemForm.value.selectedItemType,
+      itemTypeId: this.addItemForm.value.selectedItemType,
+      tripId: this.tripId,
       selectedUsers: selectedUsers
     };
-    
-    this.modalController.dismiss(itemData);
+
+    // Chama o serviço para criar o item
+    this.tripService.createItem(itemData).subscribe({
+      next: (response) => {
+        console.log('Item created successfully', response);
+        this.modalController.dismiss(response); // Fecha o modal com a resposta
+      },
+      error: (error) => {
+        console.error('Error creating item', error);
+      }
+    });
   }
   toggleUserSelection(user: any) {
     user.isSelected = !user.isSelected; // Toggle the selection state
