@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TripItem } from '../models/trip-item';
+import { Item } from '../models/item';
 import { Trip,TripResponse } from '../models/trip';
 import { User } from '../models/user';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -106,5 +107,13 @@ export class TripService {
 
   addUserToTrip(tripId: number, email: string) {
     return this.http.post(`${this.apiUrl}/trips/${tripId}/users`, { email });
+  }
+  createItem(createItemDto: Item): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/trips/item`, createItemDto);
+  }
+
+  // Método para atualizar um item existente
+  updateItem(id: number, updateItemDto: Item): Observable<any> {
+    return this.http.patch<any>(`${this.apiUrl}/item/${id}`, updateItemDto);
   }
 }
