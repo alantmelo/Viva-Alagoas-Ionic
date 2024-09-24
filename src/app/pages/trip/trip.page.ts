@@ -12,7 +12,7 @@ import { AddItemTripModalComponent } from 'src/app/components/add-item-trip-moda
 })
 export class TripPage implements OnInit {
   trip: Trip | undefined;
-  itemId: number| undefined;
+  items: any[] = [];  // Para armazenar os itens da viagem
 
   constructor(
     private route: ActivatedRoute,
@@ -27,31 +27,42 @@ export class TripPage implements OnInit {
     this.loadTrip(tripId);
   }
 
-  async openAddItemModal() {
+  async openAddItemModal(itemId?: string) {
     if (!this.trip || !this.trip.id) {
       console.warn('Trip ID is undefined');
       return;
     }
-    this.itemId = 6;
     const modal = await this.modalController.create({
       component: AddItemTripModalComponent,
-      componentProps: { tripId: this.trip.id, itemId: this.itemId } // Certifique-se de que o tripId está correto
+      componentProps: { tripId: this.trip.id, itemId: itemId } // Certifique-se de que o tripId está correto
     });
-  
+
     modal.onDidDismiss().then((result) => {
       if (result.data) {
         console.log('Selected user IDs:', result.data);
         // Ações adicionais com os IDs selecionados, se necessário
+        this.ngOnInit(); // Atualiza a lista de itens após adicionar um novo
       }
     });
-  
+
     await modal.present();
   }
 
   loadTrip(id: number) {
     this.tripsService.getTripById(id).subscribe((trip) => {
       this.trip = trip;
+      console.log(trip.item);
+      this.loadItems(); // Carrega os itens após carregar a viagem
     });
+  }
+
+  loadItems() {
+    if (this.trip && this.trip.item) {
+      this.items = this.trip.item;  // Preenche a lista de itens da viagem
+      console.log('Trip items:', this.items);
+    } else {
+      console.warn('No items found for this trip');
+    }
   }
 
   async presentAddUserAlert() {
@@ -104,7 +115,7 @@ export class TripPage implements OnInit {
       console.error('Trip ID is undefined');
       return;
     }
-  
+
     this.tripsService.addUserToTrip(this.trip.id, email).subscribe({
       next: async (response: any) => {
         console.log('User added to trip:', response);
@@ -132,5 +143,3 @@ export class TripPage implements OnInit {
     });
   }
 }
-
-  

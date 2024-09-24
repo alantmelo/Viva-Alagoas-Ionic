@@ -1,3 +1,4 @@
+import { Item } from "./item";
 export interface City {
     id: number;
     name: string;
@@ -23,6 +24,7 @@ export interface City {
     userId: number;
     cityId: number;
     city: City;
+    item: Item[];
   }
   
   export interface TripResponse {
