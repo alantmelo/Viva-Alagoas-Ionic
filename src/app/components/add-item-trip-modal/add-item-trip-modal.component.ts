@@ -9,10 +9,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./add-item-trip-modal.component.scss'],
 })
 export class AddItemTripModalComponent implements OnInit {
-  @Input() tripId!: number;
+  @Input() tripId!: number; // ID da viagem
+  @Input() itemId?: number; // ID opcional do item para edição
   tripUsers: any[] = [];
   activeItemTypes: any[] = [];
-  selectedItemType: number | null = null;
 
   // Form properties
   addItemForm!: FormGroup;
@@ -22,18 +22,23 @@ export class AddItemTripModalComponent implements OnInit {
     private tripService: TripService,
     private fb: FormBuilder
   ) {
-    // Initialize the form group here
+    // Initialize the form group
     this.addItemForm = this.fb.group({
       itemName: ['', Validators.required],
       quantity: [1, [Validators.required, Validators.min(1)]],
       userQuantity: [1, [Validators.required, Validators.min(1)]],
       price: [0, [Validators.required, Validators.min(0)]],
-      selectedItemType: [null]
+      selectedItemType: [null, Validators.required],
     });
   }
 
   ngOnInit() {
     this.loadTripData();
+
+    // Se houver itemId, buscar os dados do item
+    if (this.itemId) {
+      this.loadItemData(this.itemId);
+    }
   }
 
   loadTripData() {
@@ -41,23 +46,60 @@ export class AddItemTripModalComponent implements OnInit {
       next: (data) => {
         this.tripUsers = data.tripUsers.map(user => ({
           ...user,
-          // isSelected: false
+          isSelected: false // Inicializa todos como não selecionados
         }));
-        console.log(data);
         this.activeItemTypes = data.activeItemTypes;
+  
+        console.log('Trip users loaded:', this.tripUsers);
+  
+        // Se o item já estiver carregado (em caso de atualização), podemos marcar os usuários selecionados
+        if (this.itemId) {
+          this.loadItemData(this.itemId);
+        }
       },
       error: (err) => console.error('Error loading trip data', err)
     });
   }
+  
+
+  // Carregar os dados do item existente para edição
+  loadItemData(itemId: number) {
+    this.tripService.getItemById(itemId).subscribe({
+      next: (itemData) => {
+        // Preencher o formulário com os dados do item
+        this.addItemForm.patchValue({
+          itemName: itemData.name,
+          quantity: itemData.quantity,
+          userQuantity: itemData.userQuantity,
+          price: itemData.price,
+          selectedItemType: itemData.itemTypeId,
+        });
+  
+        // Marcar os usuários que estão selecionados para este item
+        const selectedUserIds = itemData.itemUser.map((user: { userId: any; }) => user.userId);
+  
+        // Agora, marca os usuários selecionados, assumindo que `tripUsers` já foi carregado
+        this.tripUsers.forEach((tripUser) => {
+          tripUser.isSelected = selectedUserIds.includes(tripUser.user.id);
+        });
+  
+        console.log('Updated trip users with selections:', this.tripUsers);
+      },
+      error: (err) => console.error('Error loading item data', err),
+    });
+  }
+  
+  
 
   close() {
     this.modalController.dismiss();
   }
 
   confirm() {
-    const selectedUsers = this.tripUsers.filter(user => user.isSelected).map(user => user.user.id);
-    // console.log(selectedUsers);
-    // Dados do item coletados do formulário e dos usuários selecionados
+    const selectedUsers = this.tripUsers
+      .filter((user) => user.isSelected)
+      .map((user) => user.user.id);
+
     const itemData = {
       name: this.addItemForm.value.itemName,
       quantity: this.addItemForm.value.quantity,
@@ -65,22 +107,36 @@ export class AddItemTripModalComponent implements OnInit {
       price: this.addItemForm.value.price,
       itemTypeId: this.addItemForm.value.selectedItemType,
       tripId: this.tripId,
-      selectedUsers: selectedUsers
+      selectedUsers: selectedUsers,
     };
 
-    // Chama o serviço para criar o item
-    this.tripService.createItem(itemData).subscribe({
-      next: (response) => {
-        console.log('Item created successfully', response);
-        this.modalController.dismiss(response); // Fecha o modal com a resposta
-      },
-      error: (error) => {
-        console.error('Error creating item', error);
-      }
-    });
+    if (this.itemId) {
+      // Se itemId existir, fazer atualização
+      this.tripService.updateItem(this.itemId, itemData).subscribe({
+        next: (response) => {
+          console.log('Item updated successfully', response);
+          this.modalController.dismiss(response); // Fecha o modal com a resposta
+        },
+        error: (error) => {
+          console.error('Error updating item', error);
+        },
+      });
+    } else {
+      // Caso contrário, criar novo item
+      this.tripService.createItem(itemData).subscribe({
+        next: (response) => {
+          console.log('Item created successfully', response);
+          this.modalController.dismiss(response); // Fecha o modal com a resposta
+        },
+        error: (error) => {
+          console.error('Error creating item', error);
+        },
+      });
+    }
   }
+
   toggleUserSelection(user: any) {
-    user.isSelected = !user.isSelected; // Toggle the selection state
-    console.log(this.tripUsers); // Log tripUsers to see the updated selection state
+    user.isSelected = !user.isSelected; // Alternar a seleção
+    console.log(this.tripUsers); // Log para verificar o estado atualizado
   }
 }

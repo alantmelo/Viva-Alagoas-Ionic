@@ -116,4 +116,8 @@ export class TripService {
   updateItem(id: number, updateItemDto: Item): Observable<any> {
     return this.http.patch<any>(`${this.apiUrl}/item/${id}`, updateItemDto);
   }
+
+  getItemById(itemId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/trips/items/${itemId}`);
+  }
 }

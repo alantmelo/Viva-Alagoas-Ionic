@@ -12,6 +12,7 @@ import { AddItemTripModalComponent } from 'src/app/components/add-item-trip-moda
 })
 export class TripPage implements OnInit {
   trip: Trip | undefined;
+  itemId: number| undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,10 +32,10 @@ export class TripPage implements OnInit {
       console.warn('Trip ID is undefined');
       return;
     }
-  
+    this.itemId = 6;
     const modal = await this.modalController.create({
       component: AddItemTripModalComponent,
-      componentProps: { tripId: this.trip.id } // Certifique-se de que o tripId está correto
+      componentProps: { tripId: this.trip.id, itemId: this.itemId } // Certifique-se de que o tripId está correto
     });
   
     modal.onDidDismiss().then((result) => {
