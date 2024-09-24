@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TripService } from 'src/app/services/trip.service';
-import { Trip } from 'src/app/models/trip';
+import { Item, Trip } from 'src/app/models/trip';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { AddItemTripModalComponent } from 'src/app/components/add-item-trip-modal/add-item-trip-modal.component';
 
@@ -12,7 +12,7 @@ import { AddItemTripModalComponent } from 'src/app/components/add-item-trip-moda
 })
 export class TripPage implements OnInit {
   trip: Trip | undefined;
-  items: any[] = [];  // Para armazenar os itens da viagem
+  items: any[] = []; // Para armazenar os itens da viagem
 
   constructor(
     private route: ActivatedRoute,
@@ -34,13 +34,12 @@ export class TripPage implements OnInit {
     }
     const modal = await this.modalController.create({
       component: AddItemTripModalComponent,
-      componentProps: { tripId: this.trip.id, itemId: itemId } // Certifique-se de que o tripId está correto
+      componentProps: { tripId: this.trip.id, itemId: itemId }
     });
 
     modal.onDidDismiss().then((result) => {
       if (result.data) {
         console.log('Selected user IDs:', result.data);
-        // Ações adicionais com os IDs selecionados, se necessário
         this.ngOnInit(); // Atualiza a lista de itens após adicionar um novo
       }
     });
@@ -58,11 +57,18 @@ export class TripPage implements OnInit {
 
   loadItems() {
     if (this.trip && this.trip.item) {
-      this.items = this.trip.item;  // Preenche a lista de itens da viagem
+      this.items = this.trip.item; // Preenche a lista de itens da viagem
       console.log('Trip items:', this.items);
     } else {
       console.warn('No items found for this trip');
     }
+  }
+
+  getUserNames(item: Item): string {
+    if (item.itemUser.length > 0) {
+      return item.itemUser.map((user: { user: { name: any; }; }) => user.user.name).join(', ');
+    }
+    return 'No users assigned';
   }
 
   async presentAddUserAlert() {
@@ -87,7 +93,6 @@ export class TripPage implements OnInit {
             if (this.isValidEmail(email)) {
               this.addUserToTrip(email);
             } else {
-              // Mostrar mensagem de erro se o email não for válido
               const invalidEmailAlert = await this.alertController.create({
                 header: 'Invalid Email',
                 message: 'Please enter a valid email address.',
@@ -119,7 +124,6 @@ export class TripPage implements OnInit {
     this.tripsService.addUserToTrip(this.trip.id, email).subscribe({
       next: async (response: any) => {
         console.log('User added to trip:', response);
-        // Mostrar toast de sucesso
         const toast = await this.toastController.create({
           message: 'User added to trip successfully!',
           duration: 3000,
@@ -129,7 +133,6 @@ export class TripPage implements OnInit {
       },
       error: async (error: any) => {
         console.error('Failed to add user to trip:', error);
-        // Mostrar toast de erro
         const toast = await this.toastController.create({
           message: 'Failed to add user to trip. Please try again.',
           duration: 3000,

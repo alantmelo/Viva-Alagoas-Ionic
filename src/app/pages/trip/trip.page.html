@@ -27,6 +27,7 @@
         <h2>{{ item.name }}</h2>
         <p>Quantity: {{ item.quantity }}</p>
         <p>Price: {{ item.price | currency }}</p>
+        <p>Users: {{ getUserNames(item) }}</p> <!-- Exibe os nomes dos usuários -->
       </ion-label>
     </ion-item>
   </ion-list>

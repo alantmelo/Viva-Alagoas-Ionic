@@ -1,4 +1,4 @@
-import { Item } from "./item";
+// import { Item } from "./item";
 export interface City {
     id: number;
     name: string;
@@ -31,4 +31,21 @@ export interface City {
     items: Trip[];
     total: number;
   }
+  export interface User {
+    name: string;
+  }
   
+  export interface ItemUser {
+    id: number;
+    user: User;
+  }
+  
+  export interface Item {
+    id: number;
+    name: string;
+    itemUser: ItemUser[];
+    itemType: {
+      id: number;
+      name: string;
+    };
+  }
