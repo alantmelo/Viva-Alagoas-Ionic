@@ -21,11 +21,13 @@
       </ion-item>
     </ion-item-sliding>
   </ion-list>
-  
-  
-
   <ion-infinite-scroll (ionInfinite)="loadMore($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more trips...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="openTripModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

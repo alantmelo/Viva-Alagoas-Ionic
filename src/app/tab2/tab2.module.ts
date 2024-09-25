@@ -5,8 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { Tab2Page } from './tab2.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
+import { ReactiveFormsModule } from '@angular/forms';
 import { Tab2PageRoutingModule } from './tab2-routing.module';
-
+import { TripModalComponent } from '../components/trip-modal/trip-modal.component';
 @NgModule({
   imports: [
     IonicModule,
@@ -14,7 +15,9 @@ import { Tab2PageRoutingModule } from './tab2-routing.module';
     FormsModule,
     ExploreContainerComponentModule,
     Tab2PageRoutingModule,
+    ReactiveFormsModule
   ],
-  declarations: [Tab2Page]
+  declarations: [Tab2Page, 
+    TripModalComponent,]
 })
 export class Tab2PageModule {}

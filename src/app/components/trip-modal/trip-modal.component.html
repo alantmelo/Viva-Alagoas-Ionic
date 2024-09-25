@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Trip Modal</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="tripForm" (ngSubmit)="confirm()">
+    <ion-item>
+      <ion-label>Name</ion-label>
+      <ion-input formControlName="name"></ion-input>
+    </ion-item>
+    <div *ngIf="tripForm.get('name')?.invalid && (tripForm.get('name')?.touched || tripForm.get('name')?.dirty)">
+      <ion-text color="danger">Name is required.</ion-text>
+    </div>
+
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <div *ngIf="tripForm.get('password')?.invalid && (tripForm.get('password')?.touched || tripForm.get('password')?.dirty)">
+      <ion-text color="danger">Password must be at least 8 characters.</ion-text>
+    </div>
+
+    <ion-item>
+      <ion-label>Trip Code</ion-label>
+      <ion-input formControlName="tripCode"></ion-input>
+    </ion-item>
+    <div *ngIf="tripForm.get('tripCode')?.invalid && (tripForm.get('tripCode')?.touched || tripForm.get('tripCode')?.dirty)">
+      <ion-text color="danger">Trip Code is required.</ion-text>
+    </div>
+
+    <ion-item>
+      <ion-label>Description</ion-label>
+      <ion-input formControlName="description"></ion-input>
+    </ion-item>
+    <div *ngIf="tripForm.get('description')?.invalid && (tripForm.get('description')?.touched || tripForm.get('description')?.dirty)">
+      <ion-text color="danger">Description is required.</ion-text>
+    </div>
+
+    <ion-item>
+      <ion-label>City</ion-label>
+      <ion-input type="number" formControlName="city"></ion-input>
+    </ion-item>
+    <div *ngIf="tripForm.get('city')?.invalid && (tripForm.get('city')?.touched || tripForm.get('city')?.dirty)">
+      <ion-text color="danger">City is required.</ion-text>
+    </div>
+
+    <ion-item>
+      <ion-label>User ID</ion-label>
+      <ion-input type="number" formControlName="userId"></ion-input>
+    </ion-item>
+    <div *ngIf="tripForm.get('userId')?.invalid && (tripForm.get('userId')?.touched || tripForm.get('userId')?.dirty)">
+      <ion-text color="danger">User ID is required.</ion-text>
+    </div>
+
+    <ion-button expand="full" type="submit" [disabled]="tripForm.invalid">Submit</ion-button>
+
+    <div *ngIf="errorMessage" color="danger">{{ errorMessage }}</div>
+  </form>
+</ion-content>

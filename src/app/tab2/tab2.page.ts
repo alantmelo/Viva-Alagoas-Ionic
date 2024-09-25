@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TripService } from '../services/trip.service'; 
 import { Trip, TripResponse } from '../models/trip';
+import { TripModalComponent } from '../components/trip-modal/trip-modal.component';
+
+import { ModalController } from '@ionic/angular';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -15,7 +18,8 @@ export class Tab2Page  implements OnInit{
   totalTrips: number = 0;
     constructor(
       private router: Router,
-      private tripsService: TripService
+      private tripsService: TripService,
+      private modalCtrl: ModalController,
   ) {
   }
   navigateToPage(id: Number) {
@@ -64,6 +68,12 @@ export class Tab2Page  implements OnInit{
         console.error('Error updating trip status:', err);
       }
     });
+  }
+  async openTripModal() {
+    const modal = await this.modalCtrl.create({
+      component: TripModalComponent,
+    });
+    await modal.present();
   }
 
 }
