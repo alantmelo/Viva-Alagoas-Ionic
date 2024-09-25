@@ -52,6 +52,18 @@ export class Tab2Page  implements OnInit{
       event.target.disabled = true; // Desabilita o scroll infinito quando todas as viagens são carregadas
     }
   }
+  updateTripStatus(tripId: number) {
+    this.tripsService.updateTripStatusToFalse(tripId).subscribe({
+      next: (response) => {
+        console.log('Trip status updated:', response);
+        this.trips = this.trips.filter(trip => trip.id !== tripId);
 
+        // Aqui você pode adicionar lógica para atualizar a UI ou exibir uma mensagem de sucesso
+      },
+      error: (err) => {
+        console.error('Error updating trip status:', err);
+      }
+    });
+  }
 
 }

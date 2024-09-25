@@ -14,22 +14,28 @@ import { environment } from 'src/environments/environment';
 })
 export class TripService {
 
+  private token = localStorage.getItem('authToken');
   private apiUrl = `${environment.apiUrl}mobile/v1/calculator`; 
   constructor(private http: HttpClient) {}
   getTripById(id: number): Observable<Trip> {
     return this.http.get<Trip>(`${this.apiUrl}/trips/${id}`);
   }
-  getTrips(search: string = '', page: number = 0, pageSize: number = 10, cityId?: number): Observable<TripResponse> {
+  getTrips(search: string = '', page: number = 0, pageSize: number = 10, userId?: number): Observable<TripResponse> {
     let params = new HttpParams()
       .set('search', search)
       .set('page', page.toString())
       .set('pageSize', pageSize.toString());
-
-    if (cityId) {
-      params = params.set('cityId', cityId.toString());
+  
+    if (userId) {
+      params = params.set('userId', userId.toString());
     }
-
-    return this.http.get<TripResponse>(`${this.apiUrl}/trips`, { params });
+  
+    // Define os cabeçalhos, incluindo o token de autorização
+    const headers = {
+      Authorization: `Bearer ${this.token}`, // Adiciona o token ao cabeçalho
+    };
+  
+    return this.http.get<TripResponse>(`${this.apiUrl}/trips`, { params, headers });
   }
 
   private items$ = new BehaviorSubject<TripItem[]>([
@@ -120,5 +126,9 @@ export class TripService {
   removeItem(id: number): Observable<any> {
     console.log('entrou no service ionic');
     return this.http.delete(`${this.apiUrl}/trips/items/${id}`);
+  }
+  updateTripStatusToFalse(tripId: number): Observable<any> {
+    const url = `${this.apiUrl}/trips/${tripId}`;
+    return this.http.delete(url, {}); // Faz o patch sem body, apenas para alterar o status
   }
 }

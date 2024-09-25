@@ -5,14 +5,24 @@
   <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="onSearchChange($event)" debounce="500"></ion-searchbar>
 
   <ion-list>
-    <ion-item *ngFor="let trip of trips">
-      <ion-label  (click)="navigateToPage(trip.id)">
-        <h2>{{ trip.name }}</h2>
-        <p>{{ trip.description }}</p>
-        <p>Total Items Value: {{ trip.total | currency }}</p>
-      </ion-label>
-    </ion-item>
+    <ion-item-sliding *ngFor="let trip of trips">
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="updateTripStatus(trip.id)">
+          <ion-icon name="trash" slot="start"></ion-icon> <!-- Ícone de lixeira -->
+          Delete
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item>
+        <ion-label (click)="navigateToPage(trip.id)">
+          <h2>{{ trip.name }}</h2>
+          <p>{{ trip.description }}</p>
+          <p>Total Items Value: {{ trip.total | currency }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-item-sliding>
   </ion-list>
+  
+  
 
   <ion-infinite-scroll (ionInfinite)="loadMore($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more trips...">
