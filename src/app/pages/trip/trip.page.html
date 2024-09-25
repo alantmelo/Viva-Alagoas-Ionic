@@ -26,10 +26,13 @@
     <ion-item-sliding *ngFor="let item of items">
       <ion-item (click)="openAddItemModal(item.id)">
         <ion-label>
-          <h2>{{ item.name }}</h2>
           <p>Quantity: {{ item.quantity }}</p>
           <p>Price: {{ item.price | currency }}</p>
-          <p>Users: {{ getUserNames(item) }}</p> <!-- Exibe os nomes dos usuários -->
+          <p>Total: {{ getTotalPrice(item) | currency }}</p> <!-- Mostra o valor total -->
+          <p>Users: {{ getUserNames(item) }}</p> <!-- Mostra os nomes dos usuários -->
+          <p *ngIf="item.itemUser.length > 0">
+            Each user pays: {{ getEachUserPayment(item) | currency }}
+          </p> <!-- Mostra o valor que cada usuário paga -->
         </ion-label>
       </ion-item>
   

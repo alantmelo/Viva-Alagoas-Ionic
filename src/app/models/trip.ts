@@ -44,7 +44,7 @@ export interface City {
     id: number;
     name: string;
     price: number;
-    quantitaty: number;
+    quantity: number;
     itemUser: ItemUser[];
     itemType: {
       id: number;

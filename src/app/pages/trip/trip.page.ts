@@ -161,7 +161,21 @@ export class TripPage implements OnInit {
       this.showToast('Error removing item. Please try again.');
     }
   }
+  getTotalPrice(item: Item): number {
+    return item.quantity * item.price;
+  }
   
+
+  // Método para calcular quanto cada usuário tem que pagar
+  getEachUserPayment(item: Item): number {
+    console.log(item)
+    if (item.itemUser.length > 0) {
+      const totalPrice = this.getTotalPrice(item);
+      console.log(totalPrice)
+      return totalPrice / item.itemUser.length; // Divide o total pelo número de usuários
+    }
+    return 0; // Se não houver usuários, retorna 0
+  }
 
   /**
    * Exibe uma mensagem de toast.
