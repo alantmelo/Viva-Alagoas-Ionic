@@ -13,7 +13,7 @@ export class AddItemTripModalComponent implements OnInit {
   @Input() itemId?: number; // ID opcional do item para edição
   tripUsers: any[] = [];
   activeItemTypes: any[] = [];
-
+  errorMessage: string | null = null;
   // Form properties
   addItemForm!: FormGroup;
 
@@ -27,7 +27,7 @@ export class AddItemTripModalComponent implements OnInit {
       itemName: ['', Validators.required],
       quantity: [1, [Validators.required, Validators.min(1)]],
       userQuantity: [1, [Validators.required, Validators.min(1)]],
-      price: [0, [Validators.required, Validators.min(0)]],
+      price: [0, [Validators.required, Validators.min(1)]],
       selectedItemType: [null, Validators.required],
     });
   }
@@ -49,9 +49,9 @@ export class AddItemTripModalComponent implements OnInit {
           isSelected: false // Inicializa todos como não selecionados
         }));
         this.activeItemTypes = data.activeItemTypes;
-  
+
         console.log('Trip users loaded:', this.tripUsers);
-  
+
         // Se o item já estiver carregado (em caso de atualização), podemos marcar os usuários selecionados
         if (this.itemId) {
           this.loadItemData(this.itemId);
@@ -60,7 +60,6 @@ export class AddItemTripModalComponent implements OnInit {
       error: (err) => console.error('Error loading trip data', err)
     });
   }
-  
 
   // Carregar os dados do item existente para edição
   loadItemData(itemId: number) {
@@ -74,22 +73,20 @@ export class AddItemTripModalComponent implements OnInit {
           price: itemData.price,
           selectedItemType: itemData.itemTypeId,
         });
-  
+
         // Marcar os usuários que estão selecionados para este item
         const selectedUserIds = itemData.itemUser.map((user: { userId: any; }) => user.userId);
-  
+
         // Agora, marca os usuários selecionados, assumindo que `tripUsers` já foi carregado
         this.tripUsers.forEach((tripUser) => {
           tripUser.isSelected = selectedUserIds.includes(tripUser.user.id);
         });
-  
+
         console.log('Updated trip users with selections:', this.tripUsers);
       },
       error: (err) => console.error('Error loading item data', err),
     });
   }
-  
-  
 
   close() {
     this.modalController.dismiss();
@@ -99,7 +96,14 @@ export class AddItemTripModalComponent implements OnInit {
     const selectedUsers = this.tripUsers
       .filter((user) => user.isSelected)
       .map((user) => user.user.id);
-
+  
+    // Verifica se pelo menos um usuário foi selecionado
+    if (selectedUsers.length === 0) {
+      this.errorMessage = "Please select at least one user."; // Mensagem de erro
+      return; // Interrompe a execução se não houver usuários selecionados
+    }
+  
+    // Prepara os dados do item a serem enviados
     const itemData = {
       name: this.addItemForm.value.itemName,
       quantity: this.addItemForm.value.quantity,
@@ -109,7 +113,7 @@ export class AddItemTripModalComponent implements OnInit {
       tripId: this.tripId,
       selectedUsers: selectedUsers,
     };
-
+  
     if (this.itemId) {
       // Se itemId existir, fazer atualização
       this.tripService.updateItem(this.itemId, itemData).subscribe({
@@ -119,6 +123,7 @@ export class AddItemTripModalComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error updating item', error);
+          this.errorMessage = "An error occurred while updating the item."; // Mensagem de erro
         },
       });
     } else {
@@ -130,10 +135,14 @@ export class AddItemTripModalComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error creating item', error);
+          this.errorMessage = "An error occurred while creating the item."; // Mensagem de erro
         },
       });
     }
+  
+    this.errorMessage = ""; // Limpa a mensagem de erro após um envio bem-sucedido
   }
+  
 
   toggleUserSelection(user: any) {
     user.isSelected = !user.isSelected; // Alternar a seleção
