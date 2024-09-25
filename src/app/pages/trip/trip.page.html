@@ -13,6 +13,7 @@
       <ion-card-title>{{ trip.name }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
+      <p><strong>Total:</strong> {{ trip.total | currency }}</p>
       <p><strong>Código:</strong> {{ trip.tripCode }}</p>
       <p><strong>Status:</strong> {{ trip.status ? 'Ativa' : 'Inativa' }}</p>
       <p><strong>Descrição:</strong> {{ trip.description }}</p>
@@ -21,8 +22,10 @@
       <p><strong>Atualizada em:</strong> {{ trip.updatedAt | date }}</p>
     </ion-card-content>
   </ion-card>
-  
+  <ion-card>
+    
   <ion-list>
+    
     <ion-item-sliding *ngFor="let item of items">
       <ion-item (click)="openAddItemModal(item.id)">
         <ion-label>
@@ -43,6 +46,7 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+</ion-card>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>

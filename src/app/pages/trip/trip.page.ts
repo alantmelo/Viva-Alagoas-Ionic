@@ -50,7 +50,7 @@ export class TripPage implements OnInit {
   loadTrip(id: number) {
     this.tripsService.getTripById(id).subscribe((trip) => {
       this.trip = trip;
-      // console.log(trip.item);
+      console.log(trip);
       this.loadItems(); // Carrega os itens após carregar a viagem
     });
   }
@@ -58,7 +58,7 @@ export class TripPage implements OnInit {
   loadItems() {
     if (this.trip && this.trip.item) {
       this.items = this.trip.item; // Preenche a lista de itens da viagem
-      console.log('Trip items:', this.items);
+      // console.log('Trip items:', this.items);
     } else {
       console.warn('No items found for this trip');
     }
@@ -168,10 +168,9 @@ export class TripPage implements OnInit {
 
   // Método para calcular quanto cada usuário tem que pagar
   getEachUserPayment(item: Item): number {
-    console.log(item)
     if (item.itemUser.length > 0) {
       const totalPrice = this.getTotalPrice(item);
-      console.log(totalPrice)
+      // console.log(totalPrice)
       return totalPrice / item.itemUser.length; // Divide o total pelo número de usuários
     }
     return 0; // Se não houver usuários, retorna 0
