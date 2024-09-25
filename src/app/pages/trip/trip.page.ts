@@ -145,4 +145,33 @@ export class TripPage implements OnInit {
       }
     });
   }
+
+  /**
+   * Remove um item da lista.
+   * @param id - O ID do item a ser removido.
+   */
+  async removeItem(id: number) {
+    console.log('remove: '+ id)
+    try {
+      await this.tripsService.removeItem(id).toPromise();
+      this.items = this.items.filter(item => item.id !== id); // Atualiza a lista local
+      this.showToast(`Item with ID ${id} has been deleted successfully.`);
+    } catch (error) {
+      console.error('Error removing item', error);
+      this.showToast('Error removing item. Please try again.');
+    }
+  }
+
+  /**
+   * Exibe uma mensagem de toast.
+   * @param message - A mensagem a ser exibida.
+   */
+  async showToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
 }

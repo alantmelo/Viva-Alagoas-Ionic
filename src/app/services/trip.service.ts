@@ -71,9 +71,6 @@ export class TripService {
     this.items$.next([...this.items$.getValue(), newItem]);
   }
 
-  removeItem(id: number) {
-    this.items$.next(this.items$.getValue().filter((item) => item.id !== id));
-  }
 
   changeQty(quantity: number, id: number) {
     const items = this.items$.getValue();
@@ -119,5 +116,9 @@ export class TripService {
 
   getItemById(itemId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/trips/items/${itemId}`);
+  }
+  removeItem(id: number): Observable<any> {
+    console.log('entrou no service ionic');
+    return this.http.delete(`${this.apiUrl}/trips/items/${id}`);
   }
 }
