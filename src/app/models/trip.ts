@@ -43,6 +43,8 @@ export interface City {
   export interface Item {
     id: number;
     name: string;
+    price: number;
+    quantitaty: number;
     itemUser: ItemUser[];
     itemType: {
       id: number;

@@ -39,7 +39,7 @@ export class TripPage implements OnInit {
 
     modal.onDidDismiss().then((result) => {
       if (result.data) {
-        console.log('Selected user IDs:', result.data);
+        // console.log('Selected user IDs:', result.data);
         this.ngOnInit(); // Atualiza a lista de itens após adicionar um novo
       }
     });
@@ -50,7 +50,7 @@ export class TripPage implements OnInit {
   loadTrip(id: number) {
     this.tripsService.getTripById(id).subscribe((trip) => {
       this.trip = trip;
-      console.log(trip.item);
+      // console.log(trip.item);
       this.loadItems(); // Carrega os itens após carregar a viagem
     });
   }
@@ -151,7 +151,7 @@ export class TripPage implements OnInit {
    * @param id - O ID do item a ser removido.
    */
   async removeItem(id: number) {
-    console.log('remove: '+ id)
+    console.log('remove: ' + id);
     try {
       await this.tripsService.removeItem(id).toPromise();
       this.items = this.items.filter(item => item.id !== id); // Atualiza a lista local
@@ -161,6 +161,7 @@ export class TripPage implements OnInit {
       this.showToast('Error removing item. Please try again.');
     }
   }
+  
 
   /**
    * Exibe uma mensagem de toast.

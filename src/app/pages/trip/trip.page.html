@@ -21,6 +21,7 @@
       <p><strong>Atualizada em:</strong> {{ trip.updatedAt | date }}</p>
     </ion-card-content>
   </ion-card>
+  
   <ion-list>
     <ion-item-sliding *ngFor="let item of items">
       <ion-item (click)="openAddItemModal(item.id)">
