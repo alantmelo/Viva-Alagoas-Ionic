@@ -26,14 +26,6 @@
     </div>
 
     <ion-item>
-      <ion-label>Trip Code</ion-label>
-      <ion-input formControlName="tripCode"></ion-input>
-    </ion-item>
-    <div *ngIf="tripForm.get('tripCode')?.invalid && (tripForm.get('tripCode')?.touched || tripForm.get('tripCode')?.dirty)">
-      <ion-text color="danger">Trip Code is required.</ion-text>
-    </div>
-
-    <ion-item>
       <ion-label>Description</ion-label>
       <ion-input formControlName="description"></ion-input>
     </ion-item>

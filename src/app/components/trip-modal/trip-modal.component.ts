@@ -24,7 +24,6 @@ export class TripModalComponent implements OnInit {
     this.tripForm = this.fb.group({
       name: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(3)]],
-      tripCode: ['', [Validators.required]],
       description: ['', Validators.required],
       city: [null],
     });
@@ -45,7 +44,6 @@ export class TripModalComponent implements OnInit {
         this.tripForm.patchValue({
           name: tripData.name,
           password: tripData.password,
-          tripCode: tripData.tripCode,
           description: tripData.description,
           city: tripData.city,
         });
@@ -63,7 +61,6 @@ export class TripModalComponent implements OnInit {
     const tripData = {
       name: this.tripForm.value.name,
       password: this.tripForm.value.password,
-      tripCode: this.tripForm.value.tripCode,
       description: this.tripForm.value.description,
       city: this.tripForm.value.city,
     };

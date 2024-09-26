@@ -17,13 +17,25 @@
       <p><strong>Código:</strong> {{ trip.tripCode }}</p>
       <p><strong>Status:</strong> {{ trip.status ? 'Ativa' : 'Inativa' }}</p>
       <p><strong>Descrição:</strong> {{ trip.description }}</p>
+      <p><strong>Password:</strong> {{ trip.password }}</p>
       <!-- <p><strong>Cidade:</strong> {{ trip.city?.name }}</p> -->
       <p><strong>Criada em:</strong> {{ trip.createdAt | date }}</p>
       <p><strong>Atualizada em:</strong> {{ trip.updatedAt | date }}</p>
     </ion-card-content>
   </ion-card>
   <ion-card>
-    
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Users in this Trip</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let tripUser of trip.tripUser">
+            <ion-label>{{ tripUser.user.name }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
   <ion-list>
     
     <ion-item-sliding *ngFor="let item of items">

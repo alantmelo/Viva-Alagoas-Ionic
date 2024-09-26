@@ -25,7 +25,12 @@ export interface City {
     cityId?: number;
     city?: City;
     item?: Item[];
-    total?: number;  // Adicione esta linha
+    total?: number;
+    tripUser: TripUser[];
+  }
+  export interface TripUser {
+    id: number;
+    user: User;
   }
   
   export interface TripResponse {

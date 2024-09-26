@@ -49,9 +49,14 @@ export class TripPage implements OnInit {
 
   loadTrip(id: number) {
     this.tripsService.getTripById(id).subscribe((trip) => {
+      console.log('Trip response:', trip); // Log the entire trip response
       this.trip = trip;
-      console.log(trip);
-      this.loadItems(); // Carrega os itens após carregar a viagem
+  
+      if (this.trip) {
+        console.log('User Trips:', this.trip); // Check if userTrip exists
+      }
+  
+      this.loadItems(); // Load items after loading the trip
     });
   }
 
