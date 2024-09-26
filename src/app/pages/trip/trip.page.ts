@@ -4,6 +4,7 @@ import { TripService } from 'src/app/services/trip.service';
 import { Item, Trip } from 'src/app/models/trip';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { AddItemTripModalComponent } from 'src/app/components/add-item-trip-modal/add-item-trip-modal.component';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-trip',
@@ -135,6 +136,7 @@ export class TripPage implements OnInit {
           color: 'success'
         });
         await toast.present();
+        this.ngOnInit(); 
       },
       error: async (error: any) => {
         console.error('Failed to add user to trip:', error);
@@ -157,15 +159,19 @@ export class TripPage implements OnInit {
    */
   async removeItem(id: number) {
     console.log('remove: ' + id);
-    try {
-      await this.tripsService.removeItem(id).toPromise();
-      this.items = this.items.filter(item => item.id !== id); // Atualiza a lista local
-      this.showToast(`Item with ID ${id} has been deleted successfully.`);
-    } catch (error) {
-      console.error('Error removing item', error);
-      this.showToast('Error removing item. Please try again.');
-    }
+    
+    this.tripsService.removeItem(id).subscribe({
+      next: () => {
+        this.items = this.items.filter(item => item.id !== id); // Update the local item list
+        this.showToast(`Item with ID ${id} has been deleted successfully.`);
+      },
+      error: (error) => {
+        console.error('Error removing item', error);
+        this.showToast('Error removing item. Please try again.');
+      }
+    });
   }
+  
   getTotalPrice(item: Item): number {
     return item.quantity * item.price;
   }
@@ -192,5 +198,39 @@ export class TripPage implements OnInit {
       position: 'bottom'
     });
     toast.present();
+  }
+  async removeTripUser(id: number) {
+    const alert = await this.alertController.create({
+      header: 'Confirm Deletion',
+      message: 'Are you sure you want to delete this Trip User?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Deletion cancelled');
+          },
+        },
+        {
+          text: 'Delete',
+          handler: async () => {
+            console.log('Deleting Trip User with ID:', id);
+            console.log('Deleting Trip ID:', +this.route.snapshot.paramMap.get('id')!);
+            try {
+              await firstValueFrom(this.tripsService.removeTripUser(+this.route.snapshot.paramMap.get('id')!,id)); // Using firstValueFrom
+              this.items = this.items.filter(item => item.id !== id); // Update the local list
+              this.showToast(`Trip User with ID ${id} has been deleted successfully.`);
+              this.ngOnInit(); 
+            } catch (error) {
+              console.error('Error removing Trip User', error);
+              this.showToast('Error removing Trip User. Please try again.');
+            }
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 }

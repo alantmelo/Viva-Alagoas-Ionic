@@ -149,4 +149,14 @@ export class TripService {
 
     return this.http.patch(`${this.apiUrl}/trips/${id}`, tripData, { headers });
   }
+  removeTripUser(tripId: number, tripUserId: number): Observable<string> {
+    const url = `${this.apiUrl}/trips/${tripId}/users/${tripUserId}`;
+    
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`,
+    });
+
+    return this.http.delete<string>(url, { headers });
+  }
 }

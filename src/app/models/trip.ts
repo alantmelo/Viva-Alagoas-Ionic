@@ -38,6 +38,7 @@ export interface City {
     total: number;
   }
   export interface User {
+    id: number;
     name: string;
   }
   
