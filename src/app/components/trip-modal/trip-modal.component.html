@@ -19,7 +19,7 @@
 
     <ion-item>
       <ion-label>Password</ion-label>
-      <ion-input type="password" formControlName="password"></ion-input>
+      <ion-input type="text" formControlName="password"></ion-input>
     </ion-item>
     <div *ngIf="tripForm.get('password')?.invalid && (tripForm.get('password')?.touched || tripForm.get('password')?.dirty)">
       <ion-text color="danger">Password must be at least 8 characters.</ion-text>
@@ -47,14 +47,6 @@
     </ion-item>
     <div *ngIf="tripForm.get('city')?.invalid && (tripForm.get('city')?.touched || tripForm.get('city')?.dirty)">
       <ion-text color="danger">City is required.</ion-text>
-    </div>
-
-    <ion-item>
-      <ion-label>User ID</ion-label>
-      <ion-input type="number" formControlName="userId"></ion-input>
-    </ion-item>
-    <div *ngIf="tripForm.get('userId')?.invalid && (tripForm.get('userId')?.touched || tripForm.get('userId')?.dirty)">
-      <ion-text color="danger">User ID is required.</ion-text>
     </div>
 
     <ion-button expand="full" type="submit" [disabled]="tripForm.invalid">Submit</ion-button>

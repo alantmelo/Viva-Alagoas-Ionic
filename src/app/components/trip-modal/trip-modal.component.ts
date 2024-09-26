@@ -23,11 +23,10 @@ export class TripModalComponent implements OnInit {
     // Initialize the form group
     this.tripForm = this.fb.group({
       name: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(3)]],
       tripCode: ['', [Validators.required]],
       description: ['', Validators.required],
-      city: [null, Validators.required],
-      userId: [null, Validators.required],
+      city: [null],
     });
   }
 
@@ -49,7 +48,6 @@ export class TripModalComponent implements OnInit {
           tripCode: tripData.tripCode,
           description: tripData.description,
           city: tripData.city,
-          userId: tripData.userId,
         });
       },
       error: (err) => console.error('Error loading trip data', err),
@@ -68,33 +66,32 @@ export class TripModalComponent implements OnInit {
       tripCode: this.tripForm.value.tripCode,
       description: this.tripForm.value.description,
       city: this.tripForm.value.city,
-      userId: this.tripForm.value.userId,
     };
 
     if (this.tripId) {
       // If tripId exists, update the trip
-      // this.tripService.updateTrip(this.tripId, tripData).subscribe({
-      //   next: (response) => {
-      //     console.log('Trip updated successfully', response);
-      //     this.modalController.dismiss(response); // Close the modal with the response
-      //   },
-      //   error: (error) => {
-      //     console.error('Error updating trip', error);
-      //     this.errorMessage = "An error occurred while updating the trip."; // Error message
-      //   },
-      // });
+      this.tripService.updateTrip(this.tripId, tripData).subscribe({
+        next: (response) => {
+          console.log('Trip updated successfully', response);
+          this.modalController.dismiss(response); // Close the modal with the response
+        },
+        error: (error) => {
+          console.error('Error updating trip', error);
+          this.errorMessage = "An error occurred while updating the trip."; // Error message
+        },
+      });
     } else {
       // Otherwise, create a new trip
-      // this.tripService.createTrip(tripData).subscribe({
-      //   next: (response) => {
-      //     console.log('Trip created successfully', response);
-      //     this.modalController.dismiss(response); // Close the modal with the response
-      //   },
-      //   error: (error) => {
-      //     console.error('Error creating trip', error);
-      //     this.errorMessage = "An error occurred while creating the trip."; // Error message
-      //   },
-      // });
+      this.tripService.createTrip(tripData).subscribe({
+        next: (response) => {
+          console.log('Trip created successfully', response);
+          this.modalController.dismiss(response); // Close the modal with the response
+        },
+        error: (error) => {
+          console.error('Error creating trip', error);
+          this.errorMessage = "An error occurred while creating the trip."; // Error message
+        },
+      });
     }
 
     this.errorMessage = ""; // Clear the error message after a successful submission

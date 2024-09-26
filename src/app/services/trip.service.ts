@@ -5,7 +5,7 @@ import { TripItem } from '../models/trip-item';
 import { Item } from '../models/item';
 import { Trip,TripResponse } from '../models/trip';
 import { User } from '../models/user';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 
@@ -130,5 +130,23 @@ export class TripService {
   updateTripStatusToFalse(tripId: number): Observable<any> {
     const url = `${this.apiUrl}/trips/${tripId}`;
     return this.http.delete(url, {}); // Faz o patch sem body, apenas para alterar o status
+  }
+
+  createTrip(tripData: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`,  // Adiciona o token no cabeçalho
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post(`${this.apiUrl}/trips`, tripData, { headers });
+  }
+
+  updateTrip(id: number, tripData: Partial<any>): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.patch(`${this.apiUrl}/trips/${id}`, tripData, { headers });
   }
 }

@@ -17,15 +17,15 @@ export interface City {
     name: string;
     password: string;
     tripCode: string;
-    status: boolean;
+    status?: boolean;
     description: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: string;
+    updatedAt?: string;
     userId: number;
-    cityId: number;
-    city: City;
-    item: Item[];
-    total: number;  // Adicione esta linha
+    cityId?: number;
+    city?: City;
+    item?: Item[];
+    total?: number;  // Adicione esta linha
   }
   
   export interface TripResponse {

@@ -7,6 +7,10 @@
   <ion-list>
     <ion-item-sliding *ngFor="let trip of trips">
       <ion-item-options side="end">
+        <ion-item-option  (click)="openTripModal(trip.id)">
+          <ion-icon name="pencil" slot="start"></ion-icon> <!-- Ícone de lixeira -->
+          Edit
+        </ion-item-option>
         <ion-item-option color="danger" (click)="updateTripStatus(trip.id)">
           <ion-icon name="trash" slot="start"></ion-icon> <!-- Ícone de lixeira -->
           Delete

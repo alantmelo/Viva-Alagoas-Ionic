@@ -69,9 +69,17 @@ export class Tab2Page  implements OnInit{
       }
     });
   }
-  async openTripModal() {
+  async openTripModal(id?: number) {
     const modal = await this.modalCtrl.create({
-      component: TripModalComponent,
+      component: TripModalComponent, 
+      componentProps: { tripId: id }
+    });
+    modal.onDidDismiss().then((result) => {
+      if (result.data) {
+        this.trips = [];
+        // console.log('Selected user IDs:', result.data);
+        this.ngOnInit(); // Atualiza a lista de itens após adicionar um novo
+      }
     });
     await modal.present();
   }
