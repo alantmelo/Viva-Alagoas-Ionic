@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Trip</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="tripForm" (ngSubmit)="editTrip()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input formControlName="name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input formControlName="password" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Description</ion-label>
+        <ion-input formControlName="description"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">City</ion-label>
+        <ion-input formControlName="city"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <div class="ion-padding">
+      <ion-button expand="block" type="submit" [disabled]="tripForm.invalid">Save Changes</ion-button>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </form>
+</ion-content>

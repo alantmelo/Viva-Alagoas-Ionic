@@ -40,6 +40,7 @@ export class TripModalComponent implements OnInit {
   loadTripData(tripId: number) {
     this.tripService.getTripById(tripId).subscribe({
       next: (tripData) => {
+        console.log(tripData);
         // Fill the form with trip data
         this.tripForm.patchValue({
           name: tripData.name,

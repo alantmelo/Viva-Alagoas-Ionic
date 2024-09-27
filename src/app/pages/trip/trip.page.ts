@@ -5,6 +5,7 @@ import { Item, Trip } from 'src/app/models/trip';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { AddItemTripModalComponent } from 'src/app/components/add-item-trip-modal/add-item-trip-modal.component';
 import { firstValueFrom } from 'rxjs';
+import { TripEditModalComponent } from 'src/app/components/trip-edit-modal/trip-edit-modal.component';
 
 @Component({
   selector: 'app-trip',
@@ -233,4 +234,19 @@ export class TripPage implements OnInit {
 
     await alert.present();
   }
+  async openTripModal(id?: number) {
+    const modal = await this.modalController.create({
+      component: TripEditModalComponent, 
+      componentProps: { tripId: id }
+    });
+    modal.onDidDismiss().then((result) => {
+      if (result.data) {
+        // this.trips = [];
+        // console.log('Selected user IDs:', result.data);
+        this.ngOnInit(); // Atualiza a lista de itens após adicionar um novo
+      }
+    });
+    await modal.present();
+  }
+  
 }

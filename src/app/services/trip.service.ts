@@ -146,7 +146,7 @@ export class TripService {
       'Authorization': `Bearer ${this.token}`,
       'Content-Type': 'application/json'
     });
-
+    console.log(tripData);
     return this.http.patch(`${this.apiUrl}/trips/${id}`, tripData, { headers });
   }
   removeTripUser(tripId: number, tripUserId: number): Observable<string> {
