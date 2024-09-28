@@ -26,8 +26,8 @@ export class TripModalComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', Validators.required],
       city: [null],
-      startDate: [null, Validators.required], // Add startDate field
-      endDate: [null, Validators.required], // Add endDate field
+      startDate: [null], // Add startDate field
+      endDate: [null], // Add endDate field
     
     });
   }
@@ -69,7 +69,6 @@ export class TripModalComponent implements OnInit {
       password: this.tripForm.value.password,
       description: this.tripForm.value.description,
       city: this.tripForm.value.city,
-
       startDate: this.formatDate(this.tripForm.value.startDate),
       endDate: this.formatDate(this.tripForm.value.endDate),
     };
