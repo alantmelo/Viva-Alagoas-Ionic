@@ -21,6 +21,8 @@ export interface City {
     description: string;
     createdAt?: string;
     updatedAt?: string;
+    endDate?: string;
+    startDate?: string;
     userId: number;
     cityId?: number;
     city?: City;

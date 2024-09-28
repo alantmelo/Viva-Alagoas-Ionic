@@ -40,6 +40,17 @@
     <div *ngIf="tripForm.get('city')?.invalid && (tripForm.get('city')?.touched || tripForm.get('city')?.dirty)">
       <ion-text color="danger">City is required.</ion-text>
     </div>
+    <!-- Add Start Date Picker -->
+    <ion-item>
+      <ion-label>Start Date</ion-label>
+      <ion-datetime presentation="date" formControlName="startDate" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"></ion-datetime>
+    </ion-item>
+
+    <!-- Add End Date Picker -->
+    <ion-item>
+      <ion-label>End Date</ion-label>
+      <ion-datetime presentation="date" formControlName="endDate" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"></ion-datetime>
+    </ion-item>
 
     <ion-button expand="full" type="submit" [disabled]="tripForm.invalid">Submit</ion-button>
 

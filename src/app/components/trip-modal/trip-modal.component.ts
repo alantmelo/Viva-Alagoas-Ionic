@@ -26,6 +26,9 @@ export class TripModalComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', Validators.required],
       city: [null],
+      startDate: [null, Validators.required], // Add startDate field
+      endDate: [null, Validators.required], // Add endDate field
+    
     });
   }
 
@@ -47,6 +50,8 @@ export class TripModalComponent implements OnInit {
           password: tripData.password,
           description: tripData.description,
           city: tripData.city,
+          startDate: this.formatDate(this.tripForm.value.startDate),
+          endDate: this.formatDate(this.tripForm.value.endDate),
         });
       },
       error: (err) => console.error('Error loading trip data', err),
@@ -64,6 +69,9 @@ export class TripModalComponent implements OnInit {
       password: this.tripForm.value.password,
       description: this.tripForm.value.description,
       city: this.tripForm.value.city,
+
+      startDate: this.formatDate(this.tripForm.value.startDate),
+      endDate: this.formatDate(this.tripForm.value.endDate),
     };
 
     if (this.tripId) {
@@ -93,5 +101,8 @@ export class TripModalComponent implements OnInit {
     }
 
     this.errorMessage = ""; // Clear the error message after a successful submission
+  }
+  formatDate(date: string){
+    return date ? date.split('T')[0] : null; // Extract just the date part
   }
 }
