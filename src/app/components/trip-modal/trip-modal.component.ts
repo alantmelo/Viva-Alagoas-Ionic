@@ -53,7 +53,8 @@ export class TripModalComponent implements OnInit {
           name: tripData.name,
           password: tripData.password,
           description: tripData.description,
-          city: tripData.city,
+          city: tripData.cityId,
+          tripType: tripData.tripTypeId,
           startDate: this.formatDate(this.tripForm.value.startDate),
           endDate: this.formatDate(this.tripForm.value.endDate),
         });

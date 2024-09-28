@@ -11,6 +11,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class TripEditModalComponent implements OnInit {
   @Input() tripId!: number; // Trip ID is required for editing
   errorMessage: string | null = null;
+  tripTypes: any[] = [];
+  cities: any[] = [];
 
   // Form properties
   tripForm!: FormGroup;
@@ -26,6 +28,7 @@ export class TripEditModalComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', Validators.required],
       city: [null],
+      tripType: [null, Validators.required],
       startDate: [null], // Add startDate field
       endDate: [null], // Add endDate field
     });
@@ -36,16 +39,24 @@ export class TripEditModalComponent implements OnInit {
     this.loadTripData(this.tripId);
   }
 
-  // Load existing trip data for editing
+  // Load existing trip data for editing and populate cities and tripTypes
   loadTripData(tripId: number) {
     this.tripService.getTripById(tripId).subscribe({
       next: (tripData) => {
+        console.log(tripData.tripTypes);
+
+        // Populate cities and tripTypes
+        this.cities = tripData.cities;
+        this.tripTypes = tripData.tripTypes;
+
         // Fill the form with trip data
         this.tripForm.patchValue({
           name: tripData.name,
           password: tripData.password,
           description: tripData.description,
-          city: tripData.city,
+          city: tripData.cityId,
+          tripType: tripData.tripTypeId,
+          
           startDate: this.formatDate(this.tripForm.value.startDate),
           endDate: this.formatDate(this.tripForm.value.endDate),
         });
@@ -63,17 +74,17 @@ export class TripEditModalComponent implements OnInit {
 
   // Handle the submission of the edited trip data
   editTrip() {
-    // Prepare trip data to send
+    console.log('this.tripForm.value.city: '+ this.tripForm.value.city);
     const tripData = {
       name: this.tripForm.value.name,
       password: this.tripForm.value.password,
       description: this.tripForm.value.description,
-      city: this.tripForm.value.city,
+      cityId: this.tripForm.value.city,
+      tripTypeId: this.tripForm.value.tripType,
       startDate: this.formatDate(this.tripForm.value.startDate),
       endDate: this.formatDate(this.tripForm.value.endDate),
     };
 
-    // Update the trip
     this.tripService.updateTrip(this.tripId, tripData).subscribe({
       next: (response) => {
         console.log('Trip updated successfully', response);
@@ -85,7 +96,8 @@ export class TripEditModalComponent implements OnInit {
       },
     });
   }
-  formatDate(date: string){
+
+  formatDate(date: string) {
     return date ? date.split('T')[0] : null; // Extract just the date part
   }
 }

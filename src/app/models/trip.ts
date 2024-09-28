@@ -25,10 +25,18 @@ export interface City {
     startDate?: string;
     userId: number;
     cityId?: number;
+    tripTypeId?: number;
     city?: City;
     item?: Item[];
     total?: number;
     tripUser: TripUser[];
+    tripTypes: TripType[];
+    cities: City[];
+  }
+
+  export interface TripType{
+    id: number;
+    name: string;
   }
   export interface TripUser {
     id: number;

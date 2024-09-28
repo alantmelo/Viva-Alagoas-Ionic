@@ -25,21 +25,32 @@
         <ion-input formControlName="description"></ion-input>
       </ion-item>
 
+      <!-- City Select -->
       <ion-item>
         <ion-label position="floating">City</ion-label>
-        <ion-input formControlName="city"></ion-input>
+        <ion-select formControlName="city" placeholder="Select City">
+          <ion-select-option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Trip Type Select -->
+      <ion-item>
+        <ion-label position="floating">Trip Type</ion-label>
+        <ion-select formControlName="tripType" placeholder="Select Trip Type">
+          <ion-select-option *ngFor="let tripType of tripTypes" [value]="tripType.id">{{ tripType.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Start Date</ion-label>
+        <ion-datetime presentation="date" formControlName="startDate" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>End Date</ion-label>
+        <ion-datetime presentation="date" formControlName="endDate" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"></ion-datetime>
       </ion-item>
     </ion-list>
-    <ion-item>
-      <ion-label>Start Date</ion-label>
-      <ion-datetime presentation="date" formControlName="startDate" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"></ion-datetime>
-    </ion-item>
-
-    <!-- Add End Date Picker -->
-    <ion-item>
-      <ion-label>End Date</ion-label>
-      <ion-datetime presentation="date" formControlName="endDate" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"></ion-datetime>
-    </ion-item>
 
     <div class="ion-padding">
       <ion-button expand="block" type="submit" [disabled]="tripForm.invalid">Save Changes</ion-button>
