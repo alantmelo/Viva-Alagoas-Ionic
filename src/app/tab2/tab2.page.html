@@ -1,7 +1,13 @@
 <ion-content>
-  <div class="ion-padding">
+  <div class="header">
     <h2>MY TRIPS</h2>
+    <div class="avatar">
+      <ion-button (click)="presentAlertWithInput()" size="small">
+        <ion-icon slot="icon-only" ios="search" md="settings-sharp"></ion-icon>
+      </ion-button>
+    </div>
   </div>
+  
   <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="onSearchChange($event)" debounce="500"></ion-searchbar>
 
   <ion-list>

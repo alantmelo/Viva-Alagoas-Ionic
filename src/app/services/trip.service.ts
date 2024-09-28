@@ -104,4 +104,8 @@ export class TripService {
   getActiveTripTypesAndCities(): Observable<any> {
     return this.http.get(`${this.apiUrl}/trips/active-types-and-cities/`);
   }
+
+  findTripByCodeAndPassword(tripCode: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/trips/find-by-code`, { tripCode, password });
+  }
 }

@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { TripService } from '../services/trip.service'; 
 import { Trip, TripResponse } from '../models/trip';
 import { TripModalComponent } from '../components/trip-modal/trip-modal.component';
-
 import { ModalController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
+
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -20,10 +21,84 @@ export class Tab2Page  implements OnInit{
       private router: Router,
       private tripsService: TripService,
       private modalCtrl: ModalController,
+      private alertController: AlertController,
+
+    private toastController: ToastController,
   ) {
   }
+  async presentAlertWithInput() {
+    const alert = await this.alertController.create({
+      header: "Discover someone else's itinerary",
+      subHeader: 'Please enter the itinerary code and password',
+      inputs: [
+        {
+          name: 'code',
+          type: 'text',
+          placeholder: 'Enter itinerary code',
+        },
+        {
+          name: 'password',
+          type: 'text',
+          placeholder: 'Enter itinerary password',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          },
+        },
+        {
+          text: 'Ok',
+          handler: async (data) => {
+            const { code, password } = data;
+  
+            // Chama o método do serviço para buscar a viagem
+            try {
+              const trip = await this.tripsService.findTripByCodeAndPassword(code, password).toPromise();
+  
+              if (trip) {
+                console.log('Trip found:', trip);
+                this.navigateToPage(trip.id);
+                // Aqui você pode tratar a viagem, por exemplo, exibir os dados na tela
+                return true; // Fecha o alert
+              } else {
+                // Se a viagem não for encontrada, exibe o toast
+                const toast = await this.toastController.create({
+                  message: 'Trip not found. Please check the code and try again.',
+                  duration: 3000,
+                  position: 'bottom',
+                  color: 'danger',
+                });
+                await toast.present();
+                return false; // Impede o fechamento do alert
+              }
+            } catch (err) {
+              console.error('Error fetching trip:', err);
+  
+              // Verifique se err tem uma propriedade message
+              const message = (err as any).error?.message || 'Incorrect code or password. Please try again.';
+  
+              // Exibe o toast com o erro
+              const toast = await this.toastController.create({
+                message: message,
+                duration: 3000,
+                position: 'bottom',
+                color: 'danger',
+              });
+              await toast.present();
+              return false; // Impede o fechamento do alert
+            }
+          },
+        },
+      ],
+    });
+  
+    await alert.present();
+  }
   navigateToPage(id: Number) {
-      // Navega para a página EventPage
       this.router.navigate(['/trip/'+ id]);
   }
   ngOnInit() {
