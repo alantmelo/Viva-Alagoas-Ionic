@@ -14,6 +14,8 @@ export class TripModalComponent implements OnInit {
 
   // Form properties
   tripForm!: FormGroup;
+  tripTypes: any[] = [];
+  cities: any[] = [];
 
   constructor(
     private modalController: ModalController,
@@ -26,6 +28,7 @@ export class TripModalComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', Validators.required],
       city: [null],
+      tripType: [null, Validators.required],
       startDate: [null], // Add startDate field
       endDate: [null], // Add endDate field
     
@@ -37,6 +40,7 @@ export class TripModalComponent implements OnInit {
     if (this.tripId) {
       this.loadTripData(this.tripId);
     }
+    this.loadTripTypes();
   }
 
   // Load existing trip data for editing
@@ -69,6 +73,7 @@ export class TripModalComponent implements OnInit {
       password: this.tripForm.value.password,
       description: this.tripForm.value.description,
       city: this.tripForm.value.city,
+      tripTypeId: this.tripForm.value.tripType,
       startDate: this.formatDate(this.tripForm.value.startDate),
       endDate: this.formatDate(this.tripForm.value.endDate),
     };
@@ -103,5 +108,21 @@ export class TripModalComponent implements OnInit {
   }
   formatDate(date: string){
     return date ? date.split('T')[0] : null; // Extract just the date part
+  }
+  loadTripTypes() {
+    this.tripService.getActiveTripTypesAndCities().subscribe({
+      next: (result) => {
+        this.tripTypes = result.tripTypes; // Pega os tripTypes
+        this.cities = result.cities; // Pega as cities
+        console.log('Trip Types:', this.tripTypes);
+        console.log('Cities:', this.cities);
+      },
+      error: (error) => {
+        console.error('Erro ao buscar os dados', error);
+      },
+      complete: () => {
+        console.log('Requisição completa.');
+      }
+    });
   }
 }

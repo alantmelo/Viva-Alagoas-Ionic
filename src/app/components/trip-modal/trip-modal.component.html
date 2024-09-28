@@ -34,8 +34,17 @@
     </div>
 
     <ion-item>
-      <ion-label>City</ion-label>
-      <ion-input type="number" formControlName="city"></ion-input>
+      <ion-label>Tipo de Viagem</ion-label>
+      <ion-select formControlName="tripType" required>
+        <ion-select-option *ngFor="let type of tripTypes" [value]="type.id">{{ type.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>Cidade</ion-label>
+      <ion-select formControlName="city">
+        <ion-select-option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</ion-select-option>
+      </ion-select>
     </ion-item>
     <div *ngIf="tripForm.get('city')?.invalid && (tripForm.get('city')?.touched || tripForm.get('city')?.dirty)">
       <ion-text color="danger">City is required.</ion-text>

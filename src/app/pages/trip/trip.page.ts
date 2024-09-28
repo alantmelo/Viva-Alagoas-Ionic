@@ -165,6 +165,7 @@ export class TripPage implements OnInit {
       next: () => {
         this.items = this.items.filter(item => item.id !== id); // Update the local item list
         this.showToast(`Item with ID ${id} has been deleted successfully.`);
+        this.ngOnInit();
       },
       error: (error) => {
         console.error('Error removing item', error);

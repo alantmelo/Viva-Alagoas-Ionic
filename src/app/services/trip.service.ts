@@ -38,65 +38,6 @@ export class TripService {
     return this.http.get<TripResponse>(`${this.apiUrl}/trips`, { params, headers });
   }
 
-  private items$ = new BehaviorSubject<TripItem[]>([
-    {
-      id: 1,
-      name: 'Sol Victoria Marina Hotel',
-      price: 1500,
-      image: 'https://cdn4.iconfinder.com/data/icons/macaron-1/48/eog-512.png',
-      quantity: 1,
-    },
-    {
-      id: 1,
-      name: 'Passages',
-      price: 3000,
-      image: 'https://cdn4.iconfinder.com/data/icons/macaron-1/48/eog-512.png',
-      quantity: 1,
-    },
-    {
-      id: 1,
-      name: 'Transfer',
-      price: 300,
-      image: 'https://cdn4.iconfinder.com/data/icons/macaron-1/48/eog-512.png',
-      quantity: 1,
-    },
-    {
-      id: 1,
-      name: 'Concert Ticket',
-      price: 600,
-      image: 'https://cdn4.iconfinder.com/data/icons/macaron-1/48/eog-512.png',
-      quantity: 3,
-    },
-  ]);
-
-  getCart() {
-    return this.items$.asObservable();
-  }
-
-  addToCart(newItem: TripItem) {
-    this.items$.next([...this.items$.getValue(), newItem]);
-  }
-
-
-  changeQty(quantity: number, id: number) {
-    const items = this.items$.getValue();
-    const index = items.findIndex((item) => item.id === id);
-    items[index].quantity += quantity;
-    this.items$.next(items);
-  }
-
-  getTotalAmount() {
-    return this.items$.pipe(
-      map((items) => {
-        let total = 0;
-        items.forEach((item) => {
-          total += item.quantity * item.price;
-        });
-
-        return total;
-      })
-    );
-  }
   getTripUsers(tripId: number): Observable<{ id: number, user: { name: string } }[]> {
     return this.http.get<{ id: number, user: { name: string } }[]>(`${this.apiUrl}/trips/${tripId}/users`)
       .pipe(
@@ -158,5 +99,9 @@ export class TripService {
     });
 
     return this.http.delete<string>(url, { headers });
+  }
+
+  getActiveTripTypesAndCities(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/trips/active-types-and-cities/`);
   }
 }
