@@ -82,7 +82,6 @@ export class ModalComponent implements OnInit {
   private async getData(type: string, term: string, page: number = 0, pageSize: number = 10): Promise<any> {
     let result: any;
     let cityId : string = localStorage.getItem('cityId')!;
-    cityId = '1';
     // const cityId = localStorage.getItem('cityId');
     switch (type) {
       case 'Beaches':
