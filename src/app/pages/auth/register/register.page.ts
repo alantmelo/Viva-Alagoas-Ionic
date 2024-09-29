@@ -63,6 +63,8 @@ export class RegisterPage implements OnInit {
         next: (res) => {
           console.log(res.token.accessToken);
           this.tokenService.saveToken(res.token.accessToken);
+          this.tokenService.saveId(res.token.id);
+          this.tokenService.saveName(res.token.name);
           this.navCtrl.navigateForward('/tabs/tab1');
         },
         error: async (err) => {

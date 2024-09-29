@@ -5,12 +5,26 @@ import { Injectable } from '@angular/core';
 })
 export class TokenService {
   private tokenKey = 'authToken';
+  private id = 'id';
+  private name = 'name';
 
   constructor() {}
 
   // Save token to Local Storage
-  saveToken(token: string): void {
-    localStorage.setItem(this.tokenKey, token);
+  saveToken(data: string): void {
+    localStorage.setItem(this.tokenKey, data);
+  }
+  saveId(data: string): void {
+    localStorage.setItem(this.id, data);
+  }
+  saveName(data: string): void {
+    localStorage.setItem(this.name, data);
+  }
+  getId(): string | null {
+    return localStorage.getItem(this.name);
+  }
+  getName(): string | null {
+    return localStorage.getItem(this.id);
   }
 
   // Retrieve token from Local Storage

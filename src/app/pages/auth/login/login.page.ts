@@ -34,7 +34,9 @@ export class LoginPage {
       this.authService.login(email, password).subscribe(
         async (response) => {
           console.log('Login successful', response.accessToken);
-          await this.tokenService.saveToken(response.accessToken);
+          this.tokenService.saveToken(response.accessToken);
+          this.tokenService.saveId(response.id);
+          this.tokenService.saveName(response.name);
           this.navCtrl.navigateForward('/tabs/tab1');
         },
         async (error) => {

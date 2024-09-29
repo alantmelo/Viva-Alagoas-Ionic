@@ -6,6 +6,7 @@ import { AlertController, ModalController, ToastController } from '@ionic/angula
 import { AddItemTripModalComponent } from 'src/app/components/add-item-trip-modal/add-item-trip-modal.component';
 import { firstValueFrom } from 'rxjs';
 import { TripEditModalComponent } from 'src/app/components/trip-edit-modal/trip-edit-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trip',
@@ -14,6 +15,7 @@ import { TripEditModalComponent } from 'src/app/components/trip-edit-modal/trip-
 })
 export class TripPage implements OnInit {
   trip: Trip | undefined;
+  guest: boolean | undefined;
   items: any[] = []; // Para armazenar os itens da viagem
 
   constructor(
@@ -22,12 +24,37 @@ export class TripPage implements OnInit {
     private alertController: AlertController,
     private modalController: ModalController,
     private toastController: ToastController,
+    private router: Router,
   ) {}
 
+  isGuest(): boolean {
+    // Obtém o ID do localStorage
+    let id = localStorage.getItem('id');
+    
+    console.log('id:', id);
+    console.log('this.trip?.tripUser:', this.trip?.tripUser);
+  
+    // Se não houver tripUser ou id no localStorage, assume que é convidado
+    if (!id || !this.trip?.tripUser) {
+      return true;
+    }
+  
+    // Converte o ID do localStorage para número (se for necessário)
+    const userId = Number(id);
+  
+    // Verifica se o ID do localStorage está na lista de usuários da trip
+    const isUserInTrip = this.trip.tripUser.some((tripUser) => tripUser.user.id === userId);
+  
+    // Retorna verdadeiro se o ID não estiver na lista
+    return !isUserInTrip;
+  }
+  
   ngOnInit() {
     const tripId = +this.route.snapshot.paramMap.get('id')!;
     this.loadTrip(tripId);
   }
+
+  
 
   async openAddItemModal(itemId?: string) {
     if (!this.trip || !this.trip.id) {
@@ -53,7 +80,8 @@ export class TripPage implements OnInit {
     this.tripsService.getTripById(id).subscribe((trip) => {
       console.log('Trip response:', trip); // Log the entire trip response
       this.trip = trip;
-  
+      this.guest = this.isGuest();
+      console.log("guest: "+this.guest);
       if (this.trip) {
         console.log('User Trips:', this.trip); // Check if userTrip exists
       }
@@ -248,6 +276,39 @@ export class TripPage implements OnInit {
       }
     });
     await modal.present();
+  }
+  async presentCopyItineraryAlert(tripId: number) {
+    const userId =localStorage.getItem('id');
+    const alert = await this.alertController.create({
+      header: 'Copy Itinerary',
+      message: 'Would you like to copy this itinerary?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Copy action cancelled');
+          },
+        },
+        {
+          text: 'Copy',
+          handler: () => {
+            this.tripsService.copyTrip(tripId, Number(userId)).subscribe({
+              next: (newTrip: Trip) => {
+                console.log('Trip copied successfully:', newTrip);
+                this.router.navigate(['/trip/'+ newTrip.id]);
+                // Aqui você pode adicionar lógica para lidar com a nova viagem (ex. navegar para a nova viagem)
+              },
+              error: (error: any) => {
+                console.error('Error copying trip:', error);
+              }
+            });
+          },
+        },
+      ],
+    });
+  
+    await alert.present();
   }
   
 }

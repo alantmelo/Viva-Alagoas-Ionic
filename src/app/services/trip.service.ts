@@ -108,4 +108,7 @@ export class TripService {
   findTripByCodeAndPassword(tripCode: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/trips/find-by-code`, { tripCode, password });
   }
+  copyTrip(tripId: number, userId: number): Observable<Trip> {
+    return this.http.post<Trip>(`${this.apiUrl}/trips/copy/${tripId}/${userId}`, {});
+  }
 }
