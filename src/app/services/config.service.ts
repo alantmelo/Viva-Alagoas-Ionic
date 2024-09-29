@@ -7,10 +7,12 @@ import { City } from '../models/city';
   providedIn: 'root'
 })
 export class ConfigService {
-  private apiUrl = `${environment.apiUrl}cities`;
+  private apiUrl = `${environment.apiUrl}mobile/v1/config`;
+
   constructor(private http: HttpClient) {}
 
-  getCities() {
-    return this.http.get<{ items: any[]}>(this.apiUrl);
+  getCitiesByState(state: string): Observable<City[]> {
+    const params = new HttpParams().set('state', state);  // Adiciona o parâmetro state
+    return this.http.get<City[]>(`${this.apiUrl}/cities-by-state/${state}`, { params });
   }
 }

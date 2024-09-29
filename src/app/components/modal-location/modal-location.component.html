@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Selecionar Localização</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="saveCity()">
+    <ion-item>
+      <ion-label>Estado</ion-label>
+      <ion-select [(ngModel)]="selectedState" (ionChange)="onStateChange()" name="state">
+        <ion-select-option *ngFor="let state of ufList" [value]="state.uf">{{ state.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Cidade</ion-label>
+      <ion-select [(ngModel)]="selectedCity" name="city" [disabled]="!cities.length">
+        <ion-select-option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button expand="full" type="submit" [disabled]="!selectedCity">Salvar</ion-button>
+  </form>
+</ion-content>
