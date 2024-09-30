@@ -4,6 +4,10 @@ import { EventsService } from 'src/app/services/events.service';
 import { Event } from 'src/app/models/event'; 
 import { Subscription } from 'rxjs';
 import { LanguageService } from 'src/app/services/language.service';
+import { ModalController } from '@ionic/angular';
+import { AddItemTripComponent } from 'src/app/components/add-item-trip/add-item-trip.component'; // Importe o modal correto
+
+
 
 @Component({
   selector: 'app-event',
@@ -21,6 +25,7 @@ export class EventPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private eventsService: EventsService,
     private languageService: LanguageService,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -94,5 +99,12 @@ export class EventPage implements OnInit, OnDestroy {
         this.buttonName = 'Comprar';
       break;
     }
+  }
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: AddItemTripComponent, // O modal que será aberto
+    });
+
+    await modal.present();
   }
 }

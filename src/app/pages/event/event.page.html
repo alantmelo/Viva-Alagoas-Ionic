@@ -75,6 +75,11 @@
       <p><strong>Updated At:</strong> {{ event.updated_at | date }}</p>
     </ion-card-content>
   </ion-card> -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="openModal()">
+      <ion-icon name="duplicate-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
 <ion-footer  >
   <ion-button shape="round" expand="block">

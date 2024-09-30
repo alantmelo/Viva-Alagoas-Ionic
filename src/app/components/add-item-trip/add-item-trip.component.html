@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Adicionar Item à Viagem</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label>Nome do item</ion-label>
+    <ion-input placeholder="Digite o nome do item"></ion-input>
+  </ion-item>
+
+  <ion-button expand="full" (click)="closeModal()">Salvar</ion-button>
+</ion-content>

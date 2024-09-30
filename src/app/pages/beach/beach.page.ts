@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BeachService } from 'src/app/services/beaches.service';
 import { Beach } from 'src/app/models/beach';
+import { ModalController } from '@ionic/angular';
+import { AddItemTripComponent } from 'src/app/components/add-item-trip/add-item-trip.component'; // Importe o modal correto
+
 
 @Component({
   selector: 'app-beach',
@@ -12,7 +15,8 @@ export class BeachPage implements OnInit {
   beach: Beach| null = null;
   constructor(
     private route: ActivatedRoute,
-    private beachService: BeachService
+    private beachService: BeachService,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -21,6 +25,13 @@ export class BeachPage implements OnInit {
       console.log(beachData);
       this.beach = beachData;
     });
+  }
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: AddItemTripComponent, // O modal que será aberto
+    });
+
+    await modal.present();
   }
 
 }
