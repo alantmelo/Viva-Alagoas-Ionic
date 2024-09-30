@@ -103,6 +103,7 @@ export class EventPage implements OnInit, OnDestroy {
   async openModal() {
     const modal = await this.modalController.create({
       component: AddItemTripComponent, // O modal que será aberto
+      componentProps: { data: this.event}
     });
 
     await modal.present();

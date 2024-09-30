@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { TripService } from 'src/app/services/trip.service'; 
@@ -11,10 +11,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./add-item-trip.component.scss'],
 })
 export class AddItemTripComponent implements OnInit {
+  @Input() data!: any; 
   trips: Trip[] = [];
+  showPrice: boolean = false;
+  showItemType: boolean = false;
   searchQuery: string = '';
   page: number = 0;
-  tripId: any;
+  tripId: number| undefined;
   pageSize: number = 10;
   totalTrips: number = 0;
   addItemForm!: FormGroup;
@@ -26,14 +29,9 @@ export class AddItemTripComponent implements OnInit {
     private tripsService: TripService,
     private modalController: ModalController,
     private fb: FormBuilder) {
-      this.addItemForm = this.fb.group({
-        itemName: ['', Validators.required],
-        quantity: [1, [Validators.required, Validators.min(1)]],
-        userQuantity: [1, [Validators.required, Validators.min(1)]],
-        price: [0, [Validators.required, Validators.min(1)]],
-        selectedItemType: [null, Validators.required],
-        selectedTrip: [null, Validators.required], 
-      });
+      // this.data
+      
+      
     }
 
   closeModal() {
@@ -47,6 +45,31 @@ export class AddItemTripComponent implements OnInit {
     });
   }
   ngOnInit() {
+    if ('price' in this.data) {
+      this.showPrice = true;
+      console.log('O campo price existe no objeto.');
+    } else {
+      console.log('O campo price não existe no objeto.');
+    }
+    if(this.showPrice){
+      this.addItemForm = this.fb.group({
+        itemName: [this.data.name, Validators.required],
+        quantity: [1, [Validators.required, Validators.min(1)]],
+        userQuantity: [1, [Validators.required, Validators.min(1)]],
+        price: [this.data.price, [Validators.required, Validators.min(1)]],
+        selectedItemType: [null, Validators.required],
+        selectedTrip: [null, Validators.required], 
+      });
+    }else{
+      this.addItemForm = this.fb.group({
+        itemName: [this.data.name, Validators.required],
+        quantity: [0, [Validators.required, Validators.min(0)]],
+        price: [0, []],
+        selectedItemType: [null, Validators.required],
+        selectedTrip: [null, Validators.required], 
+      });
+    }
+    console.log(this.data)
     this.loadTrips();
   }
   onSearchChange(event: any) {
@@ -64,15 +87,15 @@ export class AddItemTripComponent implements OnInit {
       this.errorMessage = "Please select at least one user."; // Mensagem de erro
       return; // Interrompe a execução se não houver usuários selecionados
     }
-  
+    console.log();
     // Prepara os dados do item a serem enviados
     const itemData = {
       name: this.addItemForm.value.itemName,
       quantity: this.addItemForm.value.quantity,
-      userQuantity: this.addItemForm.value.userQuantity,
+      userQuantity: selectedUsers.length,
       price: this.addItemForm.value.price,
       itemTypeId: this.addItemForm.value.selectedItemType,
-      tripId: this.tripId,
+      tripId: Number(this.tripId),
       selectedUsers: selectedUsers,
     };
   
@@ -81,6 +104,7 @@ export class AddItemTripComponent implements OnInit {
       next: (response) => {
         console.log('Item created successfully', response);
         this.modalController.dismiss(response); // Fecha o modal com a resposta
+        this.router.navigate(['/trip/'+ this.tripId]);
       },
       error: (error) => {
         console.error('Error creating item', error);
@@ -102,6 +126,11 @@ export class AddItemTripComponent implements OnInit {
     this.tripsService.getTripData(event.detail.value).subscribe({
       next: (response) => {
         this.tripUsers = response.tripUsers;
+        if(!this.showItemType){
+          this.showItemType = true;
+        }
+        console.log(response)
+        this.activeItemTypes = response.activeItemTypes;
         console.log('Item created successfully', this.tripUsers);
       },
       error: (error) => {
@@ -109,8 +138,7 @@ export class AddItemTripComponent implements OnInit {
         this.errorMessage = "An error occurred while creating the item."; // Mensagem de erro
       },
     });
-    // getTripData
-    // this.selectedTripId = event.detail.value;
+    this.tripId = event.detail.value;
     console.log('Selected Trip ID:', event.detail.value);
   }
 }

@@ -13,6 +13,13 @@
     <ion-item *ngIf="errorMessage" class="error-message">
       <ion-label>{{ errorMessage }}</ion-label>
     </ion-item>
+    <ion-item>
+      <ion-label>Item Name</ion-label>
+      <ion-input formControlName="itemName" placeholder="Enter item name"></ion-input>
+      <ion-item *ngIf="addItemForm.get('itemName')?.invalid && (addItemForm.get('itemName')?.touched || addItemForm.get('itemName')?.dirty)">
+        <ion-label color="danger">Item Name is required.</ion-label>
+      </ion-item>
+    </ion-item>
     <ion-list>
       <ion-radio-group (ionChange)="onTripChange($event)" formControlName="selectedTrip">
         <ion-item *ngFor="let trip of trips">
@@ -32,7 +39,7 @@
       </ion-item>
     </ion-list>
 
-    <!-- <ion-item>
+    <ion-item *ngIf="showItemType">
       <ion-label>Select Item Type</ion-label>
       <ion-select formControlName="selectedItemType" placeholder="Select item type">
         <ion-select-option *ngFor="let itemType of activeItemTypes" [value]="itemType.id">
@@ -44,15 +51,7 @@
       </ion-item>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Item Name</ion-label>
-      <ion-input formControlName="itemName" placeholder="Enter item name"></ion-input>
-      <ion-item *ngIf="addItemForm.get('itemName')?.invalid && (addItemForm.get('itemName')?.touched || addItemForm.get('itemName')?.dirty)">
-        <ion-label color="danger">Item Name is required.</ion-label>
-      </ion-item>
-    </ion-item>
-
-    <ion-item>
+    <ion-item *ngIf="showPrice">
       <ion-label>Quantity</ion-label>
       <ion-input type="number" formControlName="quantity" placeholder="Enter quantity"></ion-input>
       <ion-item *ngIf="addItemForm.get('quantity')?.invalid && (addItemForm.get('quantity')?.touched || addItemForm.get('quantity')?.dirty)">
@@ -60,13 +59,13 @@
       </ion-item>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="showPrice">
       <ion-label>Price</ion-label>
       <ion-input type="number" formControlName="price" placeholder="Enter price"></ion-input>
       <ion-item *ngIf="addItemForm.get('price')?.invalid && (addItemForm.get('price')?.touched || addItemForm.get('price')?.dirty)">
         <ion-label color="danger">Price must be at least 0.</ion-label>
       </ion-item>
-    </ion-item> -->
+    </ion-item>
 
     <ion-button expand="full" type="submit" [disabled]="addItemForm.invalid">Confirm</ion-button>
   </form>

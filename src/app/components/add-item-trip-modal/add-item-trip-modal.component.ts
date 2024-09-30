@@ -15,6 +15,7 @@ export class AddItemTripModalComponent implements OnInit {
   activeItemTypes: any[] = [];
   errorMessage: string | null = null;
   // Form properties
+  showPrice: Boolean = false
   addItemForm!: FormGroup;
 
   constructor(
@@ -24,10 +25,10 @@ export class AddItemTripModalComponent implements OnInit {
   ) {
     // Initialize the form group
     this.addItemForm = this.fb.group({
+      hasValue: ["false", Validators.required],
       itemName: ['', Validators.required],
-      quantity: [1, [Validators.required, Validators.min(1)]],
-      userQuantity: [1, [Validators.required, Validators.min(1)]],
-      price: [0, [Validators.required, Validators.min(1)]],
+      quantity: [{ value: 0, disabled: true, }, Validators.min(1)], 
+      price: [{ value: 0, disabled: true, }, Validators.min(1)], 
       selectedItemType: [null, Validators.required],
     });
   }
@@ -65,8 +66,14 @@ export class AddItemTripModalComponent implements OnInit {
   loadItemData(itemId: number) {
     this.tripService.getItemById(itemId).subscribe({
       next: (itemData) => {
+        if(itemData.price !== 0) {
+          this.showPrice = true;
+          this.addItemForm.get('price')?.enable(); // Enable the price control
+          this.addItemForm.get('quantity')?.enable(); // Enable the price control
+        }
         // Preencher o formulário com os dados do item
         this.addItemForm.patchValue({
+          hasValue: [String(this.showPrice)],
           itemName: itemData.name,
           quantity: itemData.quantity,
           userQuantity: itemData.userQuantity,
@@ -99,16 +106,14 @@ export class AddItemTripModalComponent implements OnInit {
   
     // Verifica se pelo menos um usuário foi selecionado
     if (selectedUsers.length === 0) {
-      this.errorMessage = "Please select at least one user."; // Mensagem de erro
-      return; // Interrompe a execução se não houver usuários selecionados
+      this.errorMessage = "Please select at least one user.";
+      return;
     }
-  
-    // Prepara os dados do item a serem enviados
     const itemData = {
       name: this.addItemForm.value.itemName,
-      quantity: this.addItemForm.value.quantity,
-      userQuantity: this.addItemForm.value.userQuantity,
-      price: this.addItemForm.value.price,
+      quantity: this.showPrice ? this.addItemForm.value.quantity : 0,
+      userQuantity: selectedUsers.length,
+      price: this.showPrice ? this.addItemForm.value.price : 0,
       itemTypeId: this.addItemForm.value.selectedItemType,
       tripId: this.tripId,
       selectedUsers: selectedUsers,
@@ -147,5 +152,19 @@ export class AddItemTripModalComponent implements OnInit {
   toggleUserSelection(user: any) {
     user.isSelected = !user.isSelected; // Alternar a seleção
     console.log(this.tripUsers); // Log para verificar o estado atualizado
+  }
+  onPriceOptionChange(event: any) {
+    const showPriceSelected = event.detail.value === 'true';
+    this.showPrice = showPriceSelected;
+  
+    if (showPriceSelected) {
+      this.addItemForm.get('price')?.enable(); // Enable the price control
+      this.addItemForm.get('quantity')?.enable(); // Enable the price control
+    } else {
+      this.addItemForm.get('price')?.disable(); // Disable the price control
+      this.addItemForm.get('quantity')?.disable(); // Disable the price control
+      // this.addItemForm.patchValue({ price: 0 }); // Reset price to 0 when not showing
+      // this.addItemForm.patchValue({ quantity: 0 }); // Reset price to 0 when not showing
+    }
   }
 }
