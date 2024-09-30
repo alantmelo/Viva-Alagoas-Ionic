@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { EventPageRoutingModule } from './event-routing.module';
 
+import { ReactiveFormsModule } from '@angular/forms';
 import { EventPage } from './event.page';
 import { LanguageSelectorButtonComponent } from 'src/app/components/language-selector-button/language-selector-button.component';
 
@@ -14,7 +15,8 @@ import { LanguageSelectorButtonComponent } from 'src/app/components/language-sel
     CommonModule,
     FormsModule,
     IonicModule,
-    EventPageRoutingModule
+    EventPageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [EventPage, LanguageSelectorButtonComponent]
 })
