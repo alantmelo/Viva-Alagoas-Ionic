@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import { ModalLocationComponent } from '../components/modal-location/modal-location.component'; // Importa o novo modal
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tab1',
@@ -21,12 +22,15 @@ export class Tab1Page {
   };
   categories: { id: number; label: string; image: string; active: boolean; }[] | undefined;
   
-  constructor(private modalController: ModalController,
-) {
-  this.getCategories();
-  this.selectedCity = localStorage.getItem('cityName');
-  this.selectedUF = localStorage.getItem('ufName');
-  this.cityId = Number(localStorage.getItem('cityId'));
+  constructor(
+    private modalController: ModalController,
+    private translate: TranslateService
+  ) {
+    this.getCategories();
+    this.selectedCity = localStorage.getItem('cityName');
+    this.selectedUF = localStorage.getItem('ufName');
+    this.cityId = Number(localStorage.getItem('cityId'));
+    this.translate.setDefaultLang('pt');
   }
   isModalOpen = false;
   async openModal() {

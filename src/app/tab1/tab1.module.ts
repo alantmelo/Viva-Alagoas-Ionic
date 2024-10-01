@@ -10,6 +10,7 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { CategoryItemModule } from 'src/app/components/category-item/category-item.module';
 import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
 import { ModalLocationComponent } from '../components/modal-location/modal-location.component';
+import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
   imports: [
     IonicModule,
@@ -19,6 +20,7 @@ import { ModalLocationComponent } from '../components/modal-location/modal-locat
     Tab1PageRoutingModule,
     CategoryItemModule,
     SearchbarModule,
+    TranslateModule,
   ],
   declarations: [Tab1Page, ModalLocationComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
