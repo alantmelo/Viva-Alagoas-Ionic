@@ -69,6 +69,10 @@ const routes: Routes = [
   {
     path: 'favorites',
     loadChildren: () => import('./pages/favorites/favorites.module').then( m => m.FavoritesPageModule)
+  },
+  {
+    path: 'tourist-attraction/:id',
+    loadChildren: () => import('./pages/tourist-attraction/tourist-attraction.module').then( m => m.TouristAttractionPageModule)
   }
 ];
 @NgModule({

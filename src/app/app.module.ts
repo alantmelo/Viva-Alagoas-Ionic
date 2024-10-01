@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import {TokenModule } from 'src/app/services/token/token.module';
+
 @NgModule({
   declarations: [AppComponent,AddItemTripComponent,],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, TokenModule, ReactiveFormsModule,

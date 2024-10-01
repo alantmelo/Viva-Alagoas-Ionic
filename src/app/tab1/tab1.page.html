@@ -9,22 +9,22 @@
   <div class="categories">
     <app-category-item *ngFor="let item of categories" [item]="item"></app-category-item>
   </div>
-  <h1>{{ 'HELLO' | translate }}</h1>
-  <!-- <ion-grid>
+  <!-- <h1>{{ 'HELLO' | translate }}</h1> -->
+  <ion-grid>
 
     <ion-row>
       <ion-col>
         <h3>Top Destinations</h3>
         <swiper-container [slidesPerView]="1.5" spaceBetween="10">
-          <swiper-slide *ngFor="let destination of destinations">
-            <ion-card style="max-width: 400px; width: 400px;">
-              <img [src]="destination.image" />
+          <swiper-slide *ngFor="let attractions of attractions">
+            <ion-card (click)="goToAttr(attractions.id)" style="max-width: 400px; width: 400px;">
+              <img [src]="attractions.photo" />
               <ion-card-header>
-                <ion-card-title>{{ destination.name }}</ion-card-title>
-                <ion-card-subtitle>{{ destination.city }}</ion-card-subtitle>
+                <ion-card-title>{{ attractions.name }}</ion-card-title>
+                <ion-card-subtitle>{{ attractions.city }}</ion-card-subtitle>
               </ion-card-header>
               <ion-card-content>
-                <p>{{ destination.activities }} activities</p>
+                <p>{{ attractions.description }}</p>
               </ion-card-content>
             </ion-card>
           </swiper-slide>
@@ -32,5 +32,5 @@
       </ion-col>
     </ion-row>
     
-  </ion-grid> -->
+  </ion-grid>
 </ion-content>

@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ touristAttraction?.name }}</ion-title>
+    <ion-buttons slot="end">
+      <!-- <app-language-selector-button></app-language-selector-button> -->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="touristAttraction">
+  <img [src]="touristAttraction?.photo" *ngIf="touristAttraction?.photo" />
+
+  <div class="card">
+    <div class="image">
+      <div class="button-row">
+        <ion-button size="default" shape="round">
+          <ion-icon slot="icon-only" name="logo-whatsapp"></ion-icon>
+        </ion-button>
+        <ion-button size="default" shape="round">
+          <ion-icon slot="icon-only" name="logo-instagram"></ion-icon>
+        </ion-button>
+        <ion-button size="default" shape="round">
+          <ion-icon slot="icon-only" name="call-outline"></ion-icon>
+        </ion-button>
+        <ion-button size="default" shape="round">
+          <ion-icon slot="icon-only" name="map-outline"></ion-icon>
+        </ion-button>
+        <ion-button size="default" shape="round">
+          <ion-icon slot="icon-only" name="share-social-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <div class="card-content">
+      <div class="card-title">
+        <h1 class="ion-no-margin">{{ touristAttraction?.name }}</h1>
+
+      </div>
+    </div>
+
+    <div class="about">
+      <p>{{ touristAttraction?.description }}</p>
+      <p><ion-icon name="location-outline"></ion-icon> {{ touristAttraction?.street }}</p>
+      <p><ion-icon name="pin-outline"></ion-icon> {{ touristAttraction?.neighborhood }}</p>
+      <p><ion-icon name="home-outline"></ion-icon> {{ touristAttraction?.number }}</p>
+      <p><ion-icon name="map-outline"></ion-icon> {{ touristAttraction?.additionalAddress }}</p>
+      <p><ion-icon name="code-outline"></ion-icon> {{ touristAttraction?.zipeCode }}</p>
+    </div>
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="openModal()">
+      <ion-icon name="duplicate-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<ion-footer>
+
+</ion-footer>

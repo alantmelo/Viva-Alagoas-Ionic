@@ -93,4 +93,9 @@ export class RegisterPage implements OnInit {
 
     await alert.present();
   }
+  // translateMessage() {
+  //   this.translate.get('HELLO').subscribe((translation: string) => {
+  //     this.translatedText = translation;
+  //   });
+  // }
 }

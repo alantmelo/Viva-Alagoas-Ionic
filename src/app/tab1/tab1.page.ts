@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 import { ModalLocationComponent } from '../components/modal-location/modal-location.component'; // Importa o novo modal
 import { TranslateService } from '@ngx-translate/core';
+import { TouristAttractionsService } from '../services/tourist-attractions.service';
 
 @Component({
   selector: 'app-tab1',
@@ -13,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class Tab1Page {
   selectedCity: string | null;
   selectedUF: string | null;
-  cityId: number | null;
+  cityId: number | 1;
   slideOpts = {
       initialSlide: 0,
       speed: 400,
@@ -21,16 +22,20 @@ export class Tab1Page {
       spaceBetween: 10,
   };
   categories: { id: number; label: string; image: string; active: boolean; }[] | undefined;
-  
+  attractions: any[] = [];
   constructor(
     private modalController: ModalController,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private router: Router,
+    private touristAttractionService: TouristAttractionsService
   ) {
+
+    this.cityId = Number(localStorage.getItem('cityId'));
     this.getCategories();
+    this.loadAttractions();
     this.selectedCity = localStorage.getItem('cityName');
     this.selectedUF = localStorage.getItem('ufName');
-    this.cityId = Number(localStorage.getItem('cityId'));
-    this.translate.setDefaultLang('pt');
+    this.translate.setDefaultLang('pt-br');
   }
   isModalOpen = false;
   async openModal() {
@@ -107,5 +112,21 @@ export class Tab1Page {
         active: false,
       },
     ];
+  }
+  loadAttractions() {
+    this.touristAttractionService.findAllByCityId(this.cityId).subscribe({
+      next: (data) => {
+        this.attractions = data;  // Handle successful response
+      },
+      error: (error) => {
+        console.error('Erro ao carregar as atrações:', error);  // Handle error
+      },
+      complete: () => {
+        console.log('Requisição completa');  // Handle completion
+      }
+    });
+  }
+  goToAttr(id: number) {
+    this.router.navigate(['//tourist-attraction/'+ id]);
   }
 }
