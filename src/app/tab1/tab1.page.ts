@@ -5,6 +5,11 @@ import { ModalController } from '@ionic/angular';
 import { ModalLocationComponent } from '../components/modal-location/modal-location.component'; // Importa o novo modal
 import { TranslateService } from '@ngx-translate/core';
 import { TouristAttractionsService } from '../services/tourist-attractions.service';
+import { AlertController } from '@ionic/angular';
+import { lastValueFrom } from 'rxjs';
+import { TranslationHelperService } from '../helpers/translation-helper.service';
+
+
 
 @Component({
   selector: 'app-tab1',
@@ -15,27 +20,80 @@ export class Tab1Page {
   selectedCity: string | null;
   selectedUF: string | null;
   cityId: number | 1;
+  lang: any;
   slideOpts = {
       initialSlide: 0,
       speed: 400,
       slidesPerView: 1.5, // You can adjust this to control the number of visible cards
       spaceBetween: 10,
   };
-  categories: { id: number; label: string; image: string; active: boolean; }[] | undefined;
+  categories: { id: number; label: string; image: string; active: boolean; value: string }[] | undefined;
   attractions: any[] = [];
   constructor(
     private modalController: ModalController,
     private translate: TranslateService,
     private router: Router,
-    private touristAttractionService: TouristAttractionsService
+    private touristAttractionService: TouristAttractionsService,
+    private alertController: AlertController,
+    private translationHelper: TranslationHelperService
   ) {
-
+    this.lang = localStorage.getItem('selectedLanguage');
     this.cityId = Number(localStorage.getItem('cityId'));
     this.getCategories();
     this.loadAttractions();
     this.selectedCity = localStorage.getItem('cityName');
     this.selectedUF = localStorage.getItem('ufName');
-    this.translate.setDefaultLang('pt-br');
+    if(this.lang === '') {
+      this.translate.setDefaultLang('pt-br');
+    }else {
+      this.translate.setDefaultLang(this.lang);
+    }
+  }
+  availableLanguages: Array<{ value: string, label: string }> = [
+    { value: 'pt-br', label: 'Português (Brasil)' },
+    { value: 'es', label: 'Español' },
+    { "value": "fr", "label": "Français" },
+    { value: 'en', label: 'English' },
+    { value: 'it', label: 'Italiano' },
+    { value: 'jp', label: '日本語' },   // Japonês
+    { value: 'ko', label: '한국어' }    // Coreano
+  ];
+  async ionViewDidEnter() {
+    if (this.lang === '') {
+      await this.showLanguageAlert();
+    }
+  }
+  async showLanguageAlert() {
+    const alert = await this.alertController.create({
+      header: await this.translationHelper.getTranslation('SELECT_LANGUAGE'),
+      inputs: this.availableLanguages.map(lang => ({
+        name: 'language',
+        type: 'radio',
+        label: lang.label,
+        value: lang.value,
+      })),
+      buttons: [
+        {
+          text: await this.translationHelper.getTranslation('CANCEL'),
+          role: 'cancel',
+        },
+        {
+          text: await this.translationHelper.getTranslation('CONFIRM'),
+          handler: async (selectedLang: string) => {
+            if (selectedLang) {
+              this.lang = selectedLang;
+              console.log(`Idioma selecionado: ${selectedLang}`);
+              localStorage.setItem('selectedLanguage', this.lang);
+              this.translate.setDefaultLang(this.lang);
+              this.categories = [];
+              await this.getCategories();
+            }
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
   isModalOpen = false;
   async openModal() {
@@ -55,59 +113,68 @@ export class Tab1Page {
       this.selectedUF = data.uf; // Atualiza a cidade selecionada
     }
   }
-  getCategories() {
+  async getCategories() {
     this.categories = [
       {
         id: 1,
-        label: 'Beaches',
+        label: await this.translationHelper.getTranslation('BEACHES'),
+        value: 'Beaches',
         image: 'assets/icons8-beach-48.png',
         active: false,
       },
       {
         id: 2,
-        label: 'Events',
+        label: await this.translationHelper.getTranslation('EVENTS'),
+        value: 'Events',
         image: 'assets/icons8-weekend-48.png',
         active: false,
       },
       {
         id: 3,
-        label: 'Hotels',
+        label: await this.translationHelper.getTranslation('HOTELS'),
+        value: 'Hotels',
         image: 'assets/icons8-4-star-hotel-48.png',
         active: false,
       },
       {
         id: 4,
-        label: 'Transfers',
+        label: await this.translationHelper.getTranslation('TRANSFERS'),
+        value: 'Transfers',
         image: 'assets/icons8-taxi-48.png',
         active: false,
       },
       {
         id: 5,
-        label: 'Stores',
+        label: await this.translationHelper.getTranslation('STORES'),
+        value: 'Stores',
         image: 'assets/icons8-store-48.png',
         active: false,
       },
       {
         id: 6,
-        label: 'Tours',
+        label: await this.translationHelper.getTranslation('TOURIST_TOURS'),
+        value: 'Tours',
         image: 'assets/icons8-ticket-48.png',
         active: false,
       },
       {
         id: 7,
-        label: 'Restaurant',
+        label: await this.translationHelper.getTranslation('RESTAURANTS'),
+        value: 'Restaurant',
         image: 'assets/icons8-buffet-breakfast-48.png',
         active: false,
       },
       {
         id: 8,
-        label: 'Services',
+        label: await this.translationHelper.getTranslation('SERVICES'),
+        value: 'Services',
         image: 'assets/icons8-service-bell-48.png',
         active: false,
       },
       {
         id: 8,
-        label: 'Guides',
+        label: await this.translationHelper.getTranslation('TOURIST_GUIDES'),
+        value: 'Guides',
         image: 'assets/icons8-tourist-guide-48.png',
         active: false,
       },
@@ -127,6 +194,11 @@ export class Tab1Page {
     });
   }
   goToAttr(id: number) {
-    this.router.navigate(['//tourist-attraction/'+ id]);
+    this.router.navigate(['/tourist-attraction/'+ id]);
+  }
+  showTranslation() {
+    this.translate.get('SELECT_LANGUAGE').subscribe((res: string) => {
+      console.log(res); // Retorna o texto "Selecione um idioma" (ou equivalente em outro idioma)
+    });
   }
 }

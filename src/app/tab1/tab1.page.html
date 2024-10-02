@@ -1,20 +1,21 @@
 <ion-content [fullscreen]="true">
   <div class="header">
-    <h2>Viva {{selectedUF || 'AL'}} {{selectedCity || 'Maceió'}}</h2>
+    <h2>{{ 'VIVA' | translate }} {{selectedUF || 'AL'}} {{selectedCity || 'Maceió'}}</h2>
     <div class="avatar">
-      <ion-img src="assets\images\face.png"></ion-img>
+      <ion-button (click)="showLanguageAlert()" size="small">
+        <ion-icon slot="icon-only" ios="language-outline" md="language-outline"></ion-icon>
+      </ion-button>
     </div>
   </div>
   <app-searchbar (click)="openModal()"></app-searchbar>
   <div class="categories">
     <app-category-item *ngFor="let item of categories" [item]="item"></app-category-item>
   </div>
-  <!-- <h1>{{ 'HELLO' | translate }}</h1> -->
   <ion-grid>
 
     <ion-row>
       <ion-col>
-        <h3>Top Destinations</h3>
+        <h3>{{ 'TOURIST_ATTRACTIONS' | translate }}</h3>
         <swiper-container [slidesPerView]="1.5" spaceBetween="10">
           <swiper-slide *ngFor="let attractions of attractions">
             <ion-card (click)="goToAttr(attractions.id)" style="max-width: 400px; width: 400px;">

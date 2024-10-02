@@ -1,4 +1,16 @@
 {
-    "HELLO": "Hello",
-    "WELCOME": "Welcome to our app!"
+    "SELECT_LANGUAGE": "Seleccione un idioma",
+    "VIVA": "Viva",
+    "CANCEL": "Cancelar",
+    "CONFIRM": "Confirmar",
+    "BEACHES": "Playas",
+    "EVENTS": "Eventos",
+    "HOTELS": "Hoteles",
+    "TRANSFERS": "Transfers",
+    "STORES": "Tiendas",
+    "TOURIST_TOURS": "Tours turísticos",
+    "RESTAURANTS": "Restaurantes",
+    "SERVICES": "Servicios",
+    "TOURIST_GUIDES": "Guías turísticos",
+    "TOURIST_ATTRACTIONS": "Atracciones turísticas"
 }
