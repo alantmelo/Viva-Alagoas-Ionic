@@ -179,6 +179,13 @@ export class Tab1Page {
         image: 'assets/icons8-tourist-guide-48.png',
         active: false,
       },
+      {
+        id: 9,
+        label: await this.translationHelper.getTranslation('TOURIST_ATTRACTIONS'),
+        value: 'Attractions',
+        image: 'assets/icons8-tourist-guide-48.png',
+        active: false,
+      },
     ];
   }
   loadAttractions() {

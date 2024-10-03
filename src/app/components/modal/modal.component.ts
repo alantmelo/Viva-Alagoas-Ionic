@@ -9,6 +9,7 @@ import { TransferService } from 'src/app/services/transfers.service';
 import { ToursService } from 'src/app/services/tours.service';
 import { ModalController } from '@ionic/angular';
 import { ServicesService } from 'src/app/services/services.service';
+import { TouristAttractionsService } from 'src/app/services/tourist-attractions.service';
 import { BehaviorSubject, Observable, of, Subject, switchMap, firstValueFrom } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { NavController } from '@ionic/angular'; 
@@ -39,6 +40,7 @@ export class ModalComponent implements OnInit {
     private transfersService: TransferService,
     private toursService: ToursService,
     private servicesService: ServicesService,
+    private touristAttractionsService: TouristAttractionsService,
     private navCtrl: NavController
   ) {}
 
@@ -112,6 +114,9 @@ export class ModalComponent implements OnInit {
       case 'Tours':
         result = await firstValueFrom(this.toursService.getTours(term, page, pageSize, cityId!));
         break;
+      case 'Attractions':
+        result = await firstValueFrom(this.touristAttractionsService.findAllByCityId(term, page, pageSize, cityId!));
+        break;
       default:
         result = { items: [], total: 0 };
         break;
@@ -156,6 +161,9 @@ export class ModalComponent implements OnInit {
         break;
       case 'Transfers':
         targetPage = `/transfer/${id}`;
+        break;
+      case 'Attractions':
+        targetPage = `/tourist-attraction/${id}`;
         break;
       default:
         targetPage = '/';

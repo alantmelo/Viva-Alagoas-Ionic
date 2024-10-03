@@ -11,11 +11,8 @@ export class TouristAttractionsService {
   constructor(private http: HttpClient) {}
 
   // Método para buscar todas as atrações turísticas de uma cidade específica pelo cityId
-  findAllByCityId(
-    cityId: number,
-    page: number = 1,
-    pageSize: number = 10,
-    searchTerm: string = ''
+  findAllByCityId(searchTerm: string = '', page: number = 0, pageSize: number = 10, cityId: string = '1'
+    
   ): Observable<any> {
     const params = new HttpParams()
       .set('page', page.toString())
