@@ -17,15 +17,15 @@
       <ion-col>
         <h3>{{ 'TOURIST_ATTRACTIONS' | translate }}</h3>
         <swiper-container [slidesPerView]="1.5" spaceBetween="10">
-          <swiper-slide *ngFor="let attractions of attractions">
-            <ion-card (click)="goToAttr(attractions.id)" style="max-width: 400px; width: 400px;">
-              <img [src]="attractions.photo" />
+          <swiper-slide *ngFor="let attraction of attractions">
+            <ion-card (click)="goToAttr(attraction.id)" style="max-width: 400px; width: 400px;">
+              <img [src]="attraction.photo" />
               <ion-card-header>
-                <ion-card-title>{{ attractions.name }}</ion-card-title>
-                <ion-card-subtitle>{{ attractions.city }}</ion-card-subtitle>
+                <ion-card-title>{{ attraction.translatedName }}</ion-card-title>
+                <ion-card-subtitle>{{ attraction.city }}</ion-card-subtitle>
               </ion-card-header>
               <ion-card-content>
-                <p>{{ attractions.description }}</p>
+                <p>{{ attraction.translatedDescription }}</p>
               </ion-card-content>
             </ion-card>
           </swiper-slide>

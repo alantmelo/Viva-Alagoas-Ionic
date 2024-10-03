@@ -52,11 +52,11 @@ export class Tab1Page {
   availableLanguages: Array<{ value: string, label: string }> = [
     { value: 'pt-br', label: 'Português (Brasil)' },
     { value: 'es', label: 'Español' },
-    { "value": "fr", "label": "Français" },
+    { value: "fr", label: "Français" },
     { value: 'en', label: 'English' },
     { value: 'it', label: 'Italiano' },
-    { value: 'jp', label: '日本語' },   // Japonês
-    { value: 'ko', label: '한국어' }    // Coreano
+    { value: 'jp', label: '日本語' },
+    { value: 'ko', label: '한국어' }
   ];
   async ionViewDidEnter() {
     if (this.lang === '') {
@@ -87,6 +87,7 @@ export class Tab1Page {
               this.translate.setDefaultLang(this.lang);
               this.categories = [];
               await this.getCategories();
+              this.updateAttractionsTranslations();
             }
           },
         },
@@ -181,24 +182,56 @@ export class Tab1Page {
     ];
   }
   loadAttractions() {
-    this.touristAttractionService.findAllByCityId(this.cityId).subscribe({
+    this.touristAttractionService.findByCityId(this.cityId).subscribe({
       next: (data) => {
-        this.attractions = data;  // Handle successful response
+        this.attractions = data;
+        this.updateAttractionsTranslations(); // Chama a função de tradução ao carregar os dados
       },
       error: (error) => {
-        console.error('Erro ao carregar as atrações:', error);  // Handle error
+        console.error('Erro ao carregar as atrações:', error);
       },
       complete: () => {
-        console.log('Requisição completa');  // Handle completion
+        console.log('Requisição completa');
       }
     });
   }
+  
+  updateAttractionsTranslations() {
+    if (!this.attractions || this.attractions.length === 0) {
+      return; // Garante que as atrações estejam carregadas antes de atualizar as traduções
+    }
+  
+    this.attractions = this.attractions.map((attraction) => {
+      let translatedName = attraction.name; // Nome padrão
+      let translatedDescription = attraction.description; // Descrição padrão
+  
+      if (this.lang !== 'pt-br' && attraction.translations) {
+        // Procura a tradução correspondente ao idioma atual
+        const translation = attraction.translations.find((t: { lang: any; }) => t.lang === this.lang);
+        
+        if (translation) {
+          translatedName = translation.name;
+          translatedDescription = translation.description;
+        }
+      }
+  
+      return {
+        ...attraction,
+        translatedName, // Propriedade para exibir o nome traduzido
+        translatedDescription // Propriedade para exibir a descrição traduzida
+      };
+    });
+  
+    // Chama Change Detection para garantir que a view seja atualizada
+    // this.cd.detectChanges(); 
+  }
+  
   goToAttr(id: number) {
     this.router.navigate(['/tourist-attraction/'+ id]);
   }
   showTranslation() {
     this.translate.get('SELECT_LANGUAGE').subscribe((res: string) => {
-      console.log(res); // Retorna o texto "Selecione um idioma" (ou equivalente em outro idioma)
+      console.log(res);
     });
   }
 }
