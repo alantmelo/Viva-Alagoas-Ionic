@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content *ngIf="touristAttraction">
-  <img [src]="touristAttraction?.photo" *ngIf="touristAttraction?.photo" />
+  <img [src]="touristAttraction.photo" *ngIf="touristAttraction.photo" />
 
   <div class="card">
     <div class="image">
@@ -33,18 +33,18 @@
 
     <div class="card-content">
       <div class="card-title">
-        <h1 class="ion-no-margin">{{ touristAttraction?.name }}</h1>
+        <h1 class="ion-no-margin">{{ touristAttraction.name }}</h1>
 
       </div>
     </div>
 
     <div class="about">
-      <p>{{ touristAttraction?.description }}</p>
-      <p><ion-icon name="location-outline"></ion-icon> {{ touristAttraction?.street }}</p>
-      <p><ion-icon name="pin-outline"></ion-icon> {{ touristAttraction?.neighborhood }}</p>
-      <p><ion-icon name="home-outline"></ion-icon> {{ touristAttraction?.number }}</p>
-      <p><ion-icon name="map-outline"></ion-icon> {{ touristAttraction?.additionalAddress }}</p>
-      <p><ion-icon name="code-outline"></ion-icon> {{ touristAttraction?.zipeCode }}</p>
+      <p>{{ touristAttraction.description }}</p>
+      <p><ion-icon name="location-outline"></ion-icon> {{ touristAttraction.street }}</p>
+      <p><ion-icon name="pin-outline"></ion-icon> {{ touristAttraction.neighborhood }}</p>
+      <p><ion-icon name="home-outline"></ion-icon> {{ touristAttraction.number }}</p>
+      <p><ion-icon name="map-outline"></ion-icon> {{ touristAttraction.additionalAddress }}</p>
+      <p><ion-icon name="code-outline"></ion-icon> {{ touristAttraction.zipeCode }}</p>
     </div>
   </div>
 
