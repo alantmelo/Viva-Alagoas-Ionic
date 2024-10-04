@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
@@ -16,7 +16,7 @@ import { TranslationHelperService } from '../helpers/translation-helper.service'
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page  implements OnInit{
   selectedCity: string | null;
   selectedUF: string | null;
   cityId: number | 1;
@@ -39,7 +39,7 @@ export class Tab1Page {
   ) {
     this.lang = localStorage.getItem('selectedLanguage');
     this.cityId = Number(localStorage.getItem('cityId'));
-    this.getCategories();
+    // this.getCategories();
     this.loadAttractions();
     this.selectedCity = localStorage.getItem('cityName');
     this.selectedUF = localStorage.getItem('ufName');
@@ -55,9 +55,14 @@ export class Tab1Page {
     { value: "fr", label: "Français" },
     { value: 'en', label: 'English' },
     { value: 'it', label: 'Italiano' },
-    { value: 'jp', label: '日本語' },
+    { value: 'ja', label: '日本語' },
     { value: 'ko', label: '한국어' }
   ];
+
+  ngOnInit() {
+    this.getCategories();
+  }
+
   async ionViewDidEnter() {
     if (this.lang === '') {
       await this.showLanguageAlert();
