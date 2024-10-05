@@ -63,7 +63,6 @@ export class TripEditModalComponent implements OnInit {
       },
     });
   }
-
   async presentDateAlert(type: 'start' | 'end') {
     const alert = await this.alertController.create({
       header: `${type === 'start' ? 'Select Start Date' : 'Select End Date'}`,
@@ -84,19 +83,94 @@ export class TripEditModalComponent implements OnInit {
         },
         {
           text: 'Confirm',
-          handler: (data) => {
+          handler: async (data) => {
+            const selectedDate = new Date(data.date);
+            
+            if (!this.isValidDate(selectedDate)) {
+              // Exibe um alerta se a data não for válida
+              const invalidDateAlert = await this.alertController.create({
+                header: 'Invalid Date',
+                message: 'Please select a valid date.',
+                buttons: ['OK'],
+              });
+              await invalidDateAlert.present();
+              return;
+            }
+  
             if (type === 'start') {
+              const endDate = new Date(this.tripForm.value.endDate);
+              if (endDate && selectedDate > endDate) {
+                // Exibe um alerta se a data de início for maior que a data final
+                const dateOrderAlert = await this.alertController.create({
+                  header: 'Invalid Date Range',
+                  message: 'Start date cannot be after the end date.',
+                  buttons: ['OK'],
+                });
+                await dateOrderAlert.present();
+                return;
+              }
               this.tripForm.patchValue({ startDate: data.date });
             } else {
+              const startDate = new Date(this.tripForm.value.startDate);
+              if (startDate && selectedDate < startDate) {
+                // Exibe um alerta se a data final for anterior à data de início
+                const dateOrderAlert = await this.alertController.create({
+                  header: 'Invalid Date Range',
+                  message: 'End date cannot be before the start date.',
+                  buttons: ['OK'],
+                });
+                await dateOrderAlert.present();
+                return;
+              }
               this.tripForm.patchValue({ endDate: data.date });
             }
           },
         },
       ],
     });
-
+  
     await alert.present();
   }
+  
+  // Function to check if the date is valid
+  isValidDate(date: Date): boolean {
+    return date instanceof Date && !isNaN(date.getTime());
+  }
+  
+
+  // async presentDateAlert(type: 'start' | 'end') {
+  //   const alert = await this.alertController.create({
+  //     header: `${type === 'start' ? 'Select Start Date' : 'Select End Date'}`,
+  //     inputs: [
+  //       {
+  //         name: 'date',
+  //         type: 'date',
+  //         placeholder: 'YYYY-MM-DD',
+  //       },
+  //     ],
+  //     buttons: [
+  //       {
+  //         text: 'Cancel',
+  //         role: 'cancel',
+  //         handler: () => {
+  //           console.log('Cancel clicked');
+  //         },
+  //       },
+  //       {
+  //         text: 'Confirm',
+  //         handler: (data) => {
+  //           if (type === 'start') {
+  //             this.tripForm.patchValue({ startDate: data.date });
+  //           } else {
+  //             this.tripForm.patchValue({ endDate: data.date });
+  //           }
+  //         },
+  //       },
+  //     ],
+  //   });
+
+  //   await alert.present();
+  // }
 
   close() {
     this.modalController.dismiss();

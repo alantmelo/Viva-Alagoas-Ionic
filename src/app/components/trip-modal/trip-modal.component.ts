@@ -131,7 +131,37 @@ export class TripModalComponent implements OnInit {
     });
   }
 
+  
   // Novo método para exibir o alerta de seleção de datas
+  // async showDateAlert(dateType: 'startDate' | 'endDate') {
+  //   const alert = await this.alertController.create({
+  //     header: 'Select Dates',
+  //     inputs: [
+  //       {
+  //         name: 'date',
+  //         type: 'date', // Tipo 'date' para selecionar a data
+  //         label: dateType === 'startDate' ? 'Start Date' : 'End Date',
+  //         value: this.tripForm.value[dateType] ? this.formatDate(this.tripForm.value[dateType]) : null,
+  //       },
+  //     ],
+  //     buttons: [
+  //       {
+  //         text: 'Cancel',
+  //         role: 'cancel',
+  //       },
+  //       {
+  //         text: 'Confirm',
+  //         handler: (data) => {
+  //           this.tripForm.patchValue({
+  //             [dateType]: data.date ? new Date(data.date).toISOString() : null, // Converte a data para ISO
+  //           });
+  //         },
+  //       },
+  //     ],
+  //   });
+
+  //   await alert.present();
+  // }
   async showDateAlert(dateType: 'startDate' | 'endDate') {
     const alert = await this.alertController.create({
       header: 'Select Dates',
@@ -150,7 +180,47 @@ export class TripModalComponent implements OnInit {
         },
         {
           text: 'Confirm',
-          handler: (data) => {
+          handler: async (data) => {
+            const selectedDate = new Date(data.date);
+            
+            if (!this.isValidDate(selectedDate)) {
+              // Exibe um alerta se a data não for válida
+              const invalidDateAlert = await this.alertController.create({
+                header: 'Invalid Date',
+                message: 'Please select a valid date.',
+                buttons: ['OK'],
+              });
+              await invalidDateAlert.present();
+              return;
+            }
+  
+            if (dateType === 'startDate') {
+              const endDate = new Date(this.tripForm.value.endDate);
+              if (endDate && selectedDate > endDate) {
+                // Exibe um alerta se a data de início for maior que a data final
+                const dateOrderAlert = await this.alertController.create({
+                  header: 'Invalid Date Range',
+                  message: 'Start date cannot be after the end date.',
+                  buttons: ['OK'],
+                });
+                await dateOrderAlert.present();
+                return;
+              }
+            } else {
+              const startDate = new Date(this.tripForm.value.startDate);
+              if (startDate && selectedDate < startDate) {
+                // Exibe um alerta se a data final for anterior à data de início
+                const dateOrderAlert = await this.alertController.create({
+                  header: 'Invalid Date Range',
+                  message: 'End date cannot be before the start date.',
+                  buttons: ['OK'],
+                });
+                await dateOrderAlert.present();
+                return;
+              }
+            }
+  
+            // Se tudo estiver ok, atualiza o valor da data no formulário
             this.tripForm.patchValue({
               [dateType]: data.date ? new Date(data.date).toISOString() : null, // Converte a data para ISO
             });
@@ -158,7 +228,13 @@ export class TripModalComponent implements OnInit {
         },
       ],
     });
-
+  
     await alert.present();
   }
+  
+  // Função para verificar se a data é válida
+  isValidDate(date: Date): boolean {
+    return date instanceof Date && !isNaN(date.getTime());
+  }
+  
 }
