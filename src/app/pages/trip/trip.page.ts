@@ -54,7 +54,10 @@ export class TripPage implements OnInit {
     this.loadTrip(tripId);
   }
 
-  
+  formatDate(date: string | null | undefined): string | null {
+    if (!date) return null; // Retorna null se a data for undefined ou null
+    return date.split('T')[0]; // Extrai apenas a parte da data
+  }
 
   async openAddItemModal(itemId?: string) {
     if (!this.trip || !this.trip.id) {

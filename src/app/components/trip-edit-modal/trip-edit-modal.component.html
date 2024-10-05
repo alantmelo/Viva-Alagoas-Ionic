@@ -41,14 +41,14 @@
         </ion-select>
       </ion-item>
 
-      <ion-item>
+      <ion-item (click)="presentDateAlert('start')">
         <ion-label>Start Date</ion-label>
-        <ion-datetime presentation="date" formControlName="startDate" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"></ion-datetime>
+        <ion-input [value]="tripForm.value.startDate" readonly></ion-input>
       </ion-item>
 
-      <ion-item>
+      <ion-item (click)="presentDateAlert('end')">
         <ion-label>End Date</ion-label>
-        <ion-datetime presentation="date" formControlName="endDate" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"></ion-datetime>
+        <ion-input [value]="tripForm.value.endDate" readonly></ion-input>
       </ion-item>
     </ion-list>
 

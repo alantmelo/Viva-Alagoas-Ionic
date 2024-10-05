@@ -19,6 +19,8 @@
       <p><strong>Descrição:</strong> {{ trip.description }}</p>
       <p><strong>Password:</strong> {{ trip.password }}</p>
       <p><strong>Criada em:</strong> {{ trip.createdAt | date }}</p>
+      <p><strong>Start Date:</strong> {{ formatDate(trip.startDate) }}</p>
+      <p><strong>End Date:</strong> {{ formatDate(trip.endDate) }}</p>
       <p><strong>Atualizada em:</strong> {{ trip.updatedAt | date }}</p>
     </ion-card-content>
   </ion-card>
