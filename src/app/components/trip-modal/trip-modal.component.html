@@ -39,7 +39,7 @@
         <ion-select-option *ngFor="let type of tripTypes" [value]="type.id">{{ type.name }}</ion-select-option>
       </ion-select>
     </ion-item>
-  
+
     <ion-item>
       <ion-label>Cidade</ion-label>
       <ion-select formControlName="city">
@@ -49,16 +49,19 @@
     <div *ngIf="tripForm.get('city')?.invalid && (tripForm.get('city')?.touched || tripForm.get('city')?.dirty)">
       <ion-text color="danger">City is required.</ion-text>
     </div>
-    <!-- Add Start Date Picker -->
-    <ion-item>
-      <ion-label>Start Date</ion-label>
-      <ion-datetime presentation="date" formControlName="startDate" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"></ion-datetime>
+
+    <!-- Start Date Label -->
+    <ion-item (click)="showDateAlert('startDate')">
+      <ion-label>
+        Start Date: <strong>{{ tripForm.value.startDate ? formatDate(tripForm.value.startDate) : 'Select Start Date' }}</strong>
+      </ion-label>
     </ion-item>
 
-    <!-- Add End Date Picker -->
-    <ion-item>
-      <ion-label>End Date</ion-label>
-      <ion-datetime presentation="date" formControlName="endDate" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"></ion-datetime>
+    <!-- End Date Label -->
+    <ion-item (click)="showDateAlert('endDate')">
+      <ion-label>
+        End Date: <strong>{{ tripForm.value.endDate ? formatDate(tripForm.value.endDate) : 'Select End Date' }}</strong>
+      </ion-label>
     </ion-item>
 
     <ion-button expand="full" type="submit" [disabled]="tripForm.invalid">Submit</ion-button>

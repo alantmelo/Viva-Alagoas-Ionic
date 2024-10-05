@@ -197,6 +197,7 @@ export class Tab1Page  implements OnInit{
     this.touristAttractionService.findByCityId(this.cityId).subscribe({
       next: (data) => {
         this.attractions = data;
+        console.log(data);
         this.updateAttractionsTranslations(); // Chama a função de tradução ao carregar os dados
       },
       error: (error) => {

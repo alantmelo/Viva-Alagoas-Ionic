@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular'; // Importando AlertController
 import { TripService } from 'src/app/services/trip.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -20,7 +20,8 @@ export class TripModalComponent implements OnInit {
   constructor(
     private modalController: ModalController,
     private tripService: TripService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private alertController: AlertController // Adicionando AlertController
   ) {
     // Initialize the form group
     this.tripForm = this.fb.group({
@@ -31,7 +32,6 @@ export class TripModalComponent implements OnInit {
       tripType: [null, Validators.required],
       startDate: [null], // Add startDate field
       endDate: [null], // Add endDate field
-    
     });
   }
 
@@ -55,8 +55,8 @@ export class TripModalComponent implements OnInit {
           description: tripData.description,
           city: tripData.cityId,
           tripType: tripData.tripTypeId,
-          startDate:  this.formatDate(this.tripForm.value.startDate),
-          endDate: this.formatDate(this.tripForm.value.endDate),
+          startDate: tripData.startDate, // Corrigido
+          endDate: tripData.endDate, // Corrigido
         });
       },
       error: (err) => console.error('Error loading trip data', err),
@@ -75,8 +75,8 @@ export class TripModalComponent implements OnInit {
       description: this.tripForm.value.description,
       cityId: this.tripForm.value.city,
       tripTypeId: this.tripForm.value.tripType,
-      startDate: this.formatDate(this.tripForm.value.startDate),
-      endDate: this.formatDate(this.tripForm.value.endDate),
+      startDate: this.formatDate(this.tripForm.value.startDate), // Corrigido
+      endDate: this.formatDate(this.tripForm.value.endDate), // Corrigido
     };
 
     if (this.tripId) {
@@ -107,9 +107,13 @@ export class TripModalComponent implements OnInit {
 
     this.errorMessage = ""; // Clear the error message after a successful submission
   }
-  formatDate(date: string){
+
+  // Método para formatar a data
+  formatDate(date: string) {
     return date ? date.split('T')[0] : null; // Extract just the date part
   }
+
+  // Carregar tipos de viagem e cidades
   loadTripTypes() {
     this.tripService.getActiveTripTypesAndCities().subscribe({
       next: (result) => {
@@ -123,7 +127,38 @@ export class TripModalComponent implements OnInit {
       },
       complete: () => {
         console.log('Requisição completa.');
-      }
+      },
     });
+  }
+
+  // Novo método para exibir o alerta de seleção de datas
+  async showDateAlert(dateType: 'startDate' | 'endDate') {
+    const alert = await this.alertController.create({
+      header: 'Select Dates',
+      inputs: [
+        {
+          name: 'date',
+          type: 'date', // Tipo 'date' para selecionar a data
+          label: dateType === 'startDate' ? 'Start Date' : 'End Date',
+          value: this.tripForm.value[dateType] ? this.formatDate(this.tripForm.value[dateType]) : null,
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Confirm',
+          handler: (data) => {
+            this.tripForm.patchValue({
+              [dateType]: data.date ? new Date(data.date).toISOString() : null, // Converte a data para ISO
+            });
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 }
