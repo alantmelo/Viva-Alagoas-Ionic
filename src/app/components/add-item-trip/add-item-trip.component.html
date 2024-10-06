@@ -38,7 +38,11 @@
         </ion-checkbox>
       </ion-item>
     </ion-list>
-
+    <ion-item (click)="presentDateAlert()">
+      <ion-label>
+        Date: <strong>{{ addItemForm.value.date ? addItemForm.value.date : 'Select Date' }}</strong>
+      </ion-label>
+    </ion-item>
     <ion-item *ngIf="showItemType">
       <ion-label>Select Item Type</ion-label>
       <ion-select formControlName="selectedItemType" placeholder="Select item type">

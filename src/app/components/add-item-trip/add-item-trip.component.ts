@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController,AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { TripService } from 'src/app/services/trip.service'; 
 import { Trip, TripResponse } from 'src/app/models/trip';
@@ -28,11 +28,8 @@ export class AddItemTripComponent implements OnInit {
   constructor(private router: Router,
     private tripsService: TripService,
     private modalController: ModalController,
-    private fb: FormBuilder) {
-      // this.data
-      
-      
-    }
+    private alertController: AlertController,
+    private fb: FormBuilder) {}
 
   closeModal() {
     this.modalController.dismiss(); // Fecha o modal
@@ -59,6 +56,7 @@ export class AddItemTripComponent implements OnInit {
         price: [this.data.price, [Validators.required, Validators.min(1)]],
         selectedItemType: [null, Validators.required],
         selectedTrip: [null, Validators.required], 
+        date: [null],
       });
     }else{
       this.addItemForm = this.fb.group({
@@ -67,6 +65,7 @@ export class AddItemTripComponent implements OnInit {
         price: [0, []],
         selectedItemType: [null, Validators.required],
         selectedTrip: [null, Validators.required], 
+        date: [null],
       });
     }
     console.log(this.data)
@@ -87,7 +86,13 @@ export class AddItemTripComponent implements OnInit {
       this.errorMessage = "Please select at least one user."; // Mensagem de erro
       return; // Interrompe a execução se não houver usuários selecionados
     }
-    console.log();
+
+    const selectedDate = new Date(this.addItemForm.value.date); // Pega a data selecionada
+    // Verifica se a data selecionada é válida
+    if (!this.isValidDate(selectedDate)) {
+      this.showInvalidDateAlert(); // Mostra alerta de data inválida
+      return;
+    }
     // Prepara os dados do item a serem enviados
     const itemData = {
       name: this.addItemForm.value.itemName,
@@ -95,6 +100,7 @@ export class AddItemTripComponent implements OnInit {
       userQuantity: selectedUsers.length,
       price: this.addItemForm.value.price,
       itemTypeId: this.addItemForm.value.selectedItemType,
+      date: selectedDate.toISOString(),
       tripId: Number(this.tripId),
       selectedUsers: selectedUsers,
     };
@@ -114,6 +120,64 @@ export class AddItemTripComponent implements OnInit {
     
   
     this.errorMessage = ""; // Limpa a mensagem de erro após um envio bem-sucedido
+  }
+  async presentDateAlert() {
+    const alert = await this.alertController.create({
+      header: 'Select Date',
+      inputs: [
+        {
+          name: 'date',
+          type: 'date',
+          value: this.addItemForm.value.date || '',  // Pega o valor atual ou deixa vazio
+          placeholder: 'YYYY-MM-DD',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Date selection cancelled');
+          },
+        },
+        {
+          text: 'Confirm',
+          handler: (data) => {
+            if (data.date) {
+              const selectedDate = new Date(data.date);
+              if (this.isValidDate(selectedDate)) {
+                // Atualiza o campo date no formulário
+                this.addItemForm.patchValue({ date: data.date });
+                console.log('Date selected:', data.date);
+              } else {
+                this.showInvalidDateAlert(); // Alerta se a data não for válida
+              }
+            } else {
+              console.error('No date selected');
+            }
+          },
+        },
+      ],
+    });
+  
+    await alert.present();
+  }
+  // Função para exibir um alerta de data inválida
+  async showInvalidDateAlert() {
+    const alert = await this.alertController.create({
+      header: 'Invalid Date',
+      message: 'Please select a valid date.',
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+  // Função de validação de data
+  isValidDate(date: Date): boolean {
+    return date instanceof Date && !isNaN(date.getTime());
+  }
+  formatDate(date: string | null | undefined): string | null {
+    if (!date) return null; // Retorna null se a data for undefined ou null
+    return date.split('T')[0]; // Extrai apenas a parte da data
   }
   
 
